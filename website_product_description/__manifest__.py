@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': "Website Product Description",
 
@@ -6,10 +5,11 @@
         Add separate description field to website product view.
     """,
 
-    'author': "Mint System GmbH",
+    'author': "Mint System GmbH, Odoo Community Association (OCA)",
     'website': "https://www.mint-system.ch",
     'category': 'Accounting',
     'version': '14.0.1.0.1',
+    'license': 'AGPL-3',
 
     'depends': ['website_sale'],
 
