@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="website_product_description.product" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='product_details']/div/p" position="replace">
+            <p t-field="product.web_description" class="text-muted mt-3" />
+        </xpath>
+    </template>
+
+</odoo>

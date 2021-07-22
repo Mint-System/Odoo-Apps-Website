@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="address_form"
+        inherit_id="website_sale.address"
+        name="Show Date of Birth"
+        priority="30">
+
+        <xpath expr="//form/div[1]/div[2]" position="after">
+            <div t-attf-class="form-group #{error.get('date_of_birth') and 'o_has_error' or ''} col-lg-12 div_name">
+            <label class="col-form-label" for="date_of_birth">Date of Birth</label>
+            <input type="date" name="date_of_birth" t-attf-class="form-control #{error.get('date_of_birth') and 'is-invalid' or ''}" t-att-value="'date_of_birth' in checkout and checkout['date_of_birth']" />
+            </div>
+        </xpath>
+
+        <xpath expr="//input[@name='field_required']" position="replace">
+            <input type="hidden" name="field_required" t-att-value="'phone,name,date_of_birth'" />
+        </xpath>
+
+    </template>
+</odoo>
