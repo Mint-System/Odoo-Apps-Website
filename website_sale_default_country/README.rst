@@ -13,6 +13,15 @@ Set switzerland as the default country in the website sale address from.
   :width: 100
   :alt: Icon
 
+Usage
+~~~~~
+
+Clone module into Odoo addon directory.
+
+.. code-block:: bash
+
+    git clone git@github.com:Mint-System/Odoo-Theme-Mint-System.git ./addons/theme_mint_system
+
 Configuration
 ~~~~~~~~~~~~~
 
