@@ -2,9 +2,9 @@
     :target: http://www.gnu.org/licenses/gpl-3.0-standalone.html
     :alt: License: GPL-3
 
-============================
-Website Sale Default Country
-============================
+===============================
+Website Sale Default Country CH
+===============================
 
 Set switzerland as the default country in the website sale address from.
 
