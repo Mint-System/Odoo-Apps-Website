@@ -9,7 +9,7 @@
     "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "depends": ["base", "website"],
-    "data": ["views/templates.xml",],
+    "data": ["views/templates.xml"],
     "installable": True,
     "application": False,
     "images": ["images/screen.png"],
