@@ -16,7 +16,7 @@
     "images": ["images/screen.png"],
     "assets": {
         "web.assets_frontend": [
-            "website_sale_minium_order_quantity/static/src/js/website_sale_min_order.js"
+            "website_sale_minimum_order_quantity/static/src/js/website_sale_min_order.js"
         ]
     },
 }

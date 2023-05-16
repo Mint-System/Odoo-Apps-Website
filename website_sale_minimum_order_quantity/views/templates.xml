@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>    
-    <template id="product_quantity" name="website_sale_minium_order_quantity.product_quantity" inherit_id="website_sale.product_quantity">
+    <template id="product_quantity" name="website_sale_minimum_order_quantity.product_quantity" inherit_id="website_sale.product_quantity">
         
         <xpath expr="//input[hasclass('form-control', 'quantity')]" position="attributes">
             <attribute name="t-att-data-min">min_qty or 1</attribute>

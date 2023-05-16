@@ -1,4 +1,4 @@
-odoo.define('website_sale_minium_order_quantity.website_sale_min_order', function (require) {
+odoo.define('website_sale_minimum_order_quantity.website_sale_min_order', function (require) {
     'use strict';
     var core = require('web.core');
     var _t = core._t;

@@ -14,4 +14,4 @@ git clone git@github.com:mint-system/odoo-apps-website.git ./addons/website
 
 | Module | Summary |
 | --- | --- |
-| [website_sale_minium_order_quantity](website_sale_minium_order_quantity) |         Set minimum order quantity for product variants. |
+| [website_sale_minimum_order_quantity](website_sale_minimum_order_quantity) |         Set minimum order quantity for product variants. |
