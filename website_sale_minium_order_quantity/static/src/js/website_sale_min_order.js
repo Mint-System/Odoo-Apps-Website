@@ -15,7 +15,7 @@ odoo.define('website_sale_minium_order_quantity.website_sale_min_order', functio
         if (min > 1.0 && val < min) {
             $('.quantity').val(min);
             $($input).closest('.css_quantity').popover({
-                content: _t("Minimum order Quantity is " + min + "."),
+                content: _t("Minimum Order Quantity is ") + min + ".",
                 title: _t("Warning"),
                 placement: "left",
                 trigger: 'focus',
