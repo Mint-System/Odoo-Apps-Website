@@ -1,8 +1,4 @@
-/* Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) */
-/* See LICENSE file for full copyright and licensing details. */
-/* License URL : https://store.webkul.com/license.html/ */
-
-odoo.define('website_minimum_order_quantity.website_sale_min_order', function (require) {
+odoo.define('website_sale_minium_order_quantity.website_sale_min_order', function (require) {
     'use strict';
     var core = require('web.core');
     var _t = core._t;
@@ -19,7 +15,7 @@ odoo.define('website_minimum_order_quantity.website_sale_min_order', function (r
         if (min > 1.0 && val < min){ 
             $('.quantity').val(min);
             $($input).closest('.css_quantity').popover({
-                content: _t("Minimum order Quantity is"+min),
+                content: _t("Minimum Order Quantity is"+min),
                 title: _t("WARNING"),
                 placement: "left",
                 trigger: 'focus',
