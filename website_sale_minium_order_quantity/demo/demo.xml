@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="website_minimum_order_quantity.product1_wk_mp" model="product.product">
+        	<field name="name">Kodak Old Camera</field>
+            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="standard_price">29.0</field>
+            <field name="list_price">59.0</field>
+            <field name="type">consu</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">WK-MP-SEL3-CAM1</field>
+            <field name="website_published" eval="True"/>
+            <field name="min_order_qty" eval="3" />
+        </record>
+    </data>
+</odoo>

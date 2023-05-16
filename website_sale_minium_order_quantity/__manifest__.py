@@ -1,0 +1,23 @@
+{
+    "name": "Website Sale Minium Order Quantity",
+    "summary": """
+        Set minimum order quantity for product variants.
+    """,
+    "author": "Mint System GmbH, Odoo Community Association (OCA)",
+    "website": "https://www.mint-system.ch",
+    "category": "Website",
+    "version": "14.0.1.0.0",
+    "license": "AGPL-3",
+    "depends": ["website_sale", "sale_product_configurator"],
+    "data": ["views/product_views_inherit.xml", "views/templates.xml"],
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+    "images": ["images/screen.png"],
+    "demo": ["demo/demo.xml"],
+    "assets": {
+        "web.assets_frontend": [
+            "website_sale_minium_order_quantity/static/src/js/website_sale_inherit_min_order.js"
+        ]
+    },
+}
