@@ -1,41 +1,41 @@
 import logging
-
-from odoo import http , fields
+_logger = logging.getLogger(__name__)
+from odoo import http , fields, _
 from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 from odoo.addons.sale_product_configurator.controllers.main import ProductConfiguratorController
 
-_logger = logging.getLogger(__name__)
 
 class WebsiteSale(WebsiteSale):
-    
     @http.route()
     def product(self, product, category='', search='', **kwargs):
         res  = super(WebsiteSale, self).product(product,category,search,**kwargs)
         order = request.website.sale_get_order()
         line = False
         if order:
-            line = order.order_line.filtered(lambda o: o.product_template_id.id == product.id)
+            line = order.order_line.filtered(lambda o: o.product_id.id == product.id)
         if not line:
             res.qcontext.update(min_qty=int(product.min_order_qty))
         return res
 
     @http.route('/get/product/min/order/quantity',type="json", auth="public", website=True)
-    def get_product_min_order_quantity(self,cval,product_id,show_error=False):
-        Product = request.env['product.product'].sudo().browse(int(product_id))
-        min_qty = Product.min_order_qty
+    def get_product_min_order_quantity(self, cval, product_id, show_error=False):
+        product = request.env['product.product'].sudo().browse(int(product_id))
+        min_qty = product.min_order_qty
+        if not product.product_template_attribute_value_ids:
+            min_qty = product.product_tmpl_id.min_order_qty
         order = request.website.sale_get_order().exists()
         line = False
         if order:
-            line = order.order_line.filtered(lambda o: o.product_id.id == Product.id) 
+            line = order.order_line.filtered(lambda o: o.product_id.id == product.id) 
 
         value = {} 
         cval = int(cval)
         if not line or show_error:
             if cval < min_qty and cval != 0:
                 value.update({
-                    'warning':'Minimum Quantity is %s'%(min_qty),
-                    'qty':min_qty
+                    'warning': _('Minimum Quantity is %s.') % (min_qty),
+                    'qty': min_qty
                 })
             return value
         value.update(qty=cval)
@@ -64,7 +64,7 @@ class WebsiteSale(WebsiteSale):
                 if not line.id:
                     if int(add_qty) < product.min_order_qty:
                         add_qty = product.min_order_qty
-        return super(WebsiteSale,self).cart_update_json( product_id, line_id, add_qty, set_qty, display)
+        return super(WebsiteSale,self).cart_update_json(product_id, line_id, add_qty, set_qty, display)
 
 class ProductConfiguratorController(ProductConfiguratorController):
     

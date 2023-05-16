@@ -9,14 +9,14 @@
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["website_sale", "sale_product_configurator"],
-    "data": ["views/product_views_inherit.xml", "views/templates.xml"],
+    "data": ["views/product.xml", "views/templates.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
     "assets": {
         "web.assets_frontend": [
-            "website_sale_minium_order_quantity/static/src/js/website_sale_inherit_min_order.js"
+            "website_sale_minium_order_quantity/static/src/js/website_sale_min_order.js"
         ]
     },
 }

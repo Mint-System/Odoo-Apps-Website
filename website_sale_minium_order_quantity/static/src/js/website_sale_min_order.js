@@ -8,32 +8,32 @@ odoo.define('website_sale_minium_order_quantity.website_sale_min_order', functio
     require('website_sale.website_sale');
     const { OptionalProductsModal } = require('@sale_product_configurator/js/product_configurator_modal');
 
-   $(document).on('change','.quantity[data-min]', function(ev){
+    $(document).on('change', '.quantity[data-min]', function (ev) {
         var $input = this;
         var val = $(ev.target).val();
         var min = parseFloat($($input).data("min") || 0);
-        if (min > 1.0 && val < min){ 
+        if (min > 1.0 && val < min) {
             $('.quantity').val(min);
             $($input).closest('.css_quantity').popover({
-                content: _t("Minimum Order Quantity is"+min),
-                title: _t("WARNING"),
+                content: _t("Minimum order Quantity is " + min + "."),
+                title: _t("Warning"),
                 placement: "left",
                 trigger: 'focus',
                 html: true,
             });
             $($input).closest('.css_quantity').popover('show')
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.css_quantity').popover('dispose')
             }, 3000);
-       }        
+        }
     });
-    
+
     publicWidget.registry.WebsiteSale.include({
         /**
          * @override
          * @private
          */
-        
+
         onClickAddCartJSON: function (ev) {
 
             ev.preventDefault();
@@ -44,22 +44,22 @@ odoo.define('website_sale_minium_order_quantity.website_sale_min_order', functio
             var max = parseFloat($input.data("max") || Infinity);
             var previousQty = parseFloat($input.val() || 0, 10);
             var quantity = ($link.has(".fa-minus").length ? -1 : 1) + previousQty;
-            if (quantity<min && min>1){
+            if (quantity < min && min > 1) {
                 $input.closest('.css_quantity').popover({
-                    content: _t(`Minimum Quantity is ${min}`),
-                    title: _t("WARNING"),
+                    content: _t(`Minimum Quantity is ${min}.`),
+                    title: _t("Warning"),
                     placement: "left",
                     trigger: 'focus',
                     html: true,
                 });
                 $input.closest('.css_quantity').popover('show');
 
-                setTimeout(function() {
+                setTimeout(function () {
                     $('.css_quantity').popover('dispose')
                 }, 3000);
             }
             this._super(ev);
-            
+
         },
 
         _changeCartQuantity: function ($input, value, $dom_optional, line_id, productIDs) {
@@ -69,31 +69,31 @@ odoo.define('website_sale_minium_order_quantity.website_sale_min_order', functio
             var _super = this._super;
             var kwargs = arguments;
             this._rpc({
-                route:"/get/product/min/order/quantity",
-                params:{
-                    cval:value,
-                    product_id:parseInt($input.data('product-id'), 10),
-                    show_error:true
-            }
-            }).then(function (data){
-                if (data.warning && line_id){
+                route: "/get/product/min/order/quantity",
+                params: {
+                    cval: value,
+                    product_id: parseInt($input.data('product-id'), 10),
+                    show_error: true
+                }
+            }).then(function (data) {
+                if (data.warning && line_id) {
                     $input.val(data.qty);
                     $input.closest('.css_quantity').popover({
                         content: _t(data.warning),
-                        title: _t("WARNING"),
+                        title: _t("Warning"),
                         placement: "top",
                         trigger: 'focus',
                         html: true,
                     });
                     $input.closest('.css_quantity').popover('show');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $('.css_quantity').popover('dispose')
                     }, 3000);
                 }
-                else{  
-                    _super.apply(self,kwargs);
-                    }  
-            });           
+                else {
+                    _super.apply(self, kwargs);
+                }
+            });
         }
     });
 
@@ -113,35 +113,35 @@ odoo.define('website_sale_minium_order_quantity.website_sale_min_order', functio
             var self = this;
             var _super = this._super;
             var kwargs = arguments;
-            ajax.jsonRpc("/get/product/min/order/quantity",'call',
+            ajax.jsonRpc("/get/product/min/order/quantity", 'call',
                 {
-                    'cval':qty,
-                    'product_id':parseInt($product.find('.product_id').val(), 10),
+                    'cval': qty,
+                    'product_id': parseInt($product.find('.product_id').val(), 10),
                 }
-            ).then(function (data){
-                if (data.warning){
+            ).then(function (data) {
+                if (data.warning) {
                     $input.val(data.qty);
                     $input.closest('.css_quantity').popover({
                         content: _t(data.warning),
-                        title: _t("WARNING"),
+                        title: _t("Warning"),
                         placement: "top",
                         trigger: 'focus',
                         html: true,
 
                     });
                     $input.closest('.css_quantity').popover('show');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $('.css_quantity').popover('dispose')
                     }, 3000);
                 }
-                else{  
-                    _super.apply(self,kwargs);
-                    }  
-            });           
-    
+                else {
+                    _super.apply(self, kwargs);
+                }
+            });
+
         },
 
-       
+
     })
 
 })
