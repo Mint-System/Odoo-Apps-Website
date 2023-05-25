@@ -18,10 +18,13 @@ class WebsiteSale(WebsiteSale):
             res.qcontext.update(min_qty=int(product.min_order_qty))
         return res
 
-    @http.route('/get/product/min/order/quantity',type="json", auth="public", website=True)
+    @http.route('/get/product/min_order_qty',type="json", auth="public", website=True)
     def get_product_min_order_quantity(self, cval, product_id, show_error=False):
         product = request.env['product.product'].sudo().browse(int(product_id))
+        
         min_qty = product.min_order_qty
+        min_qty = product.product_tmpl_id.min_order_qty if min_qty <= 1.0 else 1.0
+
         if not product.product_template_attribute_value_ids:
             min_qty = product.product_tmpl_id.min_order_qty
         order = request.website.sale_get_order().exists()

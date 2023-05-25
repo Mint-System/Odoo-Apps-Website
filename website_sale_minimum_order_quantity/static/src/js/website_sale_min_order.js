@@ -69,7 +69,7 @@ odoo.define('website_sale_minimum_order_quantity.website_sale_min_order', functi
             var _super = this._super;
             var kwargs = arguments;
             this._rpc({
-                route: "/get/product/min/order/quantity",
+                route: "/get/product/min_order_qty",
                 params: {
                     cval: value,
                     product_id: parseInt($input.data('product-id'), 10),
@@ -113,7 +113,7 @@ odoo.define('website_sale_minimum_order_quantity.website_sale_min_order', functi
             var self = this;
             var _super = this._super;
             var kwargs = arguments;
-            ajax.jsonRpc("/get/product/min/order/quantity", 'call',
+            ajax.jsonRpc("/get/product/min_order_qty", 'call',
                 {
                     'cval': qty,
                     'product_id': parseInt($product.find('.product_id').val(), 10),
