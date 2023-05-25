@@ -57,17 +57,17 @@ class WebsiteSale(WebsiteSale):
                     add_qty = product.min_order_qty
         return super(WebsiteSale,self).cart_update(product_id, add_qty, set_qty, **kw)
 
-    @http.route()
-    def cart_update_json(self, product_id, line_id=None, add_qty=None, set_qty=None, display=True):
-        if add_qty:
-            order = request.website.sale_get_order()
-            if order.id:
-                product = request.env['product.product'].sudo().browse(int(product_id))
-                line = order.order_line.filtered(lambda o: o.product_id.id == product.id) 
-                if not line.id:
-                    if int(add_qty) < product.min_order_qty:
-                        add_qty = product.min_order_qty
-        return super(WebsiteSale,self).cart_update_json(product_id, line_id, add_qty, set_qty, display)
+    # @http.route()
+    # def cart_update_json(self, product_id, line_id=None, add_qty=None, set_qty=None, display=True):
+    #     if add_qty:
+    #         order = request.website.sale_get_order()
+    #         if order.id:
+    #             product = request.env['product.product'].sudo().browse(int(product_id))
+    #             line = order.order_line.filtered(lambda o: o.product_id.id == product.id) 
+    #             if not line.id:
+    #                 if int(add_qty) < product.min_order_qty:
+    #                     add_qty = product.min_order_qty
+    #     return super(WebsiteSale,self).cart_update_json(product_id, line_id, add_qty, set_qty, display)
 
 class ProductConfiguratorController(ProductConfiguratorController):
     
