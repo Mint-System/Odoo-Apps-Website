@@ -85,7 +85,12 @@ class SaleOrder(models.Model):
             order_line = self._cart_update_order_line(
                 product_id, quantity, order_line, **kwargs
             )
-
+            # Keep cart qty 1, when ordering decimal less than 1.
+            if not self.cart_quantity and (
+                (set_qty and set_qty > 0 and set_qty < 1)
+                or (quantity and quantity > 0 and quantity < 1)
+            ):
+                self.cart_quantity = 1
             return {
                 "line_id": order_line.id,
                 "quantity": quantity,

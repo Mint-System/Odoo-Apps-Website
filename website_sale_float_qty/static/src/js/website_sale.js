@@ -1,32 +1,31 @@
 odoo.define('website_sale_float_qty.VariantMixin', function (require) {
 'use strict';
 
-// const {Markup} = require('web.utils');
-var VariantMixin = require('sale.VariantMixin');
+require('website_sale.website_sale');
 var publicWidget = require('web.public.widget');
 var core = require('web.core');
 var wSaleUtils = require('website_sale.utils');
-require('website_sale.website_sale');
+
 
 publicWidget.registry.WebsiteSale.include({
     /**
      * @override
+     * Add check if product can be ordered with decimal quantity.
+     * If so, add/remove quantity by 0.1.
      * @param {MouseEvent} ev
-     * Add step value 0.1
+     *
      */
     onClickAddCartJSON: function (ev) {
         ev.preventDefault();
         var $link = $(ev.currentTarget);
-
-        // n
-
-        var $meter_elem = $link.parents('div#product_details').find('span[id="float_qty"]');
-        if (!$meter_elem.length)
+        var $spanFloatQty = $link.parents('div#product_details').find('span[id="float_qty"]');
+        if (!$spanFloatQty.length)
         {
-            // TODO find in another place?
-            $meter_elem = $link.parents('div.css_quantity').find('span[id="float_qty"]');
+            debugger;
+            $spanFloatQty = $link.parents('div.css_quantity').find('span[id="float_qty"]');
         }
-        if ($meter_elem.attr("value") !== "True"){
+        if ($spanFloatQty.attr("value") !== "True"){
+            // Apply standard process.
             return this._super.apply(this, arguments);
         } else {
             var step = 0.1;
@@ -34,10 +33,7 @@ publicWidget.registry.WebsiteSale.include({
             const min = 0.1;
             var max = parseFloat($input.data("max") || Infinity);
             var previousQty = parseFloat($input.val() || 0, 10);
-
-            // N
             var quantity = ($link.has(".fa-minus").length ? -step : step) + previousQty;
-
             var newQty = quantity > min ? (quantity < max ? quantity : max) : min;
 
             if (newQty !== previousQty) {
@@ -48,14 +44,17 @@ publicWidget.registry.WebsiteSale.include({
 
     },
     /**
-     * Alter +, - Allow buying decimal quantity for float_qty.
-     * Replace parseInt() to parseFloat() to get correct float value.
      * @override
+     * Replaced parseInt() to parseFloat() to get correct float value,
+     * if product can be ordered with decimal quantity
+     * @private
+     * @param {Event} ev
      */
     _onChangeCartQuantity: function (ev) {
         var $input = $(ev.currentTarget);
-        var $float_qty = $input.parents('div.css_quantity').find('span[id="float_qty"]');
-        if ($float_qty.attr("value") !== "True") {
+        var $spanFloatQty = $input.parents('div.css_quantity').find('span[id="float_qty"]');
+        if ($spanFloatQty.attr("value") !== "True") {
+            // Apply standard process
             return this._super.apply(this, arguments);
         } else {
             if ($input.data('update_change')) {
@@ -73,13 +72,15 @@ publicWidget.registry.WebsiteSale.include({
         }
     },
     /**
-     * @private
      * @override
-     *
+     * If product can be ordered with decimal quantity, include information in
+     * request to backend: is_float_qty: true.
+     * @private
      */
     _changeCartQuantity: function ($input, value, $dom_optional, line_id, productIDs) {
-        var $float_qty = $input.parents('div.css_quantity').find('span[id="float_qty"]');
-        if ($float_qty.attr("value") !== "True") {
+        var $spanFloatQty = $input.parents('div.css_quantity').find('span[id="float_qty"]');
+        if ($spanFloatQty.attr("value") !== "True") {
+            // Apply standard process
             return this._super.apply(this, arguments);
         } else {
             _.each($dom_optional, function (elem) {
@@ -106,7 +107,6 @@ publicWidget.registry.WebsiteSale.include({
                     $input.trigger('change');
                     return;
                 }
-                debugger;
                 sessionStorage.setItem('website_sale_cart_quantity', data.cart_quantity);
                 if (!data.cart_quantity) {
                     return window.location = '/shop/cart';
@@ -122,17 +122,21 @@ publicWidget.registry.WebsiteSale.include({
         }
     },
     /**
-     * @private
      * @override
-     *
+     * Include information is_float_qty = true when Add To Cart button clicked
+     * if product can be ordered with decimal quantity.
+     * @private
+     * @param {Object} $form
+     * @param {Number} productId
      */
     _updateRootProduct($form, productId) {
-        var $float_qty = $form.find('span[id="float_qty"]');
-        if ($float_qty.attr("value") !== "True") {
+        var $spanFloatQty = $form.find('span[id="float_qty"]');
+        if ($spanFloatQty.attr("value") !== "True") {
+            // Apply standard process
             return this._super.apply(this, arguments);
         } else {
-            const result = this._super.apply(this, arguments);
             debugger;
+            const result = this._super.apply(this, arguments);
             const rootProduct = this.rootProduct;
             rootProduct.is_float_qty = true;
             this.rootProduct = rootProduct;
@@ -141,7 +145,5 @@ publicWidget.registry.WebsiteSale.include({
     },
 
 });
-
-return VariantMixin;
 
 });

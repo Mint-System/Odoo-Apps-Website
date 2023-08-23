@@ -10,5 +10,9 @@
         <xpath expr="//div[hasclass('css_quantity')]" position="inside">
             <span id="float_qty" style="display:none;" t-att-value="line.product_id.is_float_qty"/>
         </xpath>
+        <!-- Override: set rounding '%.1f'% to show only one decimal number if product_uom_qty is float number.  -->
+        <xpath expr="//input[@type='text'][hasclass('js_quantity')]" position="attributes">
+            <attribute name="t-att-value">int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or '%.1f'% line.product_uom_qty</attribute>
+        </xpath>
     </template>
 </odoo>

@@ -3,7 +3,7 @@
     "summary": """
         Add possibility to order product with decimal quantities on the website.
     """,
-    "author": "Mint System GmbH, Odoo Community Association (OCA)",
+    "author": "Mint System GmbH, Solvti Sp. z o.o., Odoo Community Association (OCA)",
     "website": "https://www.mint-system.ch",
     "category": "Website",
     "version": "16.0.1.0.0",
