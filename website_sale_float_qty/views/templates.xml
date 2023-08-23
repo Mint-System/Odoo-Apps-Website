@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="product_quantity_float" inherit_id="website_sale.product_quantity" name="Select Quantity">
+        <xpath expr="//input[@name='add_qty']" position="after">
+            <span id="float_qty" style="display:none;" t-att-value="combination_info.get('is_float_qty', 'False')"/>
+        </xpath>
+    </template>
+    <template id="cart_lines_float_quantity" inherit_id="website_sale.cart_lines" name="Shopping Cart Lines">
+        <xpath expr="//div[hasclass('css_quantity')]" position="inside">
+            <span id="float_qty" style="display:none;" t-att-value="line.product_id.is_float_qty"/>
+        </xpath>
+    </template>
+</odoo>
