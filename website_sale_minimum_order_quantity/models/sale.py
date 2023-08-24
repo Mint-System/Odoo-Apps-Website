@@ -1,6 +1,6 @@
 import logging
 _logger = logging.getLogger(__name__)
-from odoo import api, fields, models, _
+from odoo import _, api, models
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
@@ -27,9 +27,9 @@ class SaleOrder(models.Model):
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, **kwargs):
         line = self.order_line.filtered(lambda o: o.product_id.id == product_id)
         if line.id:
-            values = super(SaleOrder, self)._cart_update( product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty, kwargs=kwargs)
+            values = super(SaleOrder, self)._cart_update( product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty, **kwargs)
         else:
-            values = super(SaleOrder, self.with_context(first_time_create=True))._cart_update( product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty, kwargs=kwargs)
+            values = super(SaleOrder, self.with_context(first_time_create=True))._cart_update( product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty, **kwargs)
         return values
 
 class SaleInherit(models.Model):
