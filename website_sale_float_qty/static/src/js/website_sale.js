@@ -1,4 +1,4 @@
-odoo.define('website_sale_float_qty.VariantMixin', function (require) {
+odoo.define('website_sale_float_qty.website_sale', function (require) {
 'use strict';
 
 require('website_sale.website_sale');
@@ -18,12 +18,7 @@ publicWidget.registry.WebsiteSale.include({
     onClickAddCartJSON: function (ev) {
         ev.preventDefault();
         var $link = $(ev.currentTarget);
-        var $spanFloatQty = $link.parents('div#product_details').find('span[id="float_qty"]');
-        if (!$spanFloatQty.length)
-        {
-            debugger;
-            $spanFloatQty = $link.parents('div.css_quantity').find('span[id="float_qty"]');
-        }
+        var $spanFloatQty = $link.parents('div.css_quantity').find('span[id="float_qty"]');
         if ($spanFloatQty.attr("value") !== "True"){
             // Apply standard process.
             return this._super.apply(this, arguments);
@@ -124,7 +119,7 @@ publicWidget.registry.WebsiteSale.include({
     /**
      * @override
      * Include information is_float_qty = true when Add To Cart button clicked
-     * if product can be ordered with decimal quantity.
+     * so that product can be ordered with decimal quantity.
      * @private
      * @param {Object} $form
      * @param {Number} productId
@@ -135,11 +130,8 @@ publicWidget.registry.WebsiteSale.include({
             // Apply standard process
             return this._super.apply(this, arguments);
         } else {
-            debugger;
             const result = this._super.apply(this, arguments);
-            const rootProduct = this.rootProduct;
-            rootProduct.is_float_qty = true;
-            this.rootProduct = rootProduct;
+            this.rootProduct.is_float_qty = true;
             return result;
         }
     },

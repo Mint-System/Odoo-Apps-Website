@@ -21,7 +21,7 @@ class SaleOrder(models.Model):
                 line_id=line_id,
                 add_qty=add_qty,
                 set_qty=set_qty,
-                kwargs=kwargs,
+                **kwargs,
             )
         else:
             self.ensure_one()

@@ -13,6 +13,7 @@
       <field name='base_unit_count'>10</field>
       <field name="image_1920" type="base64" file="website_sale_float_qty/static/img/fabric_tape_demo.png"/>
       <field name='website_published' eval="True"/>
+      <field name="website_sequence">9960</field>
   </record>
 
 </odoo>

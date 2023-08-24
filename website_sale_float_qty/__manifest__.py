@@ -23,6 +23,7 @@
     "assets": {
         "web.assets_frontend": [
             "website_sale_float_qty/static/src/js/website_sale.js",
+            "website_sale_float_qty/static/src/js/product_configurator_modal.js",
         ],
     },
 }
