@@ -1,0 +1,28 @@
+<odoo>
+
+  <!-- Decimal Units - Meter -->
+  <record id="product_uom_decimal_meter_demo" model="uom.uom">
+      <field name="category_id" ref="uom.uom_categ_length"/>
+      <field name="name">m</field>
+      <field name="factor" eval="1.0"/>
+      <field name="uom_type">smaller</field>
+      <field name="float_qty" eval="True"/>
+  </record>
+
+  <record id="product_product_decimal_lenght_demo" model="product.product">
+      <field name="name">Fabric tape</field>
+      <field name="categ_id" ref="product.product_category_5"/>
+      <field name="standard_price">1.2</field>
+      <field name="list_price">1.2</field>
+      <field name="detailed_type">consu</field>
+      <field name="uom_id" ref="product_uom_decimal_meter_demo"/>
+      <field name="uom_po_id" ref="product_uom_decimal_meter_demo"/>
+      <field name="default_code">E-CDM07</field>
+      <field name='weight'>0.5</field>
+      <field name='base_unit_count'>10</field>
+      <field name="image_1920" type="base64" file="website_sale_float_qty/static/img/fabric_tape_demo.png"/>
+      <field name='website_published' eval="True"/>
+      <field name="website_sequence">9960</field>
+  </record>
+
+</odoo>
