@@ -37,13 +37,13 @@ class SaleInherit(models.Model):
   
     @api.constrains('product_uom_qty')
     def check_min_order_qty(self):
-        il=[]
-        for line in self:
-            rounding = line.product_uom.rounding
-            io =  line.filtered(lambda o: float_compare(o.product_uom_qty, o.product_id.min_order_qty, precision_rounding=rounding) < 0)
-            if io:
-                for p in io:
-                    il.append(_('Minimum Order Quantity for %s should be %s.') % (p.product_id.name, p.product_id.min_order_qty))
-        if len(il) > 0:
-            msg = '\n'.join(il)
-            raise ValidationError(msg)
+        messages=[]
+        for line in self.filtered(lambda l: l.product_uom_qty and l.product_id.min_order_qty):
+            rounding = line.product_uom.rounding            
+            invalid_lines = line.filtered(lambda o: float_compare(o.product_uom_qty, o.product_id.min_order_qty, precision_rounding=rounding) < 0)
+            if invalid_lines:
+                for line in invalid_lines:
+                    messages.append(_('Minimum Order Quantity for %s should be %s.') % (line.product_id.name, line.product_id.min_order_qty))
+        if len(messages) > 0:
+            message = '\n'.join(messages)
+            raise ValidationError(message)
