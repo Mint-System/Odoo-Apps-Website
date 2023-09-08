@@ -11,7 +11,6 @@ class SaleOrder(models.Model):
 
         # Apply fixed price discount
         price_discount = order_line.order_id.pricelist_id._get_fixed_discount(order_line.product_id, quantity)
-        if price_discount != 0.0:
-            order_line.update({ 'discount': price_discount })
+        order_line.update({ 'discount': price_discount })
 
         return order_line
