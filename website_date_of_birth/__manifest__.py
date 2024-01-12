@@ -8,7 +8,7 @@
     "category": "Website",
     "version": "14.0.1.0.1",
     "license": "AGPL-3",
-    "depends": ["base", "website"],
+    "depends": ["website_form"],
     "data": [
         "views/base_view_partner_form.xml",
         "views/website_sale_address.xml",
