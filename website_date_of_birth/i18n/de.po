@@ -1,14 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* website_date_of_birth
-# 	* website_sale
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0+e\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-15 10:50+0000\n"
-"PO-Revision-Date: 2020-12-15 10:50+0000\n"
+"POT-Creation-Date: 2024-01-15 10:18+0000\n"
+"PO-Revision-Date: 2024-01-15 10:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,14 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: website_date_of_birth
+#: model:ir.model,name:website_date_of_birth.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: website_date_of_birth
 #: model:ir.model.fields,field_description:website_date_of_birth.field_res_partner__date_of_birth
 #: model:ir.model.fields,field_description:website_date_of_birth.field_res_users__date_of_birth
 #: model_terms:ir.ui.view,arch_db:website_date_of_birth.address_form
 #: model_terms:ir.ui.view,arch_db:website_date_of_birth.view_partner_form
 msgid "Date of Birth"
 msgstr "Geburtsdatum"
-
-#. module: website_sale
-#: model:ir.module.module,shortdesc:base.module_website_date_of_birth
-msgid "Website Date of Birth"
-msgstr "Website Geburtsdatum"

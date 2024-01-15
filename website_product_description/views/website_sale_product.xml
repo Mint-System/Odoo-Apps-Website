@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <template id="product" inherit_id="website_sale.product">
         <xpath expr="//p[@t-field='product.description_sale']" position="replace">
-            <p t-field="product.web_description" class="text-muted my-2" placeholder="A short description that will also appear on documents."/>
+            <p
+                t-field="product.web_description"
+                class="text-muted my-2"
+                placeholder="A short description that will also appear on documents."
+            />
         </xpath>
     </template>
 
