@@ -4,7 +4,7 @@
         id="address_form"
         inherit_id="website_sale.address"
         name="Show Date of Birth"
-        priority="30"
+        priority="99"
     >
 
         <xpath expr="//form/div[1]/div[2]" position="after">
