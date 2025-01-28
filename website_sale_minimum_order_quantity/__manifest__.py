@@ -3,7 +3,7 @@
     "summary": """
         Set minimum order quantity for product variants.
     """,
-    "author": "Mint System GmbH, Odoo Community Association (OCA)",
+    "author": "Mint System GmbH",
     "website": "https://www.mint-system.ch",
     "category": "Website",
     "version": "16.0.1.0.3",
