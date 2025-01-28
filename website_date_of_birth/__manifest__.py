@@ -3,7 +3,7 @@
     "summary": """
         Adds date of birth field to partner and website checkout form.
     """,
-    "author": "Mint System GmbH, Odoo Community Association (OCA)",
+    "author": "Mint System GmbH",
     "website": "https://www.mint-system.ch",
     "category": "Website",
     "version": "14.0.1.0.1",
