@@ -1,20 +1,9 @@
 <odoo>
-    <record id="product_odoo_community_demo" model="product.product">
-        <field name="name">Odoo Community Edition</field>
-        <field name="sale_ok" eval="True" />
-        <field name="list_price">20</field>
-        <field name="helm_repo_id" ref="helm.kubernetes_build_demo">
+    <record id="helm.product_odoo_community_edition_demo" model="product.product">
         <field name="website_published">True</field>
     </record>
 
-    <record id="pricelist_item_odoo_community_demo" model="product.pricelist.item">
-        <field name="base">list_price</field>
-        <field name="applied_on">1_product</field>
-        <field name="pricelist_id" ref="website_sale.list_europe" />
-        <field
-            name="product_tmpl_id"
-            ref="website_sale_helm.product_odoo_community_demo_product_template"
-        />
-        <field name="fixed_price">20</field>
+    <record id="helm.product_odoo_enterprise_edition_demo" model="product.product">
+        <field name="website_published">True</field>
     </record>
 </odoo>
