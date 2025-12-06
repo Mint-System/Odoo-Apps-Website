@@ -12,6 +12,7 @@ class WebsiteFormExtraInfo(WebsiteForm):
     @route('/website/form/shop.sale.order', type='http', auth="public", methods=['POST'], website=True)
     def website_form_saleorder(self, **kwargs):
         model_record = request.env.ref('sale.model_sale_order')
+        # error = request.session.pop("form_error", None)
         try:
             data = self.extract_data(model_record, kwargs)
         except ValidationError as e:
@@ -25,20 +26,19 @@ class WebsiteFormExtraInfo(WebsiteForm):
 
         custom = data.get('custom', '')
 
-        custom_result = {}
+        custom_result = self.parse_custom_field(custom)
+        _logger.warning(f"custom_result: {custom_result}")
+        custom_result = self.normalize_custom_fields(custom_result)
 
-        if ":" in custom:
-            key, value = [x.strip() for x in custom.split(":", 1)]
-            
-            # Convert date
-            try:
-                date_obj = datetime.strptime(value, "%d.%m.%Y")
-                value = date_obj.strftime("%Y-%m-%d")
-            except Exception:
-                pass
+        birthdate = custom_result.pop("birthdate", None)
 
-            custom_result[key] = value
-            order.write(custom_result)
+        order.order_line.write(custom_result)
+
+        if order.partner_id and birthdate:
+            order.partner_id.sudo().write({
+                "birthdate": birthdate
+            })
+
 
         if data['record']:
             order.write(data['record'])
@@ -47,3 +47,62 @@ class WebsiteFormExtraInfo(WebsiteForm):
             self.insert_attachment(model_record, order.id, data['attachments'])
 
         return json.dumps({'id': order.id})
+
+    def validate_date(self, value):
+        """Validate date_from server-side."""
+        if not value:
+            return "Please select a date."
+
+        try:
+            date_obj = datetime.strptime(value, "%Y-%m-%d")
+        except ValueError:
+            return "Invalid date format."
+
+        _logger.warning(f"date_obj: {date_obj}")
+
+        # Blacklisted dates
+        blacklist = {
+            datetime(2026, 2, 5),
+            datetime(2026, 2, 10),
+            datetime(2026, 2, 20),
+        }
+        for bl_date in blacklist:
+            _logger.warning(f"blacklist_date: {bl_date}")
+        if date_obj in blacklist:
+            return "Selected date is not allowed."
+
+        # Must be future
+        today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
+        if date_obj < today:
+            return "The date must be in the future."
+
+        return None
+
+    def parse_custom_field(self, text):
+        result = {}
+        for line in text.splitlines():
+            if ":" in line:
+                key, value = line.split(":", 1)  # split only on the first colon
+                key = key.strip()
+                value = value.strip()
+                result[key] = value
+        return result
+
+
+    def normalize_custom_fields(self, custom_fields_dict):
+        custom_date = custom_fields_dict.get("date_from")
+        birthdate = custom_fields_dict.get("birthdate")
+        if custom_date:
+            custom_fields_dict["date_from"] = datetime.strptime(custom_date, "%d.%m.%Y").date()
+        if birthdate:
+            custom_fields_dict["birthdate"] = datetime.strptime(birthdate, "%d.%m.%Y").date()
+        return custom_fields_dict
+
+
+    route('/shop/cart/clear', type='json', auth="public", website=True)
+    def clear_cart(self):
+        order = request.website.sale_get_order()
+        if order and order.order_line:
+            order.order_line.unlink()
+            request.website.sale_reset()
+        return {'status': 'ok'}

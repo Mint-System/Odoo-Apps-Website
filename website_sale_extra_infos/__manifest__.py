@@ -10,12 +10,23 @@
     "development_status": "Production/Stable",
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["website_sale"],
+    "depends": ["website_sale", "sale"],
     "data": [
+        "security/ir.model.access.csv",
         "views/sale_order_views.xml",
+        "views/blacklist_views.xml",
+        "views/sale_menu_views.xml",
+        "views/product_template_views.xml",
+        "views/website_templates.xml",
     ],
     "installable": True,
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
+    'assets': {
+        'web.assets_frontend': [
+            "website_sale_extra_infos/static/src/js/extra_info_validation.js",
+            "website_sale_extra_infos/static/src/js/one_product.js",
+        ]
+    }
 }
