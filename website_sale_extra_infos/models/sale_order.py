@@ -30,7 +30,27 @@ class SaleOrder(models.Model):
         compute="_compute_region",
         store=False,
         readonly=True,
-        )
+    )
+
+    liability_insurance = fields.Boolean(
+        compute="_compute_boolean_fields"
+    )
+
+    code_of_honour =  fields.Boolean(
+        compute="_compute_boolean_fields"
+    )
+
+    strahlner_ordinance =  fields.Boolean(
+        compute="_compute_boolean_fields"
+    )
+
+    minimum_age =  fields.Boolean(
+        compute="_compute_boolean_fields"
+    )
+
+    photo_uploaded = fields.Boolean(
+        default=False
+    )
 
 
 
@@ -65,6 +85,14 @@ class SaleOrder(models.Model):
                 order.region = order.order_line[0].region if order.order_line[0].region else "none"
             else:
                 order.region = "none"
+
+    @api.depends("order_line")
+    def _compute_boolean_fields(self):
+        for order in self:
+            order.liability_insurance = order.order_line[0].liability_insurance
+            order.code_of_honour = order.order_line[0].code_of_honour
+            order.strahlner_ordinance = order.order_line[0].strahlner_ordinance
+            order.minimum_age = order.order_line[0].minimum_age
 
 
 

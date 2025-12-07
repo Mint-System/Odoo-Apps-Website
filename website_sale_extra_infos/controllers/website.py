@@ -21,6 +21,7 @@ class WebsiteFormExtraInfo(WebsiteForm):
         _logger.warning(f"data: {data}")
 
         order = request.website.sale_get_order()
+        partner = order.partner_id
         if not order:
             return json.dumps({'error': "No order found; please add a product to your cart."})
 
@@ -39,44 +40,15 @@ class WebsiteFormExtraInfo(WebsiteForm):
                 "birthdate": birthdate
             })
 
-
         if data['record']:
             order.write(data['record'])
 
         if data['attachments']:
             self.insert_attachment(model_record, order.id, data['attachments'])
+            order.write({'photo_uploaded': True})
 
         return json.dumps({'id': order.id})
 
-    def validate_date(self, value):
-        """Validate date_from server-side."""
-        if not value:
-            return "Please select a date."
-
-        try:
-            date_obj = datetime.strptime(value, "%Y-%m-%d")
-        except ValueError:
-            return "Invalid date format."
-
-        _logger.warning(f"date_obj: {date_obj}")
-
-        # Blacklisted dates
-        blacklist = {
-            datetime(2026, 2, 5),
-            datetime(2026, 2, 10),
-            datetime(2026, 2, 20),
-        }
-        for bl_date in blacklist:
-            _logger.warning(f"blacklist_date: {bl_date}")
-        if date_obj in blacklist:
-            return "Selected date is not allowed."
-
-        # Must be future
-        today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
-        if date_obj < today:
-            return "The date must be in the future."
-
-        return None
 
     def parse_custom_field(self, text):
         result = {}

@@ -15,14 +15,19 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         "keyup input[name='birthdate']": "_onDateInteract",
     },
     start() {
-        this.blacklist = [];
-        return this._fetchBlacklist();
+        this.params = {
+            blacklisted_dates: [],
+            needs_photo: false,
+            min_age: 14,
+            future_only: true,
+        };
+        return this._fetchParams();
     },
 
 
-    async _fetchBlacklist() {
+    async _fetchParams() {
         try {
-            const resp = await fetch("/website/blacklist_dates", {
+            const resp = await fetch("/website/get_params", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -32,9 +37,9 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
 
             const data = await resp.json();
             console.log("Blacklist:", data);
-            this.blacklist = data.result || [];
+            this.params = data.result || this.params;
         } catch (e) {
-            console.error("Could not fetch blacklist dates", e);
+            console.error("Could not fetch params", e);
         }
     },
 
@@ -44,6 +49,7 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         let hasError = false;
         const dateInput = this.el.querySelector("input[name='date_from']");
         const birthdateInput = this.el.querySelector("input[name='birthdate']");
+        const fileInput = this.el.querySelector("input[type='file']");
         const rawDateInput = dateInput?.value;
         const rawBirthdateInput = birthdateInput?.value;
 
@@ -82,17 +88,13 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             this._showError(dateInput, "Ungültiges Datum.");
         }
 
-        if (!dateFrom) {
-            hasError = true;
-            this._showError(dateInput, "Ungültiges Datum.");
-        }
 
-        if (dateFrom && dateFrom <= today) {
+        if (dateFrom && this.params.future_only && dateFrom <= today) {
             hasError = true;
             this._showError(dateInput, "Das Datum muss in der Zukunft liegen.");
         }
 
-        if (this.blacklist.includes(normalizedDateInput)) {
+        if (this.params.blacklisted_dates.includes(normalizedDateInput)) {
             hasError = true;
             this._showError(dateInput, "Dieses Datum ist nicht verfügbar. Bitte ein anderes wählen.");
         }
@@ -104,9 +106,23 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         }
 
 
-        if (birthdate && birthdate >= today) {
+        // if (birthdate && birthdate >= today) {
+        //     hasError = true;
+        //     this._showError(birthdateInput, "Das Geburtsdatum muss in der Vergangenheit liegen.");
+
+        // must be at least 14 years old
+        const minAgeDate = new Date();
+        minAgeDate.setFullYear(minAgeDate.getFullYear() - this.params.min_age);
+
+        if (birthdate > minAgeDate) {
             hasError = true;
-            this._showError(birthdateInput, "Das Geburtsdatum muss in der Vergangenheit liegen.");
+            this._showError(birthdateInput, "Sie müssen mindestens 14 Jahre alt sein.");
+        }
+        console.log("needs_photo", this.params.needs_photo)
+
+        if (this.params.needs_photo && fileInput?.files.length === 0) {
+            this._showError(fileInput, "Bitte eine Datei hochladen.");
+            hasError = true;
         }
 
         if (hasError) {
