@@ -28,7 +28,7 @@
                             <field name="code_of_honour" readonly="1"/>
                             <field name="strahlner_ordinance" readonly="1"/>
                             <field name="minimum_age" readonly="1"/>
-                            <field name="photo_uploaded" readonly="1" />
+                            <!-- <field name="photo_uploaded" readonly="1" /> -->
                         </group>
                     </group>
                 </page>

@@ -1,9 +1,12 @@
 import json
 import logging
+import base64
 from datetime import datetime
+from werkzeug.datastructures import FileStorage
 
 from odoo.http import request, route
 from odoo.addons.website.controllers.form import WebsiteForm
+
 
 _logger = logging.getLogger(__name__)
 
@@ -44,8 +47,19 @@ class WebsiteFormExtraInfo(WebsiteForm):
             order.write(data['record'])
 
         if data['attachments']:
-            self.insert_attachment(model_record, order.id, data['attachments'])
+
+            upload = data['attachments'][0]
+
+            content = upload.read()
+            b64 = base64.b64encode(content)
+            filename = upload.filename       
+            mimetype = upload.mimetype
+
+            if not partner.image_released:
+                partner.sudo().write({"image_1920": b64})
+
             order.write({'photo_uploaded': True})
+            # self.insert_attachment(model_record, order.id, data['attachments'])
 
         return json.dumps({'id': order.id})
 

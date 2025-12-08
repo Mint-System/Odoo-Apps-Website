@@ -36,8 +36,8 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             });
 
             const data = await resp.json();
-            console.log("Blacklist:", data);
-            this.params = data.result || this.params;
+            this.params = data.result;
+            console.log("params :", this.params);
         } catch (e) {
             console.error("Could not fetch params", e);
         }
@@ -83,6 +83,18 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
+        // const year = parseInt(dateFrom.substring(0, 4));
+        console.log("dateFrom: ", dateFrom);
+        const year = dateFrom.getFullYear();
+        const years = this.params.patents_by_year || {};
+        const yearStats = years[year] || { day: 0, week: 0, year: 0 };
+
+        const duration = this.params.duration;
+        console.log("duration: ", duration);
+        console.log("yearStats week:", yearStats.week);
+        console.log("max week: ", this.params.max_week);
+
+
         if (!dateFrom) {
             hasError = true;
             this._showError(dateInput, "Ungültiges Datum.");
@@ -97,6 +109,23 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         if (this.params.blacklisted_dates.includes(normalizedDateInput)) {
             hasError = true;
             this._showError(dateInput, "Dieses Datum ist nicht verfügbar. Bitte ein anderes wählen.");
+        }
+
+        // limit checks
+
+        if (duration === "day" && yearStats.day >= this.params.max_day) {
+            hasError = true;
+            this._showError(dateInput, `Im Jahr ${year} sind maximal ${this.params.max_day} Tagespatente erlaubt.`);
+        }
+
+        if (duration === "week" && yearStats.week >= this.params.max_week) {
+            hasError = true;
+            this._showError(dateInput, `Im Jahr ${year} ist nur 1 Wochenpatent erlaubt.`);
+        }
+
+        if (duration === "year" && yearStats.year >= this.params.max_year) {
+            hasError = true;
+            this._showError(dateInput, `Im Jahr ${year} ist nur 1 Jahrespatent erlaubt.`);
         }
 
 
@@ -124,6 +153,7 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             this._showError(fileInput, "Bitte eine Datei hochladen.");
             hasError = true;
         }
+
 
         if (hasError) {
             ev.preventDefault();

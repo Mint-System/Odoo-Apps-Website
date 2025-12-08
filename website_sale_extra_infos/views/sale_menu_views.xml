@@ -23,5 +23,27 @@
               parent="sale.menu_sales_config"
               sequence="2"/>
 
+
+
+    <!-- Action to open blacklisted dates -->
+    <record id="action_sale_blacklisted_customer" model="ir.actions.act_window">
+        <field name="name">Blacklisted Customers</field>
+        <field name="res_model">blacklist.customer</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add new blacklisted customers
+            </p><p>
+                Configure customers that should be blacklisted for sales operations.
+            </p>
+        </field>
+    </record>
+
+        <menuitem id="menu_sale_blacklisted_customers_root"
+              name="Blacklisted Customers"
+              action="action_sale_blacklisted_customer"
+              parent="sale.menu_sales_config"
+              sequence="3"/>
+
 </odoo>
 

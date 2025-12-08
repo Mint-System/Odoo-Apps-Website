@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 _logger = logging.getLogger(__name__)
 
-from .config import REGION_SELECTION
+from .config import REGION_SELECTION, DURATION_SELECTION
 
 
 class SaleOrderLine(models.Model):
@@ -51,6 +51,24 @@ class SaleOrderLine(models.Model):
         default=False
     )
 
+    duration = fields.Selection(
+        selection=DURATION_SELECTION,
+        compute="_compute_duration",
+        store=False,
+        readonly=True,
+    )
+
+    partner_id = fields.Many2one(
+        related="order_id.partner_id",
+        store=True,
+    )
+
+    is_patent = fields.Boolean(
+        string="is patent",
+        related="product_id.is_patent",
+        store=True,
+    )
+
     
     @api.depends("date_from")
     def _compute_date_to(self):
@@ -62,14 +80,23 @@ class SaleOrderLine(models.Model):
         for line in self:
             duration = line.product_id.duration
             _logger.warning(f"duration: {duration}")
-            _logger.warning(f"shift: {duration_map[duration]}")
             if line.date_from and line.product_id.duration in duration_map.keys():
-               line.date_to = self.date_from + timedelta(**duration_map[duration])
+               line.date_to = line.date_from + timedelta(**duration_map[duration])
             else:
                 line.date_to = line.date_from
 
     def _compute_birthdate(self):
-        self.birthdate = self.order_id.res_partner_birthdate
+        for line in self:
+            line.birthdate = line.order_id.res_partner_birthdate
+
+    def _compute_duration(self):
+        for line in self:
+            line.duration = line.product_id.duration
+
+    
+
+
+
 
 
 

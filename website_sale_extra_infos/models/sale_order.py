@@ -95,5 +95,23 @@ class SaleOrder(models.Model):
             order.minimum_age = order.order_line[0].minimum_age
 
 
+    def action_confirm(self):
+        res = super(
+            SaleOrder, self.with_context(prevent_delivery_creation=True)
+        ).action_confirm()
+        for order in self:
+            for line in order.order_line:
+                product = line.product_id
+                duration = product.duration
+                if duration:
+                    self.env["patent.history"].create({
+                        "partner_id": order.partner_id.id,
+                        "product_id": product.id,
+                        "duration": duration,
+                        "year": order.date_from.year,
+                        "qty": line.product_uom_qty,
+                        "sale_order_id": order.id,
+                        "sale_order_line_id": line.id,
+                    })
+        return res
 
-    

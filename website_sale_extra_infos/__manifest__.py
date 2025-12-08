@@ -18,6 +18,8 @@
         "views/sale_menu_views.xml",
         "views/product_template_views.xml",
         "views/website_templates.xml",
+        "views/res_partner_views.xml",
+        "views/block_view.xml"
     ],
     "installable": True,
     "application": False,
