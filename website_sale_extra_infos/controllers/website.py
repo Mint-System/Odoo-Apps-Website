@@ -85,7 +85,7 @@ class WebsiteFormExtraInfo(WebsiteForm):
         return custom_fields_dict
 
 
-    route('/shop/cart/clear', type='json', auth="public", website=True)
+    @route('/shop/cart/clear', type='json', auth="public", website=True)
     def clear_cart(self):
         order = request.website.sale_get_order()
         if order and order.order_line:

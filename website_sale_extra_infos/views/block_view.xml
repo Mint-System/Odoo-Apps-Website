@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="shop_blocked_page" model="ir.ui.view">
+        <field name="name">Checkout Korporation Uri</field>
+        <field name="type">qweb</field>
+        <field name="key">website_sale_extra_infos.shop_blocked_page</field>
+        <field name="arch" type="xml">
+
+            <t t-name="shop_blocked_page">
+                <t t-call="website.layout">
+                    <div class="container mt-5 mb-5">
+                        <div class="alert alert-danger" role="alert">
+                            <h3>Unfortunately, the process had to be ended.</h3>
+                            <p>Please contact the office.</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+</odoo>
