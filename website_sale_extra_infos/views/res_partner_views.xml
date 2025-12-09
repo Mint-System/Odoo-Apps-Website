@@ -6,7 +6,6 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
 
-            <!-- Insert a new notebook page -->
             <xpath expr="//notebook" position="inside">
                 <page string="Patents">
                     <group>
@@ -28,6 +27,19 @@
                     </group>
                 </page>
             </xpath>
+
+            <!-- <xpath expr="//field[@name='category_id']" position="after">
+                <field name="image_released" />
+            </xpath> -->
+            <xpath expr="//field[@name='image_1920']" position="replace">
+            <div class="oe_avatar" style="display:flex; flex-direction:column; align-items:center;">
+                <field name="image_1920" widget="image"
+                       class="oe_avatar"
+                       options="{'preview_image': 'avatar_128'}"/>
+
+                <field string="Image released" name="image_released"/>
+            </div>
+        </xpath>
 
         </field>
     </record>

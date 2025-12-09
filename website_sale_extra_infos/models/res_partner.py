@@ -29,7 +29,7 @@ class ResPartner(models.Model):
         compute="_compute_patent_stats",
         string="Year Patents (this year)"
     )
-    image_released = fields.Boolean("Image released", default=False)
+    image_released = fields.Boolean(string="Image released", default=False)
 
     @api.depends("patent_ids", "patent_ids.date_from")
     def _compute_patent_stats(self):
