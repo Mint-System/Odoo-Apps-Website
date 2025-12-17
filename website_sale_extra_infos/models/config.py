@@ -4,7 +4,7 @@ REGION_SELECTION = [
     ("fell", "2. Fellital"),
     ("made", "3. Maderanertal/Etzlital/Brunnital"),
     ("rest", "4. Übriges Strahlnergebiet Korporation Uri"),
-    ("none", ""),
+    ("none", "-"),
     ]
 
 
@@ -18,5 +18,6 @@ PATENT_LIMITS = {
 DURATION_SELECTION = [
     ("day", "Day"),
     ("week", "Week"),
-    ("year", "Year")
+    ("year", "Year"),
+    ("none", ""),
 ]

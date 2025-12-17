@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    birthdate = fields.Date(string='Birthdate', required=True)
+    birthdate = fields.Date(string='Birthdate', required=False)
 
     patent_ids = fields.One2many(
         comodel_name="sale.order.line",

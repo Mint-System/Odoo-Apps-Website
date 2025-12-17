@@ -21,7 +21,7 @@
                                 <field name="date_from"/>
                                 <field name="date_to"/>
                                 <field name="product_id"/>
-                                <field name="duration"/>
+                                <!-- <field name="duration"/> -->
                             </list>
                         </field>
                     </group>

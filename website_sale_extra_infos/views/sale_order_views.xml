@@ -6,10 +6,11 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="date_from"/>
-                <field name="date_to"/>
-                <field name="region"/> 
-                <field name="birthdate" />
+                <field name="has_patents" invisible="1"/>
+                <field name="date_from" invisible="not has_patents"/>
+                <field name="date_to" invisible="not has_patents"/>
+                <field name="region" invisible="not has_patents"/> 
+                <field name="birthdate" invisible="not has_patents"/>
             </xpath>
         </field>
     </record>

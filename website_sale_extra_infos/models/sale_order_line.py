@@ -85,9 +85,13 @@ class SaleOrderLine(models.Model):
             else:
                 line.date_to = line.date_from
 
+
     def _compute_birthdate(self):
         for line in self:
-            line.birthdate = line.order_id.res_partner_birthdate
+            if line.order_id and line.order_id.partner_id:
+                line.birthdate = line.order_id.partner_id.birthdate
+            else:
+                line.birthdate = False
 
     def _compute_duration(self):
         for line in self:
