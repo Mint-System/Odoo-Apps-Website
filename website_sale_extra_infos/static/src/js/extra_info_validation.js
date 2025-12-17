@@ -3,7 +3,7 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 
 publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
-    selector: "form.o_mark_required",   // target your form
+    selector: ".js_extra_info_form, form[data-model_name='shop.sale.order'], form.o_extra_info_validation",   // target your form
     events: {
         "click .s_website_form_send": "_onWebsiteFormSend",
         "focus input[name='date_from']": "_onDateInteract",
@@ -15,6 +15,19 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         "keyup input[name='birthdate']": "_onDateInteract",
     },
     start() {
+        // Prevent widget from initializing in backend context where it's not needed
+        if (!this.el.closest('.o_website_frontend')) {
+            // Check if we're in a context where this widget should run
+            // If not in website context, exit early to avoid errors in backend
+            const isWebsiteContext = window.location.pathname.startsWith('/shop/') || 
+                                   window.location.pathname.startsWith('/website/') ||
+                                   this.el.closest('.s_website_form');
+            
+            if (!isWebsiteContext) {
+                return Promise.resolve(); // Early return if not in proper context
+            }
+        }
+        
         this.params = {
             blacklisted_dates: [],
             needs_photo: false,
