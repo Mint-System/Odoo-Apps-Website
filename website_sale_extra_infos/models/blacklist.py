@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import fields, models
+
 
 class BlacklistDate(models.Model):
     _name = "blacklist.date"
@@ -7,7 +8,5 @@ class BlacklistDate(models.Model):
     name = fields.Char(required=True)
     date = fields.Date(required=True)
     active = fields.Boolean(
-        string='Active',
-        default=True,
-        help='If unchecked, this blacklisted date entry will be ignored'
+        string="Active", default=True, help="If unchecked, this blacklisted date entry will be ignored"
     )

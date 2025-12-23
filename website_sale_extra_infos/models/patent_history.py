@@ -1,8 +1,9 @@
 import logging
 
-from odoo import models, fields
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
+
 
 class PatentHistory(models.Model):
     _name = "patent.history"
@@ -10,10 +11,7 @@ class PatentHistory(models.Model):
 
     partner_id = fields.Many2one("res.partner", required=True)
     product_id = fields.Many2one("product.product", required=True)
-    duration = fields.Selection(
-        [("day","Day"),("week","Week"),("year","Year")],
-        required=True
-    )
+    duration = fields.Selection([("day", "Day"), ("week", "Week"), ("year", "Year")], required=True)
     year = fields.Integer(required=True)
     qty = fields.Float(default=1)
 

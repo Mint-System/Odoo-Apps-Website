@@ -3,7 +3,8 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 
 publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
-    selector: ".js_extra_info_form, form[data-model_name='shop.sale.order'], form.o_extra_info_validation",   // target your form
+    selector:
+        ".js_extra_info_form, form[data-model_name='shop.sale.order'], form.o_extra_info_validation", // target your form
     events: {
         "click .s_website_form_send": "_onWebsiteFormSend",
         "focus input[name='date_from']": "_onDateInteract",
@@ -16,18 +17,19 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
     },
     start() {
         // Prevent widget from initializing in backend context where it's not needed
-        if (!this.el.closest('.o_website_frontend')) {
+        if (!this.el.closest(".o_website_frontend")) {
             // Check if we're in a context where this widget should run
             // If not in website context, exit early to avoid errors in backend
-            const isWebsiteContext = window.location.pathname.startsWith('/shop/') || 
-                                   window.location.pathname.startsWith('/website/') ||
-                                   this.el.closest('.s_website_form');
-            
+            const isWebsiteContext =
+                window.location.pathname.startsWith("/shop/") ||
+                window.location.pathname.startsWith("/website/") ||
+                this.el.closest(".s_website_form");
+
             if (!isWebsiteContext) {
                 return Promise.resolve(); // Early return if not in proper context
             }
         }
-        
+
         this.params = {
             blacklisted_dates: [],
             needs_photo: false,
@@ -37,15 +39,14 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         return this._fetchParams();
     },
 
-
     async _fetchParams() {
         try {
             const resp = await fetch("/website/get_params", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({})
+                body: JSON.stringify({}),
             });
 
             const data = await resp.json();
@@ -56,7 +57,6 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         }
     },
 
-
     _onWebsiteFormSend(ev) {
         this._clearErrors();
         let hasError = false;
@@ -66,7 +66,6 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         const rawDateInput = dateInput?.value;
         const rawBirthdateInput = birthdateInput?.value;
 
-
         if (!rawDateInput) {
             hasError = true;
             this._showError(dateInput, "Bitte ein gültiges Datum eingeben.");
@@ -74,7 +73,10 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
 
         if (!rawBirthdateInput) {
             hasError = true;
-            this._showError(birthdateInput, "Bitte ein gültiges Geburtsdatum eingeben.");
+            this._showError(
+                birthdateInput,
+                "Bitte ein gültiges Geburtsdatum eingeben."
+            );
         }
 
         if (hasError) {
@@ -83,8 +85,6 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             ev.stopImmediatePropagation();
             return;
         }
-
-
 
         // Convert the user's date into YYYY-MM-DD for easier comparison
         const normalizedDateInput = this._normalizeDate(rawDateInput);
@@ -100,19 +100,17 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         console.log("dateFrom: ", dateFrom);
         const year = dateFrom.getFullYear();
         const years = this.params.patents_by_year || {};
-        const yearStats = years[year] || { day: 0, week: 0, year: 0 };
+        const yearStats = years[year] || {day: 0, week: 0, year: 0};
 
         const duration = this.params.duration;
         console.log("duration: ", duration);
         console.log("yearStats week:", yearStats.week);
         console.log("max week: ", this.params.max_week);
 
-
         if (!dateFrom) {
             hasError = true;
             this._showError(dateInput, "Ungültiges Datum.");
         }
-
 
         if (dateFrom && this.params.future_only && dateFrom <= today) {
             hasError = true;
@@ -121,32 +119,42 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
 
         if (this.params.blacklisted_dates.includes(normalizedDateInput)) {
             hasError = true;
-            this._showError(dateInput, "Dieses Datum ist nicht verfügbar. Bitte ein anderes wählen.");
+            this._showError(
+                dateInput,
+                "Dieses Datum ist nicht verfügbar. Bitte ein anderes wählen."
+            );
         }
 
         // limit checks
 
         if (duration === "day" && yearStats.day >= this.params.max_day) {
             hasError = true;
-            this._showError(dateInput, `Im Jahr ${year} sind maximal ${this.params.max_day} Tagespatente erlaubt.`);
+            this._showError(
+                dateInput,
+                `Im Jahr ${year} sind maximal ${this.params.max_day} Tagespatente erlaubt.`
+            );
         }
 
         if (duration === "week" && yearStats.week >= this.params.max_week) {
             hasError = true;
-            this._showError(dateInput, `Im Jahr ${year} ist nur 1 Wochenpatent erlaubt.`);
+            this._showError(
+                dateInput,
+                `Im Jahr ${year} ist nur 1 Wochenpatent erlaubt.`
+            );
         }
 
         if (duration === "year" && yearStats.year >= this.params.max_year) {
             hasError = true;
-            this._showError(dateInput, `Im Jahr ${year} ist nur 1 Jahrespatent erlaubt.`);
+            this._showError(
+                dateInput,
+                `Im Jahr ${year} ist nur 1 Jahrespatent erlaubt.`
+            );
         }
-
 
         if (!birthdate) {
             hasError = true;
             this._showError(birthdateInput, "Ungültiges Geburtsdatum.");
         }
-
 
         // if (birthdate && birthdate >= today) {
         //     hasError = true;
@@ -160,13 +168,12 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             hasError = true;
             this._showError(birthdateInput, "Sie müssen mindestens 14 Jahre alt sein.");
         }
-        console.log("needs_photo", this.params.needs_photo)
+        console.log("needs_photo", this.params.needs_photo);
 
         if (this.params.needs_photo && fileInput?.files.length === 0) {
             this._showError(fileInput, "Bitte eine Datei hochladen.");
             hasError = true;
         }
-
 
         if (hasError) {
             ev.preventDefault();
@@ -195,17 +202,20 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
 
     _clearErrors() {
         // Remove previous messages
-        this.el.querySelectorAll(".o_extra_info_error").forEach(el => el.remove());
+        this.el.querySelectorAll(".o_extra_info_error").forEach((el) => el.remove());
 
         // Reset invalid state
-        this.el.querySelectorAll(".is-invalid").forEach(el => {
+        this.el.querySelectorAll(".is-invalid").forEach((el) => {
             el.classList.remove("is-invalid");
         });
     },
 
     _normalizeDate(raw) {
         // Input is often shown like "01.02.2025" or "01/02/2025"
-        const parts = raw.replace(/[^0-9]/g, "-").split("-").filter(Boolean);
+        const parts = raw
+            .replace(/[^0-9]/g, "-")
+            .split("-")
+            .filter(Boolean);
         // reorder into ISO format (yyyy-mm-dd)
         if (parts.length === 3) {
             // detect user locale (dd-mm-yyyy or mm-dd-yyyy)
@@ -223,6 +233,4 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         const d = new Date(str);
         return isNaN(d) ? null : d;
     },
-
 });
-

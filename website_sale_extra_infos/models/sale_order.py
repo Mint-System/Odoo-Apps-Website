@@ -1,7 +1,6 @@
 import logging
-from datetime import timedelta
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -12,12 +11,9 @@ from .config import REGION_SELECTION
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    date_from = fields.Date(
-        compute="_compute_date_from"
-        )
+    date_from = fields.Date(compute="_compute_date_from")
 
-    date_to = fields.Date(
-        compute="_compute_date_to")
+    date_to = fields.Date(compute="_compute_date_to")
 
     birthdate = fields.Date(
         compute="_compute_birthdate",
@@ -31,36 +27,22 @@ class SaleOrder(models.Model):
         readonly=True,
     )
 
-    liability_insurance = fields.Boolean(
-        compute="_compute_boolean_fields"
-    )
+    liability_insurance = fields.Boolean(compute="_compute_boolean_fields")
 
-    code_of_honour =  fields.Boolean(
-        compute="_compute_boolean_fields"
-    )
+    code_of_honour = fields.Boolean(compute="_compute_boolean_fields")
 
-    strahlner_ordinance =  fields.Boolean(
-        compute="_compute_boolean_fields"
-    )
+    strahlner_ordinance = fields.Boolean(compute="_compute_boolean_fields")
 
-    minimum_age =  fields.Boolean(
-        compute="_compute_boolean_fields"
-    )
+    minimum_age = fields.Boolean(compute="_compute_boolean_fields")
 
-    photo_uploaded = fields.Boolean(
-        default=False
-    )
+    photo_uploaded = fields.Boolean(default=False)
 
-    has_patents = fields.Boolean(
-        compute="_compute_has_patents",
-        store=False
-    )
-
+    has_patents = fields.Boolean(compute="_compute_has_patents", store=False)
 
     @api.depends("partner_id")
     def _compute_birthdate(self):
         for order in self:
-            order.birthdate = order.partner_id.birthdate if order.partner_id else False 
+            order.birthdate = order.partner_id.birthdate if order.partner_id else False
 
     @api.depends("order_line")
     def _compute_date_from(self):
@@ -105,7 +87,6 @@ class SaleOrder(models.Model):
                 order.strahlner_ordinance = False
                 order.minimum_age = False
 
-
     def _compute_has_patents(self):
         for order in self:
             move_lines_is_patent = order.order_line.mapped("is_patent")
@@ -114,25 +95,22 @@ class SaleOrder(models.Model):
                 self.has_patents = True
             self.has_patents = False
 
-
-
     def action_confirm(self):
-        res = super(
-            SaleOrder, self.with_context(prevent_delivery_creation=True)
-        ).action_confirm()
+        res = super(SaleOrder, self.with_context(prevent_delivery_creation=True)).action_confirm()
         for order in self:
             for line in order.order_line:
                 product = line.product_id
                 duration = product.duration
                 if duration:
-                    self.env["patent.history"].create({
-                        "partner_id": order.partner_id.id,
-                        "product_id": product.id,
-                        "duration": duration,
-                        "year": order.date_from.year,
-                        "qty": line.product_uom_qty,
-                        "sale_order_id": order.id,
-                        "sale_order_line_id": line.id,
-                    })
+                    self.env["patent.history"].create(
+                        {
+                            "partner_id": order.partner_id.id,
+                            "product_id": product.id,
+                            "duration": duration,
+                            "year": order.date_from.year,
+                            "qty": line.product_uom_qty,
+                            "sale_order_id": order.id,
+                            "sale_order_line_id": line.id,
+                        }
+                    )
         return res
-

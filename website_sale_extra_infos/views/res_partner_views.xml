@@ -1,26 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_partner_form_patent_stats" model="ir.ui.view">
         <field name="name">res.partner.form.patent.stats</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
-
             <xpath expr="//notebook" position="inside">
                 <page string="Patents">
                     <group>
-                        <field name="patents_day_count" readonly="1"/>
-                        <field name="patents_week_count" readonly="1"/>
-                        <field name="patents_year_count" readonly="1"/>
+                        <field name="patents_day_count" readonly="1" />
+                        <field name="patents_week_count" readonly="1" />
+                        <field name="patents_year_count" readonly="1" />
                         <field name="image_released" />
                     </group>
 
                     <group>
                         <field name="patent_ids" readonly="1">
                             <list editable="bottom">
-                                <field name="date_from"/>
-                                <field name="date_to"/>
-                                <field name="product_id"/>
+                                <field name="date_from" />
+                                <field name="date_to" />
+                                <field name="product_id" />
                                 <!-- <field name="duration"/> -->
                             </list>
                         </field>
@@ -32,15 +31,20 @@
                 <field name="image_released" />
             </xpath> -->
             <xpath expr="//field[@name='image_1920']" position="replace">
-            <div class="oe_avatar" style="display:flex; flex-direction:column; align-items:center;">
-                <field name="image_1920" widget="image"
-                       class="oe_avatar"
-                       options="{'preview_image': 'avatar_128'}"/>
+                <div
+                    class="oe_avatar"
+                    style="display:flex; flex-direction:column; align-items:center;"
+                >
+                    <field
+                        name="image_1920"
+                        widget="image"
+                        class="oe_avatar"
+                        options="{'preview_image': 'avatar_128'}"
+                    />
 
-                <field string="Image released" name="image_released"/>
-            </div>
-        </xpath>
-
+                    <field string="Image released" name="image_released" />
+                </div>
+            </xpath>
         </field>
     </record>
 </odoo>

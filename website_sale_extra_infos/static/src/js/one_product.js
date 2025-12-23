@@ -1,7 +1,7 @@
 /** @website-module **/
 
 import publicWidget from "@web/legacy/js/public/public_widget";
-import { rpc } from "@web/core/network/rpc";
+import {rpc} from "@web/core/network/rpc";
 
 publicWidget.registry.OneProductCart = publicWidget.Widget.extend({
     selector: ".oe_website_sale",
@@ -31,7 +31,7 @@ publicWidget.registry.OneProductCart = publicWidget.Widget.extend({
             console.log("Cart cleared");
 
             // 2. Re-trigger click so Odoo performs its normal flow
-            const reClick = new MouseEvent("click", { bubbles: true, cancelable: true });
+            const reClick = new MouseEvent("click", {bubbles: true, cancelable: true});
             reClick.__oneProductSecondClick = true;
             ev.currentTarget.dispatchEvent(reClick);
         });

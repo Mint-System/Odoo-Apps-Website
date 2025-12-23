@@ -1,6 +1,6 @@
 import logging
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    birthdate = fields.Date(string='Birthdate', required=False)
+    birthdate = fields.Date(string="Birthdate", required=False)
 
     patent_ids = fields.One2many(
         comodel_name="sale.order.line",
@@ -17,18 +17,9 @@ class ResPartner(models.Model):
         domain=[("is_patent", "=", True)],
     )
 
-    patents_day_count = fields.Integer(
-        compute="_compute_patent_stats",
-        string="Day Patents (this year)"
-    )
-    patents_week_count = fields.Integer(
-        compute="_compute_patent_stats",
-        string="Week Patents (this year)"
-    )
-    patents_year_count = fields.Integer(
-        compute="_compute_patent_stats",
-        string="Year Patents (this year)"
-    )
+    patents_day_count = fields.Integer(compute="_compute_patent_stats", string="Day Patents (this year)")
+    patents_week_count = fields.Integer(compute="_compute_patent_stats", string="Week Patents (this year)")
+    patents_year_count = fields.Integer(compute="_compute_patent_stats", string="Year Patents (this year)")
     image_released = fields.Boolean(string="Image released", default=False)
 
     @api.depends("patent_ids", "patent_ids.date_from")

@@ -3,14 +3,14 @@
     <record id="view_order_form_inherit_date_from" model="ir.ui.view">
         <field name="name">sale.order.form.inherit.date.from</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="has_patents" invisible="1"/>
-                <field name="date_from" invisible="not has_patents"/>
-                <field name="date_to" invisible="not has_patents"/>
-                <field name="region" invisible="not has_patents"/> 
-                <field name="birthdate" invisible="not has_patents"/>
+                <field name="has_patents" invisible="1" />
+                <field name="date_from" invisible="not has_patents" />
+                <field name="date_to" invisible="not has_patents" />
+                <field name="region" invisible="not has_patents" />
+                <field name="birthdate" invisible="not has_patents" />
             </xpath>
         </field>
     </record>
@@ -18,24 +18,21 @@
     <record id="view_order_form_add_custom_tab" model="ir.ui.view">
         <field name="name">sale.order.form.custom.tab</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-
                 <page string="Additional Sale Infos">
                     <group>
                         <group>
-                            <field name="liability_insurance" readonly="1"/>
-                            <field name="code_of_honour" readonly="1"/>
-                            <field name="strahlner_ordinance" readonly="1"/>
-                            <field name="minimum_age" readonly="1"/>
+                            <field name="liability_insurance" readonly="1" />
+                            <field name="code_of_honour" readonly="1" />
+                            <field name="strahlner_ordinance" readonly="1" />
+                            <field name="minimum_age" readonly="1" />
                             <!-- <field name="photo_uploaded" readonly="1" /> -->
                         </group>
                     </group>
                 </page>
-
             </xpath>
-
         </field>
     </record>
 </odoo>

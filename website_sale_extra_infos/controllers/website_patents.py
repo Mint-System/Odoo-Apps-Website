@@ -1,23 +1,24 @@
+import json
 import logging
 
-from odoo import http, fields
+from odoo import fields, http
 from odoo.http import request
-import json
 
 _logger = logging.getLogger(__name__)
 
+
 class WebsitePatentController(http.Controller):
-    @http.route('/website/patent/check_limit', type='http', auth='public', methods=['GET', 'POST'], csrf=False)
+    @http.route("/website/patent/check_limit", type="http", auth="public", methods=["GET", "POST"], csrf=False)
     def check_patent_limit(self, date_from=None, **post):
-        """ Return number of already used patents for the given partner/year/duration """
+        """Return number of already used patents for the given partner/year/duration"""
         # data = request.httprequest.get_json() or {}
         # _logger.warning(f"#### {data}")
         # date_from = data.get("date_from")
 
         try:
-            date_from = post.get('date_from') or date_from
+            date_from = post.get("date_from") or date_from
 
-            if request.httprequest.method == 'POST':
+            if request.httprequest.method == "POST":
                 try:
                     data = request.httprequest.get_json() or {}
                     date_from = data.get("date_from") or post.get("date_from") or date_from
@@ -49,11 +50,17 @@ class WebsitePatentController(http.Controller):
                     duration = product.duration
                     limit = limits.get(duration, 9999)
 
-                    used_count = request.env['patent.history'].sudo().search_count([
-                        ('partner_id', '=', int(partner.id)),
-                        ('duration', '=', duration),
-                        ('year', '=', year),
-                    ])
+                    used_count = (
+                        request.env["patent.history"]
+                        .sudo()
+                        .search_count(
+                            [
+                                ("partner_id", "=", int(partner.id)),
+                                ("duration", "=", duration),
+                                ("year", "=", year),
+                            ]
+                        )
+                    )
 
             # return {
             #     "result": {
@@ -68,19 +75,11 @@ class WebsitePatentController(http.Controller):
             #     "limit": limit,
             #     "allowed": used_count < limit
             # }
-            result = {
-                "used": used_count,
-                "limit": limit,
-                "allowed": used_count < limit
-            }
+            result = {"used": used_count, "limit": limit, "allowed": used_count < limit}
 
             _logger.warning(f"##### {result}")
 
-            return request.make_response(
-                json.dumps(result),
-                headers={'Content-Type': 'application/json'}
-            )
-
+            return request.make_response(json.dumps(result), headers={"Content-Type": "application/json"})
 
         except Exception as e:
             _logger.error(f"Error in check_patent_limit: {e}")
@@ -89,19 +88,6 @@ class WebsitePatentController(http.Controller):
                 "used": 0,
                 "limit": 9999,
                 "allowed": True,  # Default to allowing if there's an error
-                "error": str(e)
+                "error": str(e),
             }
-            return request.make_response(
-                json.dumps(error_result),
-                headers={'Content-Type': 'application/json'}
-            )
-
-
-
-
-
-
-
-
-
-       
+            return request.make_response(json.dumps(error_result), headers={"Content-Type": "application/json"})
