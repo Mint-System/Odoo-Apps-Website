@@ -2,7 +2,7 @@
 {
     "name": "Website Sale Permit Extra Info",
     "summary": """
-        Module summary.
+        Adds extra webshop page and data validation and processing to permit sale workflow.
     """,
     "author": "Mint System GmbH",
     "website": "https://www.mint-system.ch/",

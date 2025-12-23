@@ -1,1 +1,1 @@
-Module summary.
+Adds extra webshop page and data validation and processing to permit sale workflow.
