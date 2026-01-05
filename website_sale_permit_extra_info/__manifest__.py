@@ -18,4 +18,9 @@
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
+    'assets': {
+        'web.assets_frontend': [
+            "website_sale_permit_extra_info/static/src/js/one_product.js",
+        ]
+    }
 }
