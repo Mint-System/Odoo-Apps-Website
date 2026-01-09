@@ -91,7 +91,7 @@
                                                     <span class="s_website_form_label_content">Foto (obligatorisch für Jahrespatentbesitzer)</span>
                                                 </label>
                                                 <div class="col-sm">
-                                                    <input type="file" class="form-control s_website_form_input" name="photo" id="o9yrctzinfhn" data-max-files-number="1" data-max-file-size="1"/>
+                                                    <input type="file" class="form-control s_website_form_input" name="photo" id="o9yrctzinfhn" data-max-files-number="1"/>
                                                 </div>
                                             </div>
                                         </div>
