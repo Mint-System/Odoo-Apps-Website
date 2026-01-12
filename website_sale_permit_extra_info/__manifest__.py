@@ -13,6 +13,7 @@
     "depends": ["website_sale", "sale_order_permit"],
     "data": [
        "views/website_templates.xml",
+       "views/website_products.xml",
     ],
     "installable": True,
     "application": False,
@@ -21,6 +22,7 @@
     'assets': {
         'web.assets_frontend': [
             "website_sale_permit_extra_info/static/src/js/one_product.js",
+            "website_sale_permit_extra_info/static/src/js/show_products.js",
         ]
     }
 }
