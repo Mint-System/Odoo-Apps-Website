@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="shop_filter_selector" inherit_id="website_sale.products">
-        <xpath expr="//t[@t-call='website_sale.products_breadcrumb']" position="before">
-            <div class="w-100 mb-4">
-                <label for="product_type" class="form-label">
-                    Label für Abfrage
-                </label>
-                <select id="product_type" class="form-select">
-                     <option value="">-- Bitte wählen Sie --</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                </select>
-            </div>
+    <template id="hide_products_until_pricelist"
+          inherit_id="website_sale.products"
+          priority="1000">
+
+        <xpath expr="//div[contains(@class,'o_wsale_products_grid_table_wrapper')]"
+           position="attributes">
+            <attribute name="t-attf-class">
+                #{'d-none' if website.pricelist_id.is_dummy else ''}
+            </attribute>
+        </xpath>
+        <xpath expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' products_pager ')]"
+           position="attributes">
+            <attribute name="t-attf-class">
+                #{'d-none' if website.pricelist_id.is_dummy else ''}
+            </attribute>
         </xpath>
     </template>
 </odoo>
