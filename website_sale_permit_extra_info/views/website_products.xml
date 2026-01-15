@@ -16,5 +16,42 @@
                 #{'d-none' if website.pricelist_id.is_dummy else ''}
             </attribute>
         </xpath>
+        <xpath expr="//div[contains(@class,'o_wsale_products_grid_table_wrapper')]" position="before">
+            <t t-if="website.pricelist_id.is_dummy">
+                <div class="alert alert-info my-4">
+                    Bitte wählen Sie zuerst ein Preismodell.
+                </div>
+            </t>
+        </xpath>
+        
+    </template>
+    <template id="hide_dummy_pricelist_option"
+        inherit_id="website_sale.pricelist_list"
+        priority="50">
+        <xpath expr="//t[@t-foreach='website_sale_pricelists']"
+           position="replace">
+            <t t-foreach="website_sale_pricelists.filtered(lambda p: not p.is_dummy)"
+               t-as="pl">
+                <a role="menuitem"
+                   t-att-href="'/shop/change_pricelist/%s' % pl.id"
+                   class="dropdown-item">
+                    <span class="switcher_pricelist small"
+                          t-att-data-pl_id="pl.id"
+                          t-esc="pl.name"/>
+                </a>
+            </t>
+
+        </xpath>
+        <xpath expr="//a[contains(@t-attf-class,'dropdown-toggle')]/t"
+           position="replace">
+            <t t-if="pricelist and pricelist.is_dummy">
+                Bitte wählen Sie ein Preismodell.
+            </t>
+            <t t-else="">
+                <t t-esc="pricelist.name"/>
+            </t>
+
+        </xpath>
+
     </template>
 </odoo>
