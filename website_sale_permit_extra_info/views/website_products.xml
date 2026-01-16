@@ -16,15 +16,17 @@
                 #{'d-none' if website.pricelist_id.is_dummy else ''}
             </attribute>
         </xpath>
-        <xpath expr="//div[contains(@class,'o_wsale_products_grid_table_wrapper')]" position="before">
+     
+        <xpath expr="//div[contains(@class,'products_header')]"
+           position="before">
             <t t-if="website.pricelist_id.is_dummy">
-                <div class="alert alert-info my-4">
-                    Bitte wählen Sie zuerst ein Preismodell.
+                <div class="alert alert-warning w-100 mb-3">
+                   Wählen Sie unten als Erstes die für Sie zutreffende Preisliste aus.
                 </div>
             </t>
         </xpath>
-        
     </template>
+
     <template id="hide_dummy_pricelist_option"
         inherit_id="website_sale.pricelist_list"
         priority="50">
@@ -40,8 +42,8 @@
                           t-esc="pl.name"/>
                 </a>
             </t>
-
         </xpath>
+
         <xpath expr="//a[contains(@t-attf-class,'dropdown-toggle')]/t"
            position="replace">
             <t t-if="pricelist and pricelist.is_dummy">
@@ -52,6 +54,39 @@
             </t>
 
         </xpath>
-
+    
     </template>
+
+    <template id="hide_dummy_pricelist_offcanvas"
+          inherit_id="website_sale.o_wsale_offcanvas"
+          priority="1300">
+
+        <xpath expr="//a[@t-foreach='website_sale_pricelists']"
+               position="replace">
+
+            <a t-foreach="website_sale_pricelists.filtered(lambda p: not p.is_dummy)"
+               t-as="pl"
+               role="menuitem"
+               rel="noindex,nofollow"
+               t-att-href="'/shop/change_pricelist/%s' % pl.id"
+               class="list-group-item border-0 ps-0 pb-0">
+
+                <div class="form-check d-inline-block">
+                    <input type="radio"
+                           t-attf-onclick="location.href='/shop/change_pricelist/#{pl.id}';"
+                           class="form-check-input o_not_editable"
+                           name="wsale_pricelist_radios_offcanvas"
+                           t-att-checked="curr_pl == pl"/>
+                    <label class="form-check-label fw-normal"
+                           t-out="pl.name"/>
+                </div>
+
+            </a>
+
+        </xpath>
+        
+       
+    </template>
+
+
 </odoo>
