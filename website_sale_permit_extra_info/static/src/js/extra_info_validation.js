@@ -116,7 +116,7 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             console.log("yearStats week:", yearStats.week);
             console.log("max week: ", this.params.max_week);
 
-            if (this.params.future_only && dateFrom <= today) {
+            if (this.params.future_only && dateFrom <= today && duration !== "year") {
                 hasError = true;
                 this._showError(dateInput, "Das Datum muss in der Zukunft liegen.");
             }
@@ -127,17 +127,22 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             }
 
             // limit checks
-            if (duration === "day" && yearStats.day >= (this.params.max_day || Infinity)) {
+
+            if (duration === "day" && yearStats.year >= (this.params.max_year || Infinity)) {
+                hasError = true;
+                this._showError(dateInput, `Es gibt bereits ein Jahrespatent ${year} für diese E-Mail-Adresse.`);
+            }
+            if (duration === "day" && yearStats.day > (this.params.max_day || Infinity) && yearStats.year === 0) {
                 hasError = true;
                 this._showError(dateInput, `Im Jahr ${year} sind maximal ${this.params.max_day || 'unbegrenzt'} Tagespatente erlaubt.`);
             }
 
-            if (duration === "week" && yearStats.week >= (this.params.max_week || Infinity)) {
+            if (duration === "week" && yearStats.week > (this.params.max_week || Infinity)) {
                 hasError = true;
                 this._showError(dateInput, `Im Jahr ${year} ist nur ${(this.params.max_week || 1)} Wochenpatent erlaubt.`);
             }
 
-            if (duration === "year" && yearStats.year >= (this.params.max_year || Infinity)) {
+            if (duration === "year" && yearStats.year > (this.params.max_year || Infinity)) {
                 hasError = true;
                 this._showError(dateInput, `Im Jahr ${year} ist nur ${(this.params.max_year || 1)} Jahrespatent erlaubt.`);
             }

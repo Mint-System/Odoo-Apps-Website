@@ -48,7 +48,6 @@ class WebsiteParamController(http.Controller):
         # order = request.website.sale_get_order()
         # blacklisted_dates = request.env['blacklist.date'].sudo().search([]).mapped('date')
         blacklisted_dates = self.get_blacklisted_dates()
-        _logger.warning("HUHU")
         _logger.warning(f"blacklisted dates: {blacklisted_dates}")
         needs_photo = False
         min_age = 14 
@@ -67,7 +66,7 @@ class WebsiteParamController(http.Controller):
                 needs_photo = self.get_photo_need(product.duration)
 
             patent_lines_of_partner = request.env["sale.order.line"].sudo().search([
-                ("order_partner_id", "=", partner.id),
+                ("order_partner_id.email", "=", partner.email),
                 ('product_id.duration', '!=', False),
             ])
 

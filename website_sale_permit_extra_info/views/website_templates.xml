@@ -8,6 +8,12 @@
         <field name="arch" type="xml">
             <t name="Checkout Extra Info" active="False" t-name="website_sale.extra_info">
                 <t t-call="website_sale.checkout_layout">
+                    <t t-set="order" t-value="website.sale_get_order()"/>
+                    <t t-set="has_year_duration"
+                       t-value="any(
+                           line.product_id.product_tmpl_id.duration == 'year'
+                           for line in order.order_line
+                       )"/>
                     <t t-set="show_navigation_button" t-value="False" />
                     <t t-set="redirect" t-valuef="/shop/extra_info" />
                     <t t-set="oe_structure">
@@ -57,6 +63,33 @@
                                                         <i class="fa fa-calendar" />
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div t-if="not has_year_duration" data-name="Region"
+                                        class="s_website_form_field mb-3 col-12 s_website_form_custom"
+                                        data-type="many2one" data-translated-name="region">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label
+                                                class="col-form-label col-sm-auto s_website_form_label"
+                                                style="width: 200px" for="osx5r9oc5lar">
+                                                <span class="s_website_form_label_content">Strahlnerregion</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <select class="form-select s_website_form_input"
+                                                    name="region" id="osx5r9oc5lar" required="required">
+                                                    <option value="">-- Please select --</option>
+                                                    <option id="osx5r9oc5lar0"
+                                                        value="galp">1. Göscheneralp/Voralp</option>
+                                                    <option id="osx5r9oc5lar1" value="fell">2.
+                                                        Fellital</option>
+                                                    <option id="osx5r9oc5lar2"
+                                                        value="made">3.
+                                                        Maderanertal/Etzlital/Brunnital</option>
+                                                    <option id="osx5r9oc5lar3"
+                                                        value="rest">4.
+                                                        Übriges Strahlnergebiet Korporation Uri</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
