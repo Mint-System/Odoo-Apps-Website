@@ -10,7 +10,7 @@
     "development_status": "Production/Stable",
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["website_sale", "sale_order_permit"],
+    "depends": ["website_sale", "sale_order_permit", "calendar_public_holiday"],
     "data": [
        "views/website_templates.xml",
        "views/website_products.xml",
