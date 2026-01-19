@@ -21,6 +21,7 @@
     "images": ["images/screen.png"],
     'assets': {
         'web.assets_frontend': [
+            "website_sale_permit_extra_info/static/src/js/extra_info_validation.js",
             "website_sale_permit_extra_info/static/src/js/one_product.js",
             "website_sale_permit_extra_info/static/src/js/show_products.js",
         ]

@@ -12,29 +12,28 @@ class WebsiteParamController(http.Controller):
 
 
     def get_blacklisted_dates(self):
-        """Return all holiday dates from today onwards."""
+        """Return all publich holiday dates from today onwards."""
+
+        _logger.warning("get_blacklisted_dates called")
 
         today = fields.Date.today()
         company = request.website.company_id
 
-        leaves = request.env['resource.calendar.leaves'].sudo().search([
-            ('date_to', '>=', today),
-            ('company_id', 'in', [company.id, False]),
+        # does not work, why?
+        # country = company.country_id
+        country = "Schweiz"
+        _logger.warning(f"Company Country {country}")
+
+
+        calendars = request.env['calendar.public.holiday'].sudo().search([
+            ('year', '>=', today.year),
+            ('country_id.name', '=', country),
         ])
-        _logger.warning(f"###########  leaves: {leaves}")
+        _logger.warning(f"calendars: {calendars}")
 
-        blacklisted = set()
+        dates = calendars.mapped('line_ids.date')
 
-        for leave in leaves:
-            start = max(leave.date_from.date(), today)
-            end = leave.date_to.date()
-
-            current = start
-            while current <= end:
-                blacklisted.add(current.isoformat())
-                current += timedelta(days=1)
-
-        return sorted(blacklisted)
+        return sorted(d for d in dates if d >= today)
 
 
     def get_photo_need(self, duration):
@@ -49,6 +48,7 @@ class WebsiteParamController(http.Controller):
         # order = request.website.sale_get_order()
         # blacklisted_dates = request.env['blacklist.date'].sudo().search([]).mapped('date')
         blacklisted_dates = self.get_blacklisted_dates()
+        _logger.warning("HUHU")
         _logger.warning(f"blacklisted dates: {blacklisted_dates}")
         needs_photo = False
         min_age = 14 
