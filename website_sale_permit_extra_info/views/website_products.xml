@@ -20,7 +20,7 @@
         <xpath expr="//div[contains(@class,'products_header')]"
            position="before">
             <t t-if="website.pricelist_id.is_dummy">
-                <div class="alert alert-warning w-100 mb-3">
+                <div class="oe_structure alert alert-warning w-100 mb-3" id="website_product_global_text">
                    Wählen Sie unten als Erstes die für Sie zutreffende Preisliste aus.
                 </div>
             </t>
