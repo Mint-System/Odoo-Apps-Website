@@ -27,7 +27,10 @@
         </xpath>
     </template>
 
-    <template id="hide_dummy_pricelist_option"
+
+
+
+   <!--  <template id="hide_dummy_pricelist_option"
         inherit_id="website_sale.pricelist_list"
         priority="50">
         <xpath expr="//t[@t-foreach='website_sale_pricelists']"
@@ -55,7 +58,7 @@
 
         </xpath>
     
-    </template>
+    </template> -->
 
     <template id="hide_dummy_pricelist_offcanvas"
           inherit_id="website_sale.o_wsale_offcanvas"
@@ -86,6 +89,50 @@
         </xpath>
         
        
+    </template>
+
+
+    <template
+        id="website_sale_pricelist_checkboxes"
+        inherit_id="website_sale.pricelist_list"
+        name="Website Pricelist Checkbox Selector">
+
+        <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
+            <div class="o_pricelist_checkboxes my-2">
+
+                <!-- Header / helper text -->
+                <div class="mb-2 fw-semibold">
+                    <t t-if="pricelist and pricelist.is_dummy">
+                        Bitte wählen Sie ein Preismodell.
+                    </t>
+                    <t t-else="">
+                        <t t-esc="pricelist.name"/>
+                    </t>
+                </div>
+
+                <!-- Pricelist choices -->
+                <t t-foreach="website_sale_pricelists.filtered(lambda p: not p.is_dummy)" t-as="pl">
+                    <div class="form-check">
+                        <input
+                            type="radio"
+                            name="pricelist"
+                            class="form-check-input"
+                            t-att-id="'pl_%s' % pl.id"
+                            t-att-checked="pl.id == pricelist.id"
+                            t-att-onchange="'window.location.href=\'/shop/change_pricelist/%s\'' % pl.id"
+                        />
+                        <label
+                            class="form-check-label"
+                            t-att-for="'pl_%s' % pl.id"
+                        >
+                            <t t-esc="pl.name"/>
+                        </label>
+                    </div>
+                </t>
+
+            </div>
+        </xpath>
+
     </template>
 
 
