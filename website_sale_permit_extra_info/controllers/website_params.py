@@ -50,14 +50,14 @@ class WebsiteParamController(http.Controller):
         blacklisted_dates = self.get_blacklisted_dates()
         _logger.warning(f"blacklisted dates: {blacklisted_dates}")
         needs_photo = False
-        min_age = 14 
+        min_age = 14
         future_only = True
         day_patents = 0
         week_patents = 0
         year_patents = 0
         patents_by_year = {}
         duration = ""
-        
+
         if order_id:
             order = request.env["sale.order"].sudo().browse(order_id)
             partner = order.partner_id if order else request.env.user.partner_id
@@ -65,10 +65,18 @@ class WebsiteParamController(http.Controller):
                 product = order.order_line[0].product_id
                 needs_photo = self.get_photo_need(product.duration)
 
-            patent_lines_of_partner = request.env["sale.order.line"].sudo().search([
-                ("order_partner_id.email", "=", partner.email),
-                ('product_id.duration', '!=', False),
-            ])
+            if not partner.is_public:
+                domain = [
+                    ("order_partner_id.id", "=", partner.id),
+                    ('product_id.duration', '!=', False),
+                ]
+            else:
+                domain = [
+                    ("order_partner_id.email", "=", partner.email),
+                    ('product_id.duration', '!=', False),
+                ]
+
+            patent_lines_of_partner = request.env["sale.order.line"].sudo().search(domain)
 
             _logger.warning(f"patent lines: {patent_lines_of_partner}")
 
@@ -89,13 +97,10 @@ class WebsiteParamController(http.Controller):
             "min_age": min_age,
             "future_only": future_only,
             "patents_by_year": patents_by_year,
-            "max_day": 5,
+            "max_day": 2,
             "max_week": 1,
             "max_year": 1,
             "duration": duration
         }
         _logger.warning(f"params: {params}")
         return params
-
-
-
