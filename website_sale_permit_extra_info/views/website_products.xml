@@ -16,7 +16,7 @@
                 #{'d-none' if website.pricelist_id.is_dummy else ''}
             </attribute>
         </xpath>
-     
+
         <xpath expr="//div[contains(@class,'products_header')]"
            position="before">
             <t t-if="website.pricelist_id.is_dummy">
@@ -57,7 +57,7 @@
             </t>
 
         </xpath>
-    
+
     </template> -->
 
     <template id="hide_dummy_pricelist_offcanvas"
@@ -87,8 +87,8 @@
             </a>
 
         </xpath>
-        
-       
+
+
     </template>
 
 
@@ -101,13 +101,17 @@
             <div class="o_pricelist_checkboxes my-2">
 
                 <!-- Header / helper text -->
-                <div class="mb-2 fw-semibold">
-                    <t t-if="pricelist and pricelist.is_dummy">
+                <div class="mb-2 fw-semibold oe_structure" id="website_checkboxes_intro_text">
+                    <!-- <t t-if="pricelist and pricelist.is_dummy">
                         Bitte wählen Sie ein Preismodell.
                     </t>
                     <t t-else="">
                         <t t-esc="pricelist.name"/>
-                    </t>
+                    </t> -->
+
+                        Bitte wählen Sie eine Produktkategorie.
+
+
                 </div>
 
                 <!-- Pricelist choices -->
