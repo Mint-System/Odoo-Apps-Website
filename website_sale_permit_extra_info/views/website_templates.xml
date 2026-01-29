@@ -14,6 +14,11 @@
                            line.product_id.product_tmpl_id.duration == 'year'
                            for line in order.order_line
                        )"/>
+                    <t t-set="has_day_duration"
+                       t-value="any(
+                           line.product_id.product_tmpl_id.duration == 'day'
+                           for line in order.order_line
+                       )"/>
                     <t t-set="show_navigation_button" t-value="False" />
                     <t t-set="redirect" t-valuef="/shop/extra_info" />
                     <t t-set="oe_structure">
@@ -50,7 +55,12 @@
                                             <label
                                                 class="col-form-label col-sm-auto s_website_form_label"
                                                 style="width: 200px" for="o5koaivn76tr">
-                                                <span class="s_website_form_label_content">Datum Beginn</span>
+                                                <t t-if="has_day_duration">
+                                                    <span class="s_website_form_label_content">Datum</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="s_website_form_label_content">Datum Beginn</span>
+                                                </t>
                                             </label>
                                             <div class="col-sm">
                                                 <div class="s_website_form_date input-group date">
@@ -78,7 +88,7 @@
                                             <div class="col-sm">
                                                 <select class="form-select s_website_form_input"
                                                     name="region" id="osx5r9oc5lar" required="required">
-                                                    <option value="">-- Please select --</option>
+                                                    <option value="">-- Bitte wählen --</option>
                                                     <option id="osx5r9oc5lar0"
                                                         value="galp">1. Göscheneralp/Voralp</option>
                                                     <option id="osx5r9oc5lar1" value="fell">2.
