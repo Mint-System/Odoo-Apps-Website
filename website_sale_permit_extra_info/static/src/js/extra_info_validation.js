@@ -20,15 +20,15 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         if (!this.el.closest('.o_website_frontend')) {
             // Check if we're in a context where this widget should run
             // If not in website context, exit early to avoid errors in backend
-            const isWebsiteContext = window.location.pathname.startsWith('/shop/') || 
+            const isWebsiteContext = window.location.pathname.startsWith('/shop/') ||
                                    window.location.pathname.startsWith('/website/') ||
                                    this.el.closest('.s_website_form');
-            
+
             if (!isWebsiteContext) {
                 return Promise.resolve(); // Early return if not in proper context
             }
         }
-        
+
         this.params = {
             blacklisted_dates: [],
             needs_photo: false,
@@ -36,8 +36,7 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             future_only: true,
         };
         return this._fetchParams();
-    },
-
+  },
 
     async _fetchParams() {
         try {
@@ -101,13 +100,14 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
 
         // const year = parseInt(dateFrom.substring(0, 4));
         console.log("dateFrom: ", dateFrom);
-        
+
         if (!dateFrom && dateInput) {
             hasError = true;
             this._showError(dateInput, "Ungültiges Datum.");
         } else if(dateFrom && dateInput) {
             // Date is valid, proceed with date-dependent validations
             const year = dateFrom.getFullYear();
+            const currentYear = new Date().getFullYear();
             const years = this.params.patents_by_year || {};
             const yearStats = years[year] || { day: 0, week: 0, year: 0 };
 
@@ -121,9 +121,27 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
                 this._showError(dateInput, "Das Datum muss in der Zukunft liegen.");
             }
 
-            if (Array.isArray(this.params.blacklisted_dates) && this.params.blacklisted_dates.includes(normalizedDateInput)) {
+          if (this.params.future_only && year < currentYear && duration === "year") {
+            hasError = true;
+            this._showError(dateInput, "Sie können nicht für ein abgelaufenes Jahr ein Jahrespatent kaufen.");
+            }
+
+
+            if (duration != "year" && Array.isArray(this.params.blacklisted_dates) && this.params.blacklisted_dates.includes(normalizedDateInput)) {
                 hasError = true;
                 this._showError(dateInput, "Dieses Datum ist nicht verfügbar. Bitte ein anderes wählen.");
+            }
+
+            // check sunday
+            if (duration != "year" && dateFrom.getDay() === 0) {
+              hasError = true;
+              this._showError(dateInput, "Dieses Datum (Sonntag) ist nicht verfügbar. Bitte ein anderes wählen.");
+            }
+
+            // check if for year duration date is after March 31 of current year
+            if (duration === "year" && this._isAfterDeadlineOfCurrentYear(dateFrom)) {
+              hasError = true;
+              this._showError(dateInput, "Nach dem 31. März können Sie kein Jahrespatent mehr für das laufende Jahr bestellen.");
             }
 
             // limit checks
@@ -185,14 +203,23 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
 
     _onDateInteract() {
         this._clearErrors();
-    },
+  },
 
-    _showError(input, message) {
+  _isAfterDeadlineOfCurrentYear(date) {
+      const currentYear = new Date().getFullYear();
+      const limitDate = new Date(currentYear, 2, 31);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return (date.getFullYear() === currentYear && today > limitDate);
+  },
+
+  _showError(input, message) {
         if (!input) {
             console.error("Input element is null or undefined");
             return;
         }
-        
+
         // Highlight field
         input.classList.add("is-invalid");
 
@@ -243,4 +270,3 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
     },
 
 });
-

@@ -1,16 +1,13 @@
 import logging
-
 from datetime import timedelta
 
-from odoo import http, fields
+from odoo import fields, http
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
 
 class WebsiteParamController(http.Controller):
-
-
     def get_blacklisted_dates(self):
         """Return all publich holiday dates from today onwards."""
 
@@ -24,23 +21,26 @@ class WebsiteParamController(http.Controller):
         country = "Schweiz"
         _logger.warning(f"Company Country {country}")
 
-
-        calendars = request.env['calendar.public.holiday'].sudo().search([
-            ('year', '>=', today.year),
-            ('country_id.name', '=', country),
-        ])
+        calendars = (
+            request.env["calendar.public.holiday"]
+            .sudo()
+            .search(
+                [
+                    ("year", ">=", today.year),
+                    ("country_id.name", "=", country),
+                ]
+            )
+        )
         _logger.warning(f"calendars: {calendars}")
 
-        dates = calendars.mapped('line_ids.date')
+        dates = calendars.mapped("line_ids.date")
 
         return sorted(d for d in dates if d >= today)
 
-
     def get_photo_need(self, duration):
-        if duration == 'year':
+        if duration == "year":
             return True
         return False
-
 
     @http.route("/website/get_params", type="json", auth="public", csrf=False, website=True)
     def get_params(self, **kwargs):
@@ -68,12 +68,12 @@ class WebsiteParamController(http.Controller):
             if not partner.is_public:
                 domain = [
                     ("order_partner_id.id", "=", partner.id),
-                    ('product_id.duration', '!=', False),
+                    ("product_id.duration", "!=", False),
                 ]
             else:
                 domain = [
                     ("order_partner_id.email", "=", partner.email),
-                    ('product_id.duration', '!=', False),
+                    ("product_id.duration", "!=", False),
                 ]
 
             patent_lines_of_partner = request.env["sale.order.line"].sudo().search(domain)
@@ -100,7 +100,7 @@ class WebsiteParamController(http.Controller):
             "max_day": 2,
             "max_week": 1,
             "max_year": 1,
-            "duration": duration
+            "duration": duration,
         }
         _logger.warning(f"params: {params}")
         return params
