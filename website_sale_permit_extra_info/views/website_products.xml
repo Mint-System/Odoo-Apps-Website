@@ -115,7 +115,21 @@
                 </div>
 
                 <!-- Pricelist choices -->
-                <t t-foreach="website_sale_pricelists.filtered(lambda p: not p.is_dummy)" t-as="pl">
+
+                <t t-set="pricelists"
+                   t-value="website_sale_pricelists"/>
+
+                <t t-set="filtered_pricelists"
+                   t-value="
+                       pricelists.filtered(
+                           lambda p:
+                               (category and category in p.public_category_ids)
+                               or
+                               (not category and bool(p.public_category_ids))
+                       )
+                   "/>
+
+                <t t-foreach="filtered_pricelists" t-as="pl">
                     <div class="form-check">
                         <input
                             type="radio"

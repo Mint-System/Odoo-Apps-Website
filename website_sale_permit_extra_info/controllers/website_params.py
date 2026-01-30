@@ -64,6 +64,7 @@ class WebsiteParamController(http.Controller):
             if order.order_line:
                 product = order.order_line[0].product_id
                 needs_photo = self.get_photo_need(product.duration)
+                product_duration = product.duration
 
             if not partner.is_public:
                 domain = [
@@ -100,7 +101,7 @@ class WebsiteParamController(http.Controller):
             "max_day": 2,
             "max_week": 1,
             "max_year": 1,
-            "duration": duration,
+            "duration": product_duration,
         }
         _logger.warning(f"params: {params}")
         return params
