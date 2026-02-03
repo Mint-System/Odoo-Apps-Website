@@ -12,18 +12,18 @@
     "license": "AGPL-3",
     "depends": ["website_sale", "sale_order_permit", "calendar_public_holiday"],
     "data": [
-       "views/website_templates.xml",
-       "views/website_products.xml",
+        "views/website_templates.xml",
+        "views/website_products.xml",
     ],
     "installable": True,
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
-    'assets': {
-        'web.assets_frontend': [
+    "assets": {
+        "web.assets_frontend": [
             "website_sale_permit_extra_info/static/src/js/extra_info_validation.js",
             "website_sale_permit_extra_info/static/src/js/one_product.js",
             "website_sale_permit_extra_info/static/src/js/show_products.js",
         ]
-    }
+    },
 }
