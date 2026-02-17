@@ -1,0 +1,31 @@
+# Replaced from Docker apt install
+num2words # python3-num2words
+phonenumbers # python3-phonenumbers
+python-ldap # python3-pyldap
+qrcode # python3-qrcode
+setuptools # python3-setuptools
+vobject # python3-vobject
+xlrd # python3-xlrd
+xlwt # python3-xlwt
+python-magic # python3-magic
+odfpy # python3-odf
+pdfminer.six # python3-pdfminer
+python-slugify # python3-slugify
+watchdog # python3-watchdog
+rlPyCairo # python3-renderpm
+lxml # python3-lxml
+
+# Performance
+memray
+
+# OCA Tools
+manifestoo
+click-odoo-contrib
+git-aggregator
+
+# Upgrade
+git+https://github.com/OCA/openupgradelib.git@master
+git+https://github.com/odoo/upgrade-util@master ; python_version <= '3.12'
+
+#FIXME: Ensure PyPDF2 3.0.0 is not installed
+PyPDF2==2.12.1 ; python_version > '3.10' and python_version <= '3.13'

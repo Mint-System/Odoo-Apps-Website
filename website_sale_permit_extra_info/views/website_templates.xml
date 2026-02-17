@@ -135,6 +135,9 @@
                                                 </label>
                                                 <div class="col-sm">
                                                     <input type="file" class="form-control s_website_form_input" name="photo" id="o9yrctzinfhn" data-max-files-number="1"/>
+                                                     <img id="photo_preview"
+                                                         style="display:none; margin-top:10px; max-height:200px;"
+                                                         class="img-fluid"/>
                                                 </div>
                                             </div>
                                         </div>

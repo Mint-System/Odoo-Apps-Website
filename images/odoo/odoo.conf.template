@@ -1,0 +1,37 @@
+[options]
+data_dir = /var/lib/odoo
+db_name = $DB_NAME
+db_maxconn = $DB_MAXCONN
+smtp_server = $SMTP_SERVER
+smtp_port = $SMTP_PORT
+smtp_ssl = $SMTP_SSL
+smtp_user = $SMTP_USER
+smtp_password = $SMTP_PASSWORD
+email_from = $EMAIL_FROM
+addons_path = $ADDONS_PATH
+running_env = $RUNNING_ENV
+without_demo = $WITHOUT_DEMO
+server_wide_modules = $SERVER_WIDE_MODULES
+proxy_mode = $PROXY_MODE
+log_level = $LOG_LEVEL
+max_cron_threads = $MAX_CRON_THREADS
+list_db = $LIST_DB
+log_db = $LOG_DB
+log_handler = $LOG_HANDLER
+logfile = $LOGFILE
+admin_passwd = $ADMIN_PASSWD
+dbfilter = $DB_FILTER
+workers = $WORKERS
+limit_request = $LIMIT_REQUEST
+limit_time_cpu = $LIMIT_TIME_CPU
+limit_time_real = $LIMIT_TIME_REAL
+limit_memory_hard = $LIMIT_MEMORY_HARD
+limit_memory_soft = $LIMIT_MEMORY_SOFT
+limit_memory_hard_gevent = $LIMIT_MEMORY_HARD_GEVENT
+limit_memory_soft_gevent = $LIMIT_MEMORY_SOFT_GEVENT
+modules_auto_install_disabled = $MODULE_AUTO_INSTALL_DISABLED
+
+$ADDITIONAL_ODOO_RC
+
+[ir.config_parameter]
+$IR_CONFIG_PARAMETER

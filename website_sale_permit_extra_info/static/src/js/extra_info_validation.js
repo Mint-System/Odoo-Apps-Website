@@ -13,6 +13,7 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         "focus input[name='birthdate_date']": "_onDateInteract",
         "change input[name='birthdate_date']": "_onDateInteract",
         "keyup input[name='birthdate_date']": "_onDateInteract",
+        "change input[name='photo']": "_onPhotoChange",
     },
     start() {
         console.log("ExtraInfosForm initialized");
@@ -57,6 +58,27 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             console.error("Could not fetch params", e);
             // Keep default params values if fetch fails
         }
+    },
+
+    _onPhotoChange(ev) {
+        const input = ev.currentTarget;
+        const file = input.files && input.files[0];
+
+        let preview = this.el.querySelector('#photo_preview');
+
+        if (!preview) {
+            return;
+        }
+
+        if (!file || !file.type.startsWith('image/')) {
+            preview.src = '';
+            preview.style.display = 'none';
+            return;
+        }
+
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.style.display = 'block';
     },
 
 
