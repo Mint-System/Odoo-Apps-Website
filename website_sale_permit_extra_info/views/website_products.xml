@@ -100,52 +100,53 @@
         <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
             <div class="o_pricelist_checkboxes my-2">
 
-                <!-- Header / helper text -->
-                <div class="mb-2 fw-semibold oe_structure" id="website_checkboxes_intro_text">
-                    <!-- <t t-if="pricelist and pricelist.is_dummy">
-                        Bitte wählen Sie ein Preismodell.
-                    </t>
-                    <t t-else="">
-                        <t t-esc="pricelist.name"/>
-                    </t> -->
-
-                        Bitte wählen Sie eine Produktkategorie.
-
-
-                </div>
-
                 <!-- Pricelist choices -->
+                <t t-set="pricelists" t-value="website_sale_pricelists"/>
+                <t t-set="filtered_pricelists" t-value="
+                    pricelists.filtered(
+                        lambda p:
+                            (category and category in p.public_category_ids)
+                            or
+                            (not category and bool(p.public_category_ids))
+                    )
+                "/>
+                
+                <!-- If only one pricelist is available, auto-select it and reload page -->
+                <t t-if="len(filtered_pricelists) == 1">
+                    <t t-set="auto_selected_pricelist" t-value="filtered_pricelists[0]"/>
+                    <t t-if="auto_selected_pricelist.id != pricelist.id">
+                        <!-- Auto-select the only pricelist by redirecting -->
+                        <script>
+                            window.location.href = '/shop/change_pricelist/<t t-esc="auto_selected_pricelist.id"/>';
+                        </script>
+                    </t>
+                </t>
 
-                <t t-set="pricelists"
-                   t-value="website_sale_pricelists"/>
-
-                <t t-set="filtered_pricelists"
-                   t-value="
-                       pricelists.filtered(
-                           lambda p:
-                               (category and category in p.public_category_ids)
-                               or
-                               (not category and bool(p.public_category_ids))
-                       )
-                   "/>
-
-                <t t-foreach="filtered_pricelists" t-as="pl">
-                    <div class="form-check">
-                        <input
-                            type="radio"
-                            name="pricelist"
-                            class="form-check-input"
-                            t-att-id="'pl_%s' % pl.id"
-                            t-att-checked="pl.id == pricelist.id"
-                            t-att-onchange="'window.location.href=\'/shop/change_pricelist/%s\'' % pl.id"
-                        />
-                        <label
-                            class="form-check-label"
-                            t-att-for="'pl_%s' % pl.id"
-                        >
-                            <t t-esc="pl.name"/>
-                        </label>
+                <!-- Only render the radio buttons and header if there's more than one pricelist -->
+                <t t-if="len(filtered_pricelists) > 1">
+                    <!-- Header / helper text -->
+                    <div class="mb-2 fw-semibold oe_structure" id="website_checkboxes_intro_text">
+                        <!-- <t t-if="pricelist and pricelist.is_dummy">
+                            Bitte wählen Sie ein Preismodell.
+                        </t>
+                        <t t-else="">
+                            <t t-esc="pricelist.name"/>
+                        </t> -->
+    
+                            Bitte wählen Sie das zutreffende Patent aus:
                     </div>
+                
+                    <t t-foreach="filtered_pricelists" t-as="pl">
+                        <div class="form-check">
+                            <input type="radio" name="pricelist" class="form-check-input"
+                                   t-att-id="'pl_%s' % pl.id"
+                                   t-att-checked="pl.id == pricelist.id"
+                                   t-att-onchange="'window.location.href=\'/shop/change_pricelist/%s\'' % pl.id"/>
+                            <label class="form-check-label" t-att-for="'pl_%s' % pl.id">
+                                <t t-esc="pl.name"/>
+                            </label>
+                        </div>
+                    </t>
                 </t>
 
             </div>
