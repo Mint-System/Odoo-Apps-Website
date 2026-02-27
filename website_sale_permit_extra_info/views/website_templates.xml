@@ -131,7 +131,7 @@
                                     <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="binary" data-translated-name="Feld">
                                             <div class="row s_col_no_resize s_col_no_bgcolor">
                                                 <label class="col-sm-auto s_website_form_label" style="width: 200px" for="o9yrctzinfhn">
-                                                    <span class="s_website_form_label_content">Foto (obligatorisch für Jahrespatentbesitzer)</span>
+                                                    <span class="s_website_form_label_content">Foto (obligatorisch für Jahrespatentbesitzer)<br/></span><small>[.jpg, .jpeg, .png, .tiff]</small>
                                                 </label>
                                                 <div class="col-sm">
                                                     <input type="file" class="form-control s_website_form_input" name="photo" id="o9yrctzinfhn" data-max-files-number="1"/>
