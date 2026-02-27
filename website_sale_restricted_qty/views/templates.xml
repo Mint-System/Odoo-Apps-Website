@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <template id="product_quantity" name="website_sale_minimum_order_quantity.product_quantity" inherit_id="website_sale.product_quantity">
+        
+        <xpath expr="//input[hasclass('form-control', 'quantity')]" position="attributes">
+            <attribute name="t-att-data-min">min_qty or 1</attribute>
+            <attribute name="t-att-value">min_qty or add_qty or 1</attribute>
+        </xpath>
+
+        <xpath expr="//a[@id='add_to_cart']" position="after">
+            <p t-if="request.params.get('min_order_error')" class="text text-danger mt16">
+                Minimum order quantity is <t t-esc="request.params.get('min_qty')"/>
+            </p>
+        </xpath>
+
+    </template>    
+</odoo>
