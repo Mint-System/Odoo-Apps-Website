@@ -21,7 +21,7 @@
            position="before">
             <t t-if="website.pricelist_id.is_dummy">
                 <div class="oe_structure alert alert-warning w-100 mb-3" id="website_product_global_text">
-                   Wählen Sie unten als Erstes die für Sie zutreffende Preisliste aus.
+                   Wählen Sie unten als Erstes die für Sie zutreffende Patentart aus.
                 </div>
             </t>
         </xpath>
