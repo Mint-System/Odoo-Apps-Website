@@ -12,31 +12,31 @@ Add this config to your MCP client configuration:
 
 ```json
 {
-    "mcpServers": {
-        "odoo": {
-            "command": "docker",
-            "args": [
-                "run",
-                "-i",
-                "--rm",
-                "-e",
-                "ODOO_URL",
-                "-e",
-                "ODOO_DATABASE",
-                "-e",
-                "ODOO_USERNAME",
-                "-e",
-                "ODOO_PASSWORD",
-                "mintsystem/odoo-mcp"
-            ],
-            "env": {
-                "ODOO_URL": "http://odoo:8069",
-                "ODOO_DATABASE": "18.0",
-                "ODOO_USERNAME": "admin",
-                "ODOO_PASSWORD": "admin"
-            }
-        }
+  "mcpServers": {
+    "odoo": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "ODOO_URL",
+        "-e",
+        "ODOO_DATABASE",
+        "-e",
+        "ODOO_USERNAME",
+        "-e",
+        "ODOO_PASSWORD",
+        "mintsystem/odoo-mcp"
+      ],
+      "env": {
+        "ODOO_URL": "http://odoo:8069",
+        "ODOO_DATABASE": "18.0",
+        "ODOO_USERNAME": "admin",
+        "ODOO_PASSWORD": "admin"
+      }
     }
+  }
 }
 ```
 

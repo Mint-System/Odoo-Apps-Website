@@ -1,5 +1,4 @@
-[Mint System Odoo Upgrade](https://odoo.build/images/odoo-upgrade/)
-===
+# [Mint System Odoo Upgrade](https://odoo.build/images/odoo-upgrade/)
 
 [![Docker pulls](https://img.shields.io/docker/pulls/mintsystem/odoo-upgrade)](https://hub.docker.com/r/mintsystem/odoo-upgrade/)
 
@@ -65,7 +64,8 @@ pg_dump: detail: server version: 16.9; pg_dump version: 15.12 (Debian 15.12-0+de
 
 **Solution**
 
-Ensure that the local postgres server does not have a never version than the remote server.
+Ensure that the local postgres server does not have a never version than the remote
+server.
 
 If necessary downgrade the local postgres server.
 
@@ -81,5 +81,5 @@ pg_restore: error: could not execute query: ERROR:  unrecognized configuration p
 
 **Solution**
 
-The database has been restored despite the error.
-But it is recommended to use postgres version 17.
+The database has been restored despite the error. But it is recommended to use postgres
+version 17.

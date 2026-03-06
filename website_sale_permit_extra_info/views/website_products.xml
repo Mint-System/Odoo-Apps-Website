@@ -1,36 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="hide_products_until_pricelist"
-          inherit_id="website_sale.products"
-          priority="1000">
-
-        <xpath expr="//div[contains(@class,'o_wsale_products_grid_table_wrapper')]"
-           position="attributes">
+    <template
+        id="hide_products_until_pricelist"
+        inherit_id="website_sale.products"
+        priority="1000"
+    >
+        <xpath
+            expr="//div[contains(@class,'o_wsale_products_grid_table_wrapper')]"
+            position="attributes"
+        >
             <attribute name="t-attf-class">
                 #{'d-none' if website.pricelist_id.is_dummy else ''}
             </attribute>
         </xpath>
-        <xpath expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' products_pager ')]"
-           position="attributes">
+        <xpath
+            expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' products_pager ')]"
+            position="attributes"
+        >
             <attribute name="t-attf-class">
                 #{'d-none' if website.pricelist_id.is_dummy else ''}
             </attribute>
         </xpath>
 
-        <xpath expr="//div[contains(@class,'products_header')]"
-           position="before">
+        <xpath expr="//div[contains(@class,'products_header')]" position="before">
             <t t-if="website.pricelist_id.is_dummy">
-                <div class="oe_structure alert alert-warning w-100 mb-3" id="website_product_global_text">
+                <div
+                    class="oe_structure alert alert-warning w-100 mb-3"
+                    id="website_product_global_text"
+                >
                    Wählen Sie unten als Erstes die für Sie zutreffende Patentart aus.
                 </div>
             </t>
         </xpath>
     </template>
 
-
-
-
-   <!--  <template id="hide_dummy_pricelist_option"
+    <!--  <template id="hide_dummy_pricelist_option"
         inherit_id="website_sale.pricelist_list"
         priority="50">
         <xpath expr="//t[@t-foreach='website_sale_pricelists']"
@@ -60,64 +64,70 @@
 
     </template> -->
 
-    <template id="hide_dummy_pricelist_offcanvas"
-          inherit_id="website_sale.o_wsale_offcanvas"
-          priority="1300">
-
-        <xpath expr="//a[@t-foreach='website_sale_pricelists']"
-               position="replace">
-
-            <a t-foreach="website_sale_pricelists.filtered(lambda p: not p.is_dummy)"
-               t-as="pl"
-               role="menuitem"
-               rel="noindex,nofollow"
-               t-att-href="'/shop/change_pricelist/%s' % pl.id"
-               class="list-group-item border-0 ps-0 pb-0">
-
+    <template
+        id="hide_dummy_pricelist_offcanvas"
+        inherit_id="website_sale.o_wsale_offcanvas"
+        priority="1300"
+    >
+        <xpath expr="//a[@t-foreach='website_sale_pricelists']" position="replace">
+            <a
+                t-foreach="website_sale_pricelists.filtered(lambda p: not p.is_dummy)"
+                t-as="pl"
+                role="menuitem"
+                rel="noindex,nofollow"
+                t-att-href="'/shop/change_pricelist/%s' % pl.id"
+                class="list-group-item border-0 ps-0 pb-0"
+            >
                 <div class="form-check d-inline-block">
-                    <input type="radio"
-                           t-attf-onclick="location.href='/shop/change_pricelist/#{pl.id}';"
-                           class="form-check-input o_not_editable"
-                           name="wsale_pricelist_radios_offcanvas"
-                           t-att-checked="curr_pl == pl"/>
-                    <label class="form-check-label fw-normal"
-                           t-out="pl.name"/>
+                    <input
+                        type="radio"
+                        t-attf-onclick="location.href='/shop/change_pricelist/#{pl.id}';"
+                        class="form-check-input o_not_editable"
+                        name="wsale_pricelist_radios_offcanvas"
+                        t-att-checked="curr_pl == pl"
+                    />
+                    <label class="form-check-label fw-normal" t-out="pl.name" />
                 </div>
-
             </a>
-
         </xpath>
-
-
     </template>
-
 
     <template
         id="website_sale_pricelist_checkboxes"
         inherit_id="website_sale.pricelist_list"
-        name="Website Pricelist Checkbox Selector">
-
-        <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
+        name="Website Pricelist Checkbox Selector"
+    >
+        <xpath
+            expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]"
+            position="replace"
+        >
             <div class="o_pricelist_checkboxes my-2">
-
                 <!-- Pricelist choices -->
-                <t t-set="pricelists" t-value="website_sale_pricelists"/>
-                <t t-set="filtered_pricelists" t-value="
+                <t t-set="pricelists" t-value="website_sale_pricelists" />
+                <t
+                    t-set="filtered_pricelists"
+                    t-value="
                     pricelists.filtered(
                         lambda p:
                             (category and category in p.public_category_ids)
                             or
                             (not category and bool(p.public_category_ids))
                     )
-                "/>
-                
+                "
+                />
+
                 <!-- If only one pricelist is available, auto-select it and reload page -->
                 <t t-if="len(filtered_pricelists) == 1">
-                    <t t-set="auto_selected_pricelist" t-value="filtered_pricelists[0]"/>
+                    <t
+                        t-set="auto_selected_pricelist"
+                        t-value="filtered_pricelists[0]"
+                    />
                     <t t-if="auto_selected_pricelist.id != pricelist.id">
                         <!-- Auto-select the only pricelist by redirecting -->
                         <script>
-                            window.location.href = '/shop/change_pricelist/<t t-esc="auto_selected_pricelist.id"/>';
+                            window.location.href = '/shop/change_pricelist/<t
+                            t-esc="auto_selected_pricelist.id"
+                        />';
                         </script>
                     </t>
                 </t>
@@ -125,34 +135,37 @@
                 <!-- Only render the radio buttons and header if there's more than one pricelist -->
                 <t t-if="len(filtered_pricelists) > 1">
                     <!-- Header / helper text -->
-                    <div class="mb-2 fw-semibold oe_structure" id="website_checkboxes_intro_text">
+                    <div
+                        class="mb-2 fw-semibold oe_structure"
+                        id="website_checkboxes_intro_text"
+                    >
                         <!-- <t t-if="pricelist and pricelist.is_dummy">
                             Bitte wählen Sie ein Preismodell.
                         </t>
                         <t t-else="">
                             <t t-esc="pricelist.name"/>
                         </t> -->
-    
+
                             Bitte wählen Sie das zutreffende Patent aus:
                     </div>
-                
+
                     <t t-foreach="filtered_pricelists" t-as="pl">
                         <div class="form-check">
-                            <input type="radio" name="pricelist" class="form-check-input"
-                                   t-att-id="'pl_%s' % pl.id"
-                                   t-att-checked="pl.id == pricelist.id"
-                                   t-att-onchange="'window.location.href=\'/shop/change_pricelist/%s\'' % pl.id"/>
+                            <input
+                                type="radio"
+                                name="pricelist"
+                                class="form-check-input"
+                                t-att-id="'pl_%s' % pl.id"
+                                t-att-checked="pl.id == pricelist.id"
+                                t-att-onchange="'window.location.href=\'/shop/change_pricelist/%s\'' % pl.id"
+                            />
                             <label class="form-check-label" t-att-for="'pl_%s' % pl.id">
-                                <t t-esc="pl.name"/>
+                                <t t-esc="pl.name" />
                             </label>
                         </div>
                     </t>
                 </t>
-
             </div>
         </xpath>
-
     </template>
-
-
 </odoo>

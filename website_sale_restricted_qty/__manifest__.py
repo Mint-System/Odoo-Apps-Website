@@ -2,23 +2,16 @@
 {
     "name": "Website Sale Restricted Qty",
     "summary": """
-        Set minimum order quantity for product variants.
+        Shows minimum sale quantity for product on webshop product page.
     """,
     "author": "Mint System GmbH",
-    "website": "https://www.mint-system.ch",
+    "website": "https://www.mint-system.ch/",
     "category": "Repository",
     "development_status": "Production/Stable",
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["sale_restricted_qty", "website_sale"],
-    "data": [
-        "views/templates.xml",
-    ],
-    "assets": {
-        "web.assets_frontend": [
-            "website_sale_restricted_qty/static/src/js/website_sale_min_order.js"
-        ]
-    },
+    "data": ["views/website_sale_product_quantity.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

@@ -1,5 +1,4 @@
-[Mint System Odoo](https://odoo.build/images/odoo/)
-===
+# [Mint System Odoo](https://odoo.build/images/odoo/)
 
 [![Docker pulls](https://img.shields.io/docker/pulls/mintsystem/odoo)](https://hub.docker.com/r/mintsystem/odoo/)
 
@@ -7,8 +6,10 @@ A better Odoo image.
 
 This container image is an improvement of the official Odoo image:
 
-- 📦 Package management is handled with [uv](https://docs.astral.sh/uv/) for Python and [pnpm](https://pnpm.io/) for Node.
-- 🔄 The Odoo source is based on a specific [revision](https://odoo.build/revisions.html).
+- 📦 Package management is handled with [uv](https://docs.astral.sh/uv/) for Python and
+  [pnpm](https://pnpm.io/) for Node.
+- 🔄 The Odoo source is based on a specific
+  [revision](https://odoo.build/revisions.html).
 - 💎 The image build process ensures reproducibility.
 - ⚙️ Configuration of `odoo.conf` is managed through environment variables.
 - 🌱 Addons are cloned from git repositories.
@@ -17,12 +18,13 @@ This container image is an improvement of the official Odoo image:
 - 💾 Session information can be stored in the database.
 - 🖥️ Environment name is retrieved from server configuration.
 - 📋 Database initialization with selected modules.
-- 📜 The image includes built-in [manifestoo](https://github.com/acsone/manifestoo) and [click-odoo-contrib](https://github.com/acsone/click-odoo-contrib).
+- 📜 The image includes built-in [manifestoo](https://github.com/acsone/manifestoo) and
+  [click-odoo-contrib](https://github.com/acsone/click-odoo-contrib).
 - 🪴 The container runs without requiring root privileges.
 - ✂️ Reduced image size through multi-stage build and file cleanup.
 - 👀 Use the image to run module tests and create code coverage reports.
 - 🏥 Image has a built-in health check.
-- 🌐 Built-in nginx reverse proxy. 
+- 🌐 Built-in nginx reverse proxy.
 
 Source: <https://github.com/Mint-System/Odoo-Build/tree/main/images/odoo/>
 
@@ -30,15 +32,21 @@ Changelog: <https://odoo.build/images/odoo/CHANGELOG.html>
 
 ## Usage
 
-The Mint System Odoo image runs with a very basic configuration, but can also be highly customized with environment variables.
+The Mint System Odoo image runs with a very basic configuration, but can also be highly
+customized with environment variables.
 
 Supported tags:
 
-- [`19.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/19.0.20260119), [`19.0`](https://hub.docker.com/layers/mintsystem/odoo/19.0)
-- [`18.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/18.0.20260119), [`18.0`](https://hub.docker.com/layers/mintsystem/odoo/18.0)
-- [`17.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/17.0.20260119), [`17.0`](https://hub.docker.com/layers/mintsystem/odoo/17.0)
-- [`16.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/16.0.20260119), [`16.0`](https://hub.docker.com/layers/mintsystem/odoo/16.0)
-- [`15.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/15.0.20260119), [`15.0`](https://hub.docker.com/layers/mintsystem/odoo/15.0)
+- [`19.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/19.0.20260119),
+  [`19.0`](https://hub.docker.com/layers/mintsystem/odoo/19.0)
+- [`18.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/18.0.20260119),
+  [`18.0`](https://hub.docker.com/layers/mintsystem/odoo/18.0)
+- [`17.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/17.0.20260119),
+  [`17.0`](https://hub.docker.com/layers/mintsystem/odoo/17.0)
+- [`16.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/16.0.20260119),
+  [`16.0`](https://hub.docker.com/layers/mintsystem/odoo/16.0)
+- [`15.0.20260119`](https://hub.docker.com/layers/mintsystem/odoo/15.0.20260119),
+  [`15.0`](https://hub.docker.com/layers/mintsystem/odoo/15.0)
 
 ### Minimal
 
@@ -266,11 +274,16 @@ docker compose exec odoo update-modules
 
 All of these commands use the `DB_NAME` as target database.
 
-The `update-modules` command uses[click-odoo-contrib](https://github.com/acsone/click-odoo-contrib) to update all Odoo modules. On the first run each installed module is updated and a checksum is computed and stored in the database. On subsequent executions the update is only performed for modules with a different checksum.
+The `update-modules` command
+uses[click-odoo-contrib](https://github.com/acsone/click-odoo-contrib) to update all
+Odoo modules. On the first run each installed module is updated and a checksum is
+computed and stored in the database. On subsequent executions the update is only
+performed for modules with a different checksum.
 
 ### Analyze
 
-With the [manifestoo](https://github.com/acsone/manifestoo) cli you can query the module manifest files.
+With the [manifestoo](https://github.com/acsone/manifestoo) cli you can query the module
+manifest files.
 
 List all modules:
 
@@ -296,7 +309,8 @@ docker exec odoo run-tests
 
 ## Environment Variables
 
-The container can be configured with environment variables. This section shows all the variables in detail:
+The container can be configured with environment variables. This section shows all the
+variables in detail:
 
 ### Database Connection
 
@@ -355,8 +369,10 @@ The image can clone git repositories.
 - `GIT_AUTHOR_NAME`: Set user name global git config.
 - `GIT_AUTHOR_EMAIL`: Set user email global git config.
 - `GIT_SSH_PUBLIC_KEY`: Public key for SSH connection.
-- `GIT_SSH_PRIVATE_KEY`: Base64 encoded private key for SSH connection: `cat ~/.ssh/id_ed2551 | base64 -w0`
-- `SSH_ID_ALGORITHM`: Filename and algorithm of the SSH key file. Default is `id_ed25519`
+- `GIT_SSH_PRIVATE_KEY`: Base64 encoded private key for SSH connection:
+  `cat ~/.ssh/id_ed2551 | base64 -w0`
+- `SSH_ID_ALGORITHM`: Filename and algorithm of the SSH key file. Default is
+  `id_ed25519`
 - `GITHUB_USERNAME` GitHub username for https git clone and archive download.
 - `GITHUB_PAT`: GitHub access token for https git clone and archive download.
 - `GITLAB_URL`: Url of GitLab instance. Default is `https://gitlab.com`.
@@ -365,7 +381,8 @@ The image can clone git repositories.
 - `FORGEJO_URL`: Url of Forgejo instance. Default is `https://codeberg.org`.
 - `FORGEJO_USERNAME`: Forgejo Username for https git clone.
 - `FORGEJO_PAT`: Forgejo access token for https git clone and archive download.
-- `ADDONS_GIT_REPOS` Comma or line-break seperated list of git clone urls appended with `#` and branch name.
+- `ADDONS_GIT_REPOS` Comma or line-break seperated list of git clone urls appended with
+  `#` and branch name.
 
 You can use https and git urls for `ADDONS_GIT_REPOS`:
 
@@ -374,19 +391,23 @@ ADDONS_GIT_REPOS=git@github.com:OCA/server-tools#18.0,git@github.com:Mint-System
 ADDONS_GIT_REPOS=https://github.com/OCA/server-tools#18.0,https://github.com/Mint-System/Odoo-Apps-Server-Tools
 ```
 
-If you use a git url, make sure a valid SSH private/public key is defined. Branch name fallback is the Odoo version.
+If you use a git url, make sure a valid SSH private/public key is defined. Branch name
+fallback is the Odoo version.
 
 ### Addons Path
 
-The entrypoint script searches for module folders in the addons path and creates a new addons path.
+The entrypoint script searches for module folders in the addons path and creates a new
+addons path.
 
-- `ODOO_ADDONS_PATH` Comma seperated list of container paths pointing to addon folders. Default is:
+- `ODOO_ADDONS_PATH` Comma seperated list of container paths pointing to addon folders.
+  Default is:
   - `/mnt/extra-addons` Default location for custom modules.
   - `/var/lib/odoo/enterprise` Reserved location for Odoo enterprise modules.
   - `/var/lib/odoo/git` Reserved location for git repos.
   - `TEST_ADDONS_DIR` Variable location for module testing.
   - `/opt/odoo/addons` Reserved location for Odoo community modules.
-- `ODOO_ENTERPRISE_PATH` Odoo Enterprise is cloned to this folder. Default is `/var/lib/odoo/enterprise`.
+- `ODOO_ENTERPRISE_PATH` Odoo Enterprise is cloned to this folder. Default is
+  `/var/lib/odoo/enterprise`.
 
 ### Initialize
 
@@ -395,16 +416,19 @@ Set these environment variables for the database init:
 - `ODOO_INIT_LOGIN` Username of the admin user. Default is `admin`.
 - `ODOO_INIT_PASSWORD` Password of the admin user. Default is `admin`.
 - `ODOO_INIT_LANG` Language used for database init. Default is `en_US`.
-- `ODOO_INIT_ADDONS` Provide comma separated list of modules for database init. Default is `web`.
+- `ODOO_INIT_ADDONS` Provide comma separated list of modules for database init. Default
+  is `web`.
 - `WITHOUT_DEMO` If enabled Odoo inits the database with demo data. Default is `True`.
 
 ### Server Environment
 
 The Odoo server can be configured using these env vars:
 
-- `RUNNING_ENV` Provide an environment name. Can be accessed with `config.get("environment")`.
+- `RUNNING_ENV` Provide an environment name. Can be accessed with
+  `config.get("environment")`.
 - `PYTHON_INSTALL` Comma or line-break seperated list of python packages.
-- `SERVER_WIDE_MODULES` Comma separated list of modules to load with server. The variable will be prefixed with `base,web`.
+- `SERVER_WIDE_MODULES` Comma separated list of modules to load with server. The
+  variable will be prefixed with `base,web`.
 - `SESSION_DB_URI` Connection string for storing session data in database.
 - `PROXY_MODE` Enable server proxy mode. Default is `True`.
 - `LOG_LEVEL` Set the logging level. Default is `info`.
@@ -429,25 +453,34 @@ Odoo is executed as a multi-threaded Python process.
 - `LIMIT_REQUEST` Maximum number of requests per worker. Default is `65536`.
 - `LIMIT_TIME_CPU` Maximum cpu time per request. Default is `60`.
 - `LIMIT_TIME_REAL` Maximum real time per request. Default is `120`.
-- `LIMIT_MEMORY_HARD` Hard memory limit for the Odoo process. Default is `2560 * 1024 * 1024`.
-- `LIMIT_MEMORY_SOFT` Soft memory limit for the Odoo process. Default is `2048 * 1024 * 1024`.
-- `LIMIT_MEMORY_HARD_GEVENT` Set hard memory limit for the gevent process. Default is `False`.
-- `LIMIT_MEMORY_SOFT_GEVENT` Set soft memory limit for the gevent process. Default is `False`.
+- `LIMIT_MEMORY_HARD` Hard memory limit for the Odoo process. Default is
+  `2560 * 1024 * 1024`.
+- `LIMIT_MEMORY_SOFT` Soft memory limit for the Odoo process. Default is
+  `2048 * 1024 * 1024`.
+- `LIMIT_MEMORY_HARD_GEVENT` Set hard memory limit for the gevent process. Default is
+  `False`.
+- `LIMIT_MEMORY_SOFT_GEVENT` Set soft memory limit for the gevent process. Default is
+  `False`.
 
-To calculate the amount of workers multply the amount of cpu cores by 2. To get the cpu core count run `nproc`.
+To calculate the amount of workers multply the amount of cpu cores by 2. To get the cpu
+core count run `nproc`.
 
 ### Module Auto Install
 
-With the `module_change_auto_install` module you can disable the auto installation of specific modules.
+With the `module_change_auto_install` module you can disable the auto installation of
+specific modules.
 
-- `MODULE_AUTO_INSTALL_DISABLED` Comma separated list of modules that should be auto installed. Requires `module_change_auto_install` in `SERVER_WIDE_MODULES`.
+- `MODULE_AUTO_INSTALL_DISABLED` Comma separated list of modules that should be auto
+  installed. Requires `module_change_auto_install` in `SERVER_WIDE_MODULES`.
 
 ### Module Auto Update
 
 Updating translations and the module list can be automated.
 
-- `AUTO_UPDATE_TRANSLATIONS` If enabled, translatiosn will be updated when the container starts. Default is `False`.
-- `AUTO_UPDATE_MODULES_LIST` If enabled, the modules list will be updated when the container starts. Default is `False`.
+- `AUTO_UPDATE_TRANSLATIONS` If enabled, translatiosn will be updated when the container
+  starts. Default is `False`.
+- `AUTO_UPDATE_MODULES_LIST` If enabled, the modules list will be updated when the
+  container starts. Default is `False`.
 
 ### Testing
 
@@ -466,27 +499,36 @@ If you have additional config for Odoo use the vars:
 
 ### Naming
 
-This image tries to stay compatible with other images such as <https://github.com/acsone/odoo-bedrock> or <https://github.com/Tecnativa/doodba>.
+This image tries to stay compatible with other images such as
+<https://github.com/acsone/odoo-bedrock> or <https://github.com/Tecnativa/doodba>.
 
-Compatibility with other images is mainly achieved by using the same environments variables and offering the same functionality.
+Compatibility with other images is mainly achieved by using the same environments
+variables and offering the same functionality.
 
 ## Files
 
 ### pyproject.toml
 
-When mounting your `pyproject.toml` to `/var/lib/odoo/pyproject.toml` the `sync-python-project` script will run `uv sync --active` in the directory.
+When mounting your `pyproject.toml` to `/var/lib/odoo/pyproject.toml` the
+`sync-python-project` script will run `uv sync --active` in the directory.
 
 ### repos.yml
 
-The image includes [git-aggregator](https://github.com/acsone/git-aggregator). It allows to clone and merge addon repos from different origins and branches.
+The image includes [git-aggregator](https://github.com/acsone/git-aggregator). It allows
+to clone and merge addon repos from different origins and branches.
 
-When mounting the `repos.yml` to `/var/lib/odoo/git/repos.yml` the `aggregate-git-repos` script will run the `gitaggregate` command in the directory.
+When mounting the `repos.yml` to `/var/lib/odoo/git/repos.yml` the `aggregate-git-repos`
+script will run the `gitaggregate` command in the directory.
 
 ### nginx.conf
 
-The image includes the [nginx web server](https://nginx.org/). If the container is started with `odoo-nginx` in addition to the Odoo process a nginx reverese proxy is started. The nginx config file is loaded from `/etc/nginx/nginx.conf` and the process is listening on port `8080`.
+The image includes the [nginx web server](https://nginx.org/). If the container is
+started with `odoo-nginx` in addition to the Odoo process a nginx reverese proxy is
+started. The nginx config file is loaded from `/etc/nginx/nginx.conf` and the process is
+listening on port `8080`.
 
-Make sure to set `WORKERS` to `1` or more, otherwise the real-time connection of Odoo will not work. Having one or more workers will start the gevent listener on port `8072`.
+Make sure to set `WORKERS` to `1` or more, otherwise the real-time connection of Odoo
+will not work. Having one or more workers will start the gevent listener on port `8072`.
 
 ## Build
 
@@ -512,7 +554,9 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx poppler-utils tesseract
 
 ## Develop
 
-See [Odoo Build > Build and publish container image](https://odoo.build/#build-and-publish-container-image) for details.
+See
+[Odoo Build > Build and publish container image](https://odoo.build/#build-and-publish-container-image)
+for details.
 
 ### Internal paths
 
@@ -531,7 +575,8 @@ The most important image paths are:
 
 ### Capture memory profile
 
-With [memray](https://bloomberg.github.io/memray/) you can visualize the memory usage of Odoo.
+With [memray](https://bloomberg.github.io/memray/) you can visualize the memory usage of
+Odoo.
 
 Run Odoo with memray.
 
@@ -550,7 +595,8 @@ docker cp odoo:/var/lib/odoo/memray-flamegraph-capture.html ./tmp/
 
 ### Scripts
 
-Under the hood the image uses several scripts to manage Odoo. Make yourself familiar with these scripts:
+Under the hood the image uses several scripts to manage Odoo. Make yourself familiar
+with these scripts:
 
 - [`add-ssh-key`](https://github.com/Mint-System/Odoo-Build/blob/main/images/odoo/bin/add-ssh-key)
 - [`aggregate-git-repos`](https://github.com/Mint-System/Odoo-Build/blob/main/images/odoo/bin/aggregate-git-repos)

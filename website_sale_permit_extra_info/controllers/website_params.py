@@ -1,5 +1,4 @@
 import logging
-from datetime import timedelta
 
 from odoo import fields, http
 from odoo.http import request

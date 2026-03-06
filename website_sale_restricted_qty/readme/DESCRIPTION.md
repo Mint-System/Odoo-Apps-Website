@@ -1,1 +1,1 @@
-$MODULE_SUMMARY
+Set minimum order quantity for product variants.

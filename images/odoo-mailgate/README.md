@@ -1,11 +1,11 @@
-[Mint System Odoo Mailgate](https://odoo.build/images/odoo-mailgate/)
-===
+# [Mint System Odoo Mailgate](https://odoo.build/images/odoo-mailgate/)
 
 [![Docker pulls](https://img.shields.io/docker/pulls/mintsystem/odoo-mailgate)](https://hub.docker.com/r/mintsystem/odoo-mailgate/)
 
 Receive and forward emails to Odoo.
 
-The Odoo Mailgate Docker image integrates a Postfix mail server and the odoo-mailgate script.
+The Odoo Mailgate Docker image integrates a Postfix mail server and the odoo-mailgate
+script.
 
 Source: <https://github.com/Mint-System/Odoo-Build/tree/main/images/odoo-mailgate>
 
