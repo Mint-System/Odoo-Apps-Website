@@ -10,18 +10,21 @@
             <t t-if="product.is_sale_own_min_qty_set and product.sale_min_qty">
                 <span></span>
             </t>
+            <t t-else="">
+                <a t-attf-href="#" class="btn btn-link js_add_cart_json" aria-label="Remove one" title="Remove one">
+                    <i class="fa fa-minus"/>
+                </a>
+            </t>
         </xpath>
 
         <xpath expr="//input[@name='add_qty']" position="replace">
+            <t t-set="display_qty" t-value="1" />
             <t t-if="product.is_sale_own_min_qty_set"> 
                 <t t-set="min_qty" t-value="product.sale_min_qty or 1" />
                 <t
                     t-set="display_qty"
                     t-value="int(min_qty) if float(min_qty).is_integer() else min_qty"
                 />
-            </t>
-            <t t-else="">
-                <t t-set="display_qty" t-valuer="1" />
             </t>
             <input
                 type="text"
