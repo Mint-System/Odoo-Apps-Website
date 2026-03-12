@@ -1,47 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="products" inherit_id="website_sale.products">
-        <xpath expr="(//t[@t-call='website_sale.pricelist_list'])[1]" position="attributes">
-             <attribute name="t-valuef">'d-none d-lg-none'</attribute>
+        <xpath expr="//t[@t-call='website_sale.pricelist_list']/t[@t-set='_classes']" position="attributes">
+             <attribute name="t-valuef">d-none d-lg-none</attribute>
+        </xpath>
+
+        <xpath expr="//section[@id='o_wsale_products_grid']" position="before">
+            <t t-call="website_sale_permit_extra_info.pricelist_checkboxes"/>
+        </xpath>
+    </template>
+
+    <template id="product" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='product_detail_main']" position="before">
+            <t t-call="website_sale_permit_extra_info.pricelist_checkboxes"/>
         </xpath>
     </template>
 
 
+    <template id="pricelist_list" inherit_id="website_sale.pricelist_list">
+        <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="attributes">
+            <attribute name="t-attf-class">o_pricelist_dropdown dropdown d-lg-none #{_classes if hasPricelistDropdown else 'd-none'}</attribute>
+        </xpath>
+    </template>
 
+    <template id="pricelist_checkboxes" name="Pricelist Checkbox List">
+        <t name="Pricelists Checkboxes" t-name="pricelist_checkboxes">
+            <t t-set="website_sale_pricelists" t-value="website.get_pricelist_available(show_visible=True)" />
+            <t t-set="hasPricelistCheckbox" t-value="website_sale_pricelists and len(website_sale_pricelists) > 1"/>
+            <t t-set="pricelist" t-value="website.pricelist_id"/>
+            <div t-attf-class="container mt-4 d-none d-lg-block #{'d-none' if not hasPricelistCheckbox else ''}">
 
-
-
-
-
-
-
-    <template
-        id="website_sale_pricelist_checkboxes"
-        inherit_id="website_sale.pricelist_list"
-        name="Website Pricelist Checkbox Selector"
-    >
-        <xpath
-            expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]"
-            position="replace"
-        >
-            <div class="o_pricelist_checkboxes my-2">
-                <!-- Pricelist choices -->
-                <t t-set="pricelists" t-value="website_sale_pricelists" />
-                <t
-                    t-set="filtered_pricelists"
-                    t-value="
-                    pricelists.filtered(
-                        lambda p:
-                            (category and category in p.public_category_ids)
-                            or
-                            (not category and bool(p.public_category_ids))
-                    )
-                "
-                />
-
-                <!-- If only one pricelist is available, auto-select it and reload page -->
-                <t t-if="len(filtered_pricelists) == 1">
+                <t t-if="len(website_sale_pricelists) == 1">
                     <t
                         t-set="auto_selected_pricelist"
                         t-value="filtered_pricelists[0]"
@@ -56,24 +45,15 @@
                     </t>
                 </t>
 
-                <!-- Only render the radio buttons and header if there's more than one pricelist -->
-                <t t-if="len(filtered_pricelists) > 1">
-                    <!-- Header / helper text -->
+                <t t-if="len(website_sale_pricelists) > 1">
                     <div
                         class="mb-2 fw-semibold oe_structure"
                         id="website_checkboxes_intro_text"
                     >
-                        <!-- <t t-if="pricelist and pricelist.is_dummy">
-                            Bitte wählen Sie ein Preismodell.
-                        </t>
-                        <t t-else="">
-                            <t t-esc="pricelist.name"/>
-                        </t> -->
-
                             Bitte wählen Sie das zutreffende Patent aus:
                     </div>
 
-                    <t t-foreach="filtered_pricelists" t-as="pl">
+                    <t t-foreach="website_sale_pricelists" t-as="pl">
                         <div class="form-check">
                             <input
                                 type="radio"
@@ -90,6 +70,10 @@
                     </t>
                 </t>
             </div>
-        </xpath>
+        </t>
     </template>
+
 </odoo>
+
+
+

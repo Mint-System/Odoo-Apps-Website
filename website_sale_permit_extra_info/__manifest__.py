@@ -13,7 +13,8 @@
     "depends": ["website_sale", "sale_order_permit", "calendar_public_holiday"],
     "data": [
         "views/website_templates.xml",
-        "views/website_products.xml",
+        # "views/website_products.xml",
+        "views/templates.xml"
     ],
     "installable": True,
     "application": False,
