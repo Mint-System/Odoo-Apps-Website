@@ -202,7 +202,7 @@
 
                                     <div
                                         data-name="Field"
-                                        class="s_website_form_field mb-3 col-12 s_website_form_custom"
+                                        class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required"
                                         data-type="binary"
                                         data-translated-name="Feld"
                                     >
@@ -216,7 +216,7 @@
                                             >
                                                 <span
                                                     class="s_website_form_label_content"
-                                                >Foto (obligatorisch für Jahrespatentbesitzer)<br
+                                                >Foto<span class="s_website_form_mark"> *</span><br
                                                 /></span>
                                                 <small
                                                 >[.jpg, .jpeg, .png, .tiff]</small>

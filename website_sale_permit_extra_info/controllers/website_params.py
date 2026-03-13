@@ -37,7 +37,7 @@ class WebsiteParamController(http.Controller):
         return sorted(d for d in dates if d >= today)
 
     def get_photo_need(self, duration):
-        if duration == "year":
+        if duration in ["year", "week", "day"]:
             return True
         return False
 
