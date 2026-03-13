@@ -4,10 +4,6 @@
         <xpath expr="//t[@t-call='website_sale.pricelist_list']/t[@t-set='_classes']" position="attributes">
              <attribute name="t-valuef">d-none d-lg-none</attribute>
         </xpath>
-
-        <xpath expr="//section[@id='o_wsale_products_grid']" position="before">
-            <t t-call="website_sale_permit_extra_info.pricelist_checkboxes"/>
-        </xpath>
     </template>
 
     <template id="product" inherit_id="website_sale.product">
@@ -16,10 +12,29 @@
         </xpath>
     </template>
 
-
     <template id="pricelist_list" inherit_id="website_sale.pricelist_list">
-        <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="attributes">
+       <!-- easy solution if preselection does not care --> 
+       <!--  <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="attributes">
             <attribute name="t-attf-class">o_pricelist_dropdown dropdown d-lg-none #{_classes if hasPricelistDropdown else 'd-none'}</attribute>
+        </xpath> -->
+        <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
+            <div t-attf-class="o_pricelist_dropdown d-lg-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}">
+                <t t-cache="pricelist,website_sale_pricelists,navClass">
+                    <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
+                        <t t-esc="pricelist and pricelist.name or 'Select Price List'" />
+                    </a>
+                    <div class="dropdown-menu" role="menu">
+                        <a role="menuitem" href="#" class="dropdown-item" onclick="return false;">
+                            <span class="switcher_pricelist small">Bitte wählen Sie</span>
+                        </a>
+                        <t t-foreach="website_sale_pricelists" t-as="pl">
+                            <a role="menuitem" t-att-href="'/shop/change_pricelist/%s' % pl.id" class="dropdown-item">
+                                <span class="switcher_pricelist small" t-att-data-pl_id="pl.id" t-esc="pl.name"/>
+                            </a>
+                        </t>
+                    </div>
+                </t>
+            </div>
         </xpath>
     </template>
 
@@ -33,7 +48,7 @@
                 <t t-if="len(website_sale_pricelists) == 1">
                     <t
                         t-set="auto_selected_pricelist"
-                        t-value="filtered_pricelists[0]"
+                        t-value="website_sale_pricelists[0]"
                     />
                     <t t-if="auto_selected_pricelist.id != pricelist.id">
                         <!-- Auto-select the only pricelist by redirecting -->
@@ -54,13 +69,14 @@
                     </div>
 
                     <t t-foreach="website_sale_pricelists" t-as="pl">
+
                         <div class="form-check">
                             <input
                                 type="radio"
                                 name="pricelist"
                                 class="form-check-input"
                                 t-att-id="'pl_%s' % pl.id"
-                                t-att-checked="pl.id == pricelist.id"
+                                t-att-checked="pl.id == pricelist.id and pricelist.id != 0"
                                 t-att-onchange="'window.location.href=\'/shop/change_pricelist/%s\'' % pl.id"
                             />
                             <label class="form-check-label" t-att-for="'pl_%s' % pl.id">
@@ -72,7 +88,6 @@
             </div>
         </t>
     </template>
-
 </odoo>
 
 
