@@ -25,23 +25,10 @@
                     website_sale_pricelists.filtered(lambda p: (product and product.public_categ_ids in p.public_category_ids) and p.sequence != 0)        
                 "/>
                 <t t-cache="pricelist,website_sale_pricelists,navClass">
-                  <!--   <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
-                        <t t-esc="dummy_pricelist and dummy_pricelist.name or 'Select Price List'" />
-                    </a> -->
-                    <!-- <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
-                        <t t-esc="selected_pricelist.name or dummy_pricelist.name or 'Select Price List'" />
-                    </a> -->
                     <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
                         <t t-esc="pricelist and pricelist.name or dummy_pricelist.name"/>
                     </a>
                     <div class="dropdown-menu" role="menu">
-                       <!--  <a role="menuitem" href="#" class="dropdown-item" onclick="return false;">
-                            <span class="switcher_pricelist small">Bitte wählen Sie</span>
-                        </a> -->
-                       <!--  <a role="menuitem" href="#" class="dropdown-item" t-att-value="0" t-att-selected="not pricelist_id" onclick="return false;">
-                            <span class="switcher_pricelist small" t-esc="dummy_pricelist.name"/>
-                        </a> -->
-                        <!-- <option t-att-value="0" t-att-selected="not pricelist_id">Please select</option> -->
                         <t t-foreach="filtered_pricelists" t-as="pl">
                             <a role="menuitem" t-att-href="'/shop/change_pricelist/%s' % pl.id" class="dropdown-item">
                                 <span class="switcher_pricelist small" t-att-data-pl_id="pl.id" t-esc="pl.name"/>
