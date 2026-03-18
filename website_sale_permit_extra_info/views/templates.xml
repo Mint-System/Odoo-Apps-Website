@@ -18,13 +18,13 @@
             <attribute name="t-attf-class">o_pricelist_dropdown dropdown d-lg-none #{_classes if hasPricelistDropdown else 'd-none'}</attribute>
         </xpath> -->
         <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
-            <div t-attf-class="o_pricelist_dropdown d-lg-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}">
+            <div t-attf-class="o_pricelist_dropdown d-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}">
                 <t t-set="dummy_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.sequence == 0)[:1]"/>
                 <t t-set="selected_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.id == pricelist.id)[:1]"/>
                 <t t-set="filtered_pricelists" t-value="
                     website_sale_pricelists.filtered(lambda p: (product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids)) and p.sequence != 0)        
                 "/>
-                <t t-cache="pricelist,website_sale_pricelists,navClass">
+                <t>
                     <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
                         <t t-esc="pricelist and pricelist.name or dummy_pricelist.name"/>
                     </a>
@@ -45,7 +45,8 @@
             <t t-set="website_sale_pricelists" t-value="website.get_pricelist_available(show_visible=True)" />
             <t t-set="hasPricelistCheckbox" t-value="website_sale_pricelists and len(website_sale_pricelists) > 1"/>
             <t t-set="pricelist" t-value="website.pricelist_id"/>
-            <div t-attf-class="container mt-4 d-none d-lg-block #{'d-none' if not hasPricelistCheckbox else ''}">
+            <!-- <div t-attf-class="container mt-4 d-none d-lg-block #{'d-none' if not hasPricelistCheckbox else ''}"> -->
+            <div t-attf-class="container mt-4 d-block #{'d-none' if not hasPricelistCheckbox else ''}">
                 <t t-set="filtered_pricelists" t-value="
                     website_sale_pricelists.filtered(lambda p: product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids))        
                 "/>
