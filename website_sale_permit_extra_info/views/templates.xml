@@ -18,7 +18,7 @@
             <attribute name="t-attf-class">o_pricelist_dropdown dropdown d-lg-none #{_classes if hasPricelistDropdown else 'd-none'}</attribute>
         </xpath> -->
         <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
-            <div t-attf-class="o_pricelist_dropdown d-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}">
+            <div t-attf-class="o_pricelist_dropdown d-none d-lg-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}">
                 <t t-set="dummy_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.sequence == 0)[:1]"/>
                 <t t-set="selected_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.id == pricelist.id)[:1]"/>
                 <t t-set="filtered_pricelists" t-value="
