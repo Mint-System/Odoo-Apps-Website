@@ -22,7 +22,7 @@
                 <t t-set="dummy_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.sequence == 0)[:1]"/>
                 <t t-set="selected_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.id == pricelist.id)[:1]"/>
                 <t t-set="filtered_pricelists" t-value="
-                    website_sale_pricelists.filtered(lambda p: (product and product.public_categ_ids in p.public_category_ids) and p.sequence != 0)        
+                    website_sale_pricelists.filtered(lambda p: (product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids)) and p.sequence != 0)        
                 "/>
                 <t t-cache="pricelist,website_sale_pricelists,navClass">
                     <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
