@@ -47,7 +47,7 @@
             <t t-set="pricelist" t-value="website.pricelist_id"/>
             <div t-attf-class="container mt-4 d-none d-lg-block #{'d-none' if not hasPricelistCheckbox else ''}">
                 <t t-set="filtered_pricelists" t-value="
-                    website_sale_pricelists.filtered(lambda p: product and product.public_categ_ids in p.public_category_ids)        
+                    website_sale_pricelists.filtered(lambda p: product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids))        
                 "/>
 
                 <t t-if="len(filtered_pricelists) == 1">
