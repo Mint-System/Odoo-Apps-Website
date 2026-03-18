@@ -160,11 +160,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row s_website_form_field_description small form-text text-muted">
-                                        <a href="/web/content/__custom__.strahlnergebiete" target="_blank">
-                                            Karte der Strahlnergebiete
-                                        </a>
-                                    </div>
+
+                                    <t t-set="doc" t-value="request.env.ref('__custom__.strahlnergebiete', raise_if_not_found=False)"/>
+
+                                    <t t-if="doc and not has_year_duration">
+                                        <div class="row s_website_form_field_description small form-text text-muted">
+                                            <a t-att-href="'/web/content/%s' % doc.id" target="_blank">
+                                                Karte der Strahlnergebiete
+                                            </a>
+                                        </div>
+                                            
+                                    </t>
+
                                     <div
                                         data-name="Geburtstag"
                                         class="s_website_form_field mb-3 col-12 s_website_form_custom"
