@@ -6,15 +6,14 @@
         priority="1000"
     >
 
-        <xpath expr="//a[hasclass('js_add_cart_json')][1]" position="replace">
-            <t t-if="product.is_sale_own_min_qty_set and product.sale_min_qty">
-                <span></span>
-            </t>
-            <t t-else="">
-                <a t-attf-href="#" class="btn btn-link js_add_cart_json" aria-label="Remove one" title="Remove one">
-                    <i class="fa fa-minus"/>
-                </a>
-            </t>
+        <xpath expr="//a[hasclass('js_add_cart_json')][1]" position="attributes">
+            <attribute name="t-attf-id">minus_btn_{{ product.id }}</attribute>
+        </xpath>
+        <xpath expr="//a[hasclass('js_add_cart_json')][2]" position="attributes">
+            <attribute name="t-attf-id">plus_btn_{{ product.id }}</attribute>
+        </xpath>
+        <xpath expr="//input[@name='add_qty']" position="attributes">
+            <attribute name="t-attf-id">qty_input_{{ product.id }}</attribute>
         </xpath>
 
         <xpath expr="//input[@name='add_qty']" position="replace">
@@ -29,9 +28,10 @@
             <input
                 type="text"
                 class="form-control quantity text-center"
-                t-att-data-min="display_qty"
+                t-att-data-min-qty="min_qty"
                 name="add_qty"
                 t-att-value="display_qty"
+                t-att-data-product-id="product.id"
             />
         </xpath>
     </template>

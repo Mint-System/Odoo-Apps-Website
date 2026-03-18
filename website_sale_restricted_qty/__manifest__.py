@@ -12,6 +12,11 @@
     "license": "AGPL-3",
     "depends": ["sale_restricted_qty", "website_sale"],
     "data": ["views/website_sale_product_quantity.xml"],
+    'assets': {
+        'web.assets_frontend': [
+            'website_sale_restricted_qty/static/src/js/visibilty_control.js',
+        ],
+    },
     "installable": True,
     "application": False,
     "auto_install": False,
