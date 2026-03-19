@@ -11,10 +11,7 @@
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["website_sale", "sale_order_permit", "calendar_public_holiday"],
-    "data": [
-        "views/website_templates.xml",
-        "views/templates.xml"
-    ],
+    "data": ["views/website_templates.xml", "views/templates.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

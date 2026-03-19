@@ -5,7 +5,6 @@
         inherit_id="website_sale.product_quantity"
         priority="1000"
     >
-
         <xpath expr="//a[hasclass('js_add_cart_json')][1]" position="attributes">
             <attribute name="t-attf-id">minus_btn_{{ product.id }}</attribute>
         </xpath>
@@ -18,7 +17,7 @@
 
         <xpath expr="//input[@name='add_qty']" position="replace">
             <t t-set="display_qty" t-value="1" />
-            <t t-if="product.is_sale_own_min_qty_set"> 
+            <t t-if="product.is_sale_own_min_qty_set">
                 <t t-set="min_qty" t-value="product.sale_min_qty or 1" />
                 <t
                     t-set="display_qty"

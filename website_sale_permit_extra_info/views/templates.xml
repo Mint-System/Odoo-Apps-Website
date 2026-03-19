@@ -1,37 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="products" inherit_id="website_sale.products">
-        <xpath expr="//t[@t-call='website_sale.pricelist_list']/t[@t-set='_classes']" position="attributes">
-             <attribute name="t-valuef">d-none d-lg-none</attribute>
+        <xpath
+            expr="//t[@t-call='website_sale.pricelist_list']/t[@t-set='_classes']"
+            position="attributes"
+        >
+            <attribute name="t-valuef">d-none d-lg-none</attribute>
         </xpath>
     </template>
 
     <template id="product" inherit_id="website_sale.product">
         <xpath expr="//div[@id='product_detail_main']" position="before">
-            <t t-call="website_sale_permit_extra_info.pricelist_checkboxes"/>
+            <t t-call="website_sale_permit_extra_info.pricelist_checkboxes" />
         </xpath>
     </template>
 
     <template id="pricelist_list" inherit_id="website_sale.pricelist_list">
-       <!-- easy solution if preselection does not care --> 
-       <!--  <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="attributes">
+        <!-- easy solution if preselection does not care -->
+        <!--  <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="attributes">
             <attribute name="t-attf-class">o_pricelist_dropdown dropdown d-lg-none #{_classes if hasPricelistDropdown else 'd-none'}</attribute>
         </xpath> -->
-        <xpath expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]" position="replace">
-            <div t-attf-class="o_pricelist_dropdown d-none d-lg-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}">
-                <t t-set="dummy_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.sequence == 0)[:1]"/>
-                <t t-set="selected_pricelist" t-value="website_sale_pricelists.filtered(lambda p: p.id == pricelist.id)[:1]"/>
-                <t t-set="filtered_pricelists" t-value="
-                    website_sale_pricelists.filtered(lambda p: (product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids)) and p.sequence != 0)        
-                "/>
+        <xpath
+            expr="//div[contains(@t-attf-class, 'o_pricelist_dropdown')]"
+            position="replace"
+        >
+            <div
+                t-attf-class="o_pricelist_dropdown d-none d-lg-none dropdown #{_classes if hasPricelistDropdown else 'd-none'}"
+            >
+                <t
+                    t-set="dummy_pricelist"
+                    t-value="website_sale_pricelists.filtered(lambda p: p.sequence == 0)[:1]"
+                />
+                <t
+                    t-set="selected_pricelist"
+                    t-value="website_sale_pricelists.filtered(lambda p: p.id == pricelist.id)[:1]"
+                />
+                <t
+                    t-set="filtered_pricelists"
+                    t-value="
+                    website_sale_pricelists.filtered(lambda p: (product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids)) and p.sequence != 0)
+                "
+                />
                 <t>
-                    <a role="button" href="#" t-attf-class="dropdown-toggle btn btn-{{navClass}}" data-bs-toggle="dropdown">
-                        <t t-esc="pricelist and pricelist.name or dummy_pricelist.name"/>
+                    <a
+                        role="button"
+                        href="#"
+                        t-attf-class="dropdown-toggle btn btn-{{navClass}}"
+                        data-bs-toggle="dropdown"
+                    >
+                        <t
+                            t-esc="pricelist and pricelist.name or dummy_pricelist.name"
+                        />
                     </a>
                     <div class="dropdown-menu" role="menu">
                         <t t-foreach="filtered_pricelists" t-as="pl">
-                            <a role="menuitem" t-att-href="'/shop/change_pricelist/%s' % pl.id" class="dropdown-item">
-                                <span class="switcher_pricelist small" t-att-data-pl_id="pl.id" t-esc="pl.name"/>
+                            <a
+                                role="menuitem"
+                                t-att-href="'/shop/change_pricelist/%s' % pl.id"
+                                class="dropdown-item"
+                            >
+                                <span
+                                    class="switcher_pricelist small"
+                                    t-att-data-pl_id="pl.id"
+                                    t-esc="pl.name"
+                                />
                             </a>
                         </t>
                     </div>
@@ -42,14 +74,25 @@
 
     <template id="pricelist_checkboxes" name="Pricelist Checkbox List">
         <t name="Pricelists Checkboxes" t-name="pricelist_checkboxes">
-            <t t-set="website_sale_pricelists" t-value="website.get_pricelist_available(show_visible=True)" />
-            <t t-set="hasPricelistCheckbox" t-value="website_sale_pricelists and len(website_sale_pricelists) > 1"/>
-            <t t-set="pricelist" t-value="website.pricelist_id"/>
+            <t
+                t-set="website_sale_pricelists"
+                t-value="website.get_pricelist_available(show_visible=True)"
+            />
+            <t
+                t-set="hasPricelistCheckbox"
+                t-value="website_sale_pricelists and len(website_sale_pricelists) > 1"
+            />
+            <t t-set="pricelist" t-value="website.pricelist_id" />
             <!-- <div t-attf-class="container mt-4 d-none d-lg-block #{'d-none' if not hasPricelistCheckbox else ''}"> -->
-            <div t-attf-class="container mt-4 d-block #{'d-none' if not hasPricelistCheckbox else ''}">
-                <t t-set="filtered_pricelists" t-value="
-                    website_sale_pricelists.filtered(lambda p: product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids))        
-                "/>
+            <div
+                t-attf-class="container mt-4 d-block #{'d-none' if not hasPricelistCheckbox else ''}"
+            >
+                <t
+                    t-set="filtered_pricelists"
+                    t-value="
+                    website_sale_pricelists.filtered(lambda p: product and product.public_categ_ids and (product.public_categ_ids &amp; p.public_category_ids))
+                "
+                />
 
                 <t t-if="len(filtered_pricelists) == 1">
                     <t
@@ -75,7 +118,6 @@
                     </div>
 
                     <t t-foreach="filtered_pricelists" t-as="pl">
-
                         <div class="form-check">
                             <input
                                 type="radio"
@@ -95,6 +137,3 @@
         </t>
     </template>
 </odoo>
-
-
-

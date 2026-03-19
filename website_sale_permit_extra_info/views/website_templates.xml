@@ -161,15 +161,22 @@
                                         </div>
                                     </div>
 
-                                    <t t-set="doc" t-value="request.env.ref('__custom__.strahlnergebiete', raise_if_not_found=False)"/>
+                                    <t
+                                        t-set="doc"
+                                        t-value="request.env.ref('__custom__.strahlnergebiete', raise_if_not_found=False)"
+                                    />
 
                                     <t t-if="doc and not has_year_duration">
-                                        <div class="row s_website_form_field_description small form-text text-muted">
-                                            <a t-att-href="'/web/content/%s' % doc.id" target="_blank">
+                                        <div
+                                            class="row s_website_form_field_description small form-text text-muted"
+                                        >
+                                            <a
+                                                t-att-href="'/web/content/%s' % doc.id"
+                                                target="_blank"
+                                            >
                                                 Karte der Strahlnergebiete
                                             </a>
                                         </div>
-                                            
                                     </t>
 
                                     <div
@@ -228,8 +235,9 @@
                                             >
                                                 <span
                                                     class="s_website_form_label_content"
-                                                >Foto<span class="s_website_form_mark"> *</span><br
-                                                /></span>
+                                                >Foto<span
+                                                    class="s_website_form_mark"
+                                                > *</span><br /></span>
                                                 <small
                                                 >[.jpg, .jpeg, .png, .tiff]</small>
                                             </label>

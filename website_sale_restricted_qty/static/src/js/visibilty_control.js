@@ -3,20 +3,20 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 
 publicWidget.registry.MinQtyControl = publicWidget.Widget.extend({
-    selector: '#product_detail .css_quantity',
+    selector: "#product_detail .css_quantity",
 
     start() {
         this._apply();
     },
 
     events: {
-        'click .js_add_cart_json': '_onClick',
-        'change input.quantity': '_apply',
+        "click .js_add_cart_json": "_onClick",
+        "change input.quantity": "_apply",
     },
 
     _getElements() {
-        const input = this.el.querySelector('input.quantity');
-        const minusBtn = this.el.querySelector('.fa-minus')?.closest('a');
+        const input = this.el.querySelector("input.quantity");
+        const minusBtn = this.el.querySelector(".fa-minus")?.closest("a");
 
         if (!input) return null;
 
@@ -39,7 +39,7 @@ publicWidget.registry.MinQtyControl = publicWidget.Widget.extend({
         }
 
         if (els.minusBtn) {
-            els.minusBtn.classList.toggle('disabled', value <= els.minQty);
+            els.minusBtn.classList.toggle("disabled", value <= els.minQty);
         }
     },
 
