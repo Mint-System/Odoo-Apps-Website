@@ -1,6 +1,8 @@
 import logging
 
 from odoo.addons.web.controllers.home import Home, SIGN_UP_REQUEST_PARAMS
+from odoo.http import request
+from odoo.addons.website_sale.controllers.main import WebsiteSale
 from odoo.exceptions import UserError
 
 
@@ -26,3 +28,22 @@ class AuthSignupHomeFirstname(Home):
         if lang in supported_lang_codes:
             values['lang'] = lang
         return values
+
+
+
+class WebsiteSaleFirstname(WebsiteSale):
+
+    def _handle_extra_form_data(self, extra_form_data, address_values):
+        super()._handle_extra_form_data(extra_form_data, address_values)
+
+        order = request.website.sale_get_order()
+        partner = order.partner_id.sudo()
+
+        values = {}
+
+        if 'firstname' in extra_form_data:
+            values["firstname"] = extra_form_data.get('firstname')
+        if 'lastname' in extra_form_data:
+            values["lastname"] = extra_form_data.get('lastname')
+            
+        partner.write(values)
