@@ -14,6 +14,7 @@
     "data": [
         "views/address_views.xml",
         "views/auth_signup_views.xml",
+        "views/portal_templates.xml",
     ],
     "installable": True,
     "application": False,

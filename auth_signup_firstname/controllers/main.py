@@ -35,6 +35,7 @@ class WebsiteSaleFirstname(WebsiteSale):
 
     def _handle_extra_form_data(self, extra_form_data, address_values):
         super()._handle_extra_form_data(extra_form_data, address_values)
+        _logger.warning(f"###### address values: {address_values}")
 
         order = request.website.sale_get_order()
         partner = order.partner_id.sudo()
