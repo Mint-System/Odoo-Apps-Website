@@ -1,14 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="fields" inherit_id="auth_signup.fields">    
+    <template id="fields" inherit_id="auth_signup.fields">
         <xpath expr="//div[contains(@class, 'field-name')]" position="replace">
-             <div class="mb-3 field-firstname">
+            <div class="mb-3 field-firstname">
                 <label for="firstname">Your Firstname</label>
-                <input type="text" name="firstname" t-att-value="firstname" id="firstname" class="form-control form-control-sm" placeholder="e.g. John" required="required" t-att-readonly="'readonly' if only_passwords else None" t-att-autofocus="'autofocus' if login and not only_passwords else None"/>
+                <input
+                    type="text"
+                    name="firstname"
+                    t-att-value="firstname"
+                    id="firstname"
+                    class="form-control form-control-sm"
+                    placeholder="e.g. John"
+                    required="required"
+                    t-att-readonly="'readonly' if only_passwords else None"
+                    t-att-autofocus="'autofocus' if login and not only_passwords else None"
+                />
             </div>
             <div class="mb-3 field-lastname">
                 <label for="lastname">Your Lastname</label>
-                <input type="text" name="lastname" t-att-value="lastname" id="lastname" class="form-control form-control-sm" placeholder="e.g. Doe" required="required" t-att-readonly="'readonly' if only_passwords else None" t-att-autofocus="'autofocus' if login and not only_passwords else None"/>
+                <input
+                    type="text"
+                    name="lastname"
+                    t-att-value="lastname"
+                    id="lastname"
+                    class="form-control form-control-sm"
+                    placeholder="e.g. Doe"
+                    required="required"
+                    t-att-readonly="'readonly' if only_passwords else None"
+                    t-att-autofocus="'autofocus' if login and not only_passwords else None"
+                />
             </div>
         </xpath>
     </template>
