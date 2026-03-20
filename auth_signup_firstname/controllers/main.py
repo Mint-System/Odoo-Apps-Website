@@ -21,7 +21,7 @@ class AuthSignupHomeFirstname(Home):
         if values.get("password") != qcontext.get("confirm_password"):
             raise UserError(_("Passwords do not match; please retype them."))
         if values["firstname"] and values["lastname"]:
-            values["name"] = f"{values['firstname']} {values['lastname']}"  # only for avoiding error, wull be computed
+            values["name"] = f"{values['firstname']} {values['lastname']}"  # only for avoiding error, will be computed
         supported_lang_codes = [code for code, _ in request.env["res.lang"].get_installed()]
         lang = request.context.get("lang", "")
         if lang in supported_lang_codes:
@@ -32,7 +32,6 @@ class AuthSignupHomeFirstname(Home):
 class WebsiteSaleFirstname(WebsiteSale):
     def _handle_extra_form_data(self, extra_form_data, address_values):
         super()._handle_extra_form_data(extra_form_data, address_values)
-        _logger.warning(f"###### address values: {address_values}")
 
         order = request.website.sale_get_order()
         partner = order.partner_id.sudo()
