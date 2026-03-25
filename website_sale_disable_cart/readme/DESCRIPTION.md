@@ -1,0 +1,1 @@
+Allows configuration of whether product can be added to cart.
