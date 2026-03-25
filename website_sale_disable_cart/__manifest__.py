@@ -13,7 +13,8 @@
     "depends": ["website_sale"],
     "data": [
         "views/product_ribbon_views.xml",
-        "views/product_template_views.xml"],
+        "views/product_template_views.xml",
+        "views/website_sale_product.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

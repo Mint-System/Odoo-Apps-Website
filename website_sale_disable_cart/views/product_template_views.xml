@@ -4,10 +4,12 @@
         <field name="name">website_sale_disable_cart.product_template_form_view</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="website_sale.product_template_form_view"/>
-        <field name="arch" type="xml">
+
+         <field name="arch" type="xml">
             <field name="website_ribbon_id" position="after">
                 <field name="disable_add_to_cart" readonly="1" invisible="disable_add_to_cart == False" />
             </field>
-        </field>
-    </record>
+
+         </field>
+     </record>
 </odoo>
