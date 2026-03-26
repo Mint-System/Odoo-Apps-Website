@@ -11,28 +11,42 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteFormExtraInfo(WebsiteForm):
+
+
+    def _prepare_saleorder_form_data(self, model_record, kwargs):
+        """Extract + normalize all data in one place"""
+
+        data = self.extract_data(model_record, kwargs)
+
+        custom = data.get("custom", "")
+        custom_result = self.parse_custom_field(custom)
+        custom_result = self.normalize_custom_fields(custom_result)
+
+        birthdate_date = custom_result.pop("birthdate_date", None)
+
+        return {
+            "data": data,
+            "custom_result": custom_result,
+            "birthdate_date": birthdate_date,
+        }
+
     @route("/website/form/shop.sale.order", type="http", auth="public", methods=["POST"], website=True)
     def website_form_saleorder(self, **kwargs):
         model_record = request.env.ref("sale.model_sale_order")
         try:
-            data = self.extract_data(model_record, kwargs)
+            prepared_data = self._prepare_saleorder_form_data(model_record, kwargs)
         except ValidationError as e:
             return json.dumps({"error_fields": e.args[0]})
 
-        _logger.warning(f"data: {data}")
+        data = prepared_data["data"]
+        custom_result = prepared_data["custom_result"]
+        birthdate_date = prepared_data["birthdate_date"]
 
         order = request.website.sale_get_order()
         partner = order.partner_id
+
         if not order:
             return json.dumps({"error": "No order found; please add a product to your cart."})
-
-        custom = data.get("custom", "")
-
-        custom_result = self.parse_custom_field(custom)
-        _logger.warning(f"custom_result: {custom_result}")
-        custom_result = self.normalize_custom_fields(custom_result)
-
-        birthdate_date = custom_result.pop("birthdate_date", None)
 
         # only store date_from
         order.order_line.write(
