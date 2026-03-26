@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="website_form_check_list_view" model="ir.ui.view">
+        <field name="name">website.form.check.list_view</field>
+        <field name="model">website.form.check</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="patterns" />
+                <field name="form_id" />
+                <field name="redirect_id" />
+                <field name="active" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_website_form_check" model="ir.actions.act_window">
+        <field name="name">Form Checks</field>
+        <field name="res_model">website.form.check</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem 
+        id="menu_website_form_check"
+        name="Form Checks"
+        parent="contacts.res_partner_menu_config"
+        action="action_website_form_check"
+        sequence="50"
+    />
+</odoo>
