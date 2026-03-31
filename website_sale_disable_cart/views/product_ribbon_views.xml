@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="product_ribbon_form_view" model="ir.ui.view">
         <field name="name">website_sale_disable_cart.product_ribbon_form_view</field>
         <field name="model">product.ribbon</field>
-        <field name="inherit_id" ref="website_sale.product_ribbon_form_view"/>
+        <field name="inherit_id" ref="website_sale.product_ribbon_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='position']" position="after">
-                <field name="disable_add_to_cart"/>
+                <field name="disable_add_to_cart" />
             </xpath>
         </field>
     </record>

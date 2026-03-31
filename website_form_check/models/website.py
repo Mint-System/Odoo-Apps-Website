@@ -1,34 +1,27 @@
+import logging
+import re
+
 from odoo import fields, models
-from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
+
 
 class Website(models.Model):
-    _inherit = 'website'
+    _inherit = "website"
 
-    check_ids = fields.One2many(
-        'website.form.check', 
-        inverse_name='website_id',
-        string="Checks")
+    check_ids = fields.One2many("website.form.check", inverse_name="website_id", string="Checks")
 
-
-    def check_form_data(self, data):
-        record = data.get('record', {})
-        birthdate = data.get('birthdate')
-
-        name = record.get('name', '')
-        email = record.get('email', '')
-
-        combined = f"{email}{name}{birthdate}".lower()
-
+    def check_form_data(self, data_string):
         for check in self.check_ids:
             patterns = [p.strip() for p in check.patterns.split("\n") if p.strip()]
 
             for pattern in patterns:
                 try:
-                    if re.search(pattern, combined):
+                    if re.search(pattern, data_string):
                         if check.redirect_id:
-                            return check.redirect_id.url
-                        # fallback 
-                        return '/shop'
+                            return check.redirect_id.url_to
+                        # fallback
+                        return "/shop"
                 except re.error:
                     continue
 

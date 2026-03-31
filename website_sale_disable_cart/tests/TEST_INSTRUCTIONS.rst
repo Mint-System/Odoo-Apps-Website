@@ -3,4 +3,4 @@
 - On sale tab create or chose a ribbon for product.
 - Edit ribbon.
 - Activate 'Disable add to cart'.
-- Check if procuct cannot be added to shop cart. 
+- Check if procuct cannot be added to shop cart.

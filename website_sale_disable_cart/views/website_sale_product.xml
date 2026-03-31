@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template
-        id="product"
-        inherit_id="website_sale.product"
-        priority="1000"
-    >
-        <xpath expr="//p[@class='alert alert-warning' and @t-elif='not product.active']" position="after">
+    <template id="product" inherit_id="website_sale.product" priority="1000">
+        <xpath
+            expr="//p[@class='alert alert-warning' and @t-elif='not product.active']"
+            position="after"
+        >
             <p t-elif="product.disable_add_to_cart" class="alert alert-warning">
                 This product is not available.
             </p>
         </xpath>
-
-
     </template>
 </odoo>

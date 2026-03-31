@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="website_form_check_list_view" model="ir.ui.view">
         <field name="name">website.form.check.list_view</field>
@@ -7,7 +7,6 @@
             <list>
                 <field name="name" />
                 <field name="patterns" />
-                <field name="form_id" />
                 <field name="redirect_id" />
                 <field name="active" />
             </list>
@@ -20,7 +19,7 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem 
+    <menuitem
         id="menu_website_form_check"
         name="Form Checks"
         parent="contacts.res_partner_menu_config"

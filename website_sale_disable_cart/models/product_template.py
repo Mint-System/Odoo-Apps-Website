@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -13,9 +13,9 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     disable_add_to_cart = fields.Boolean(
-        related='website_ribbon_id.disable_add_to_cart',
+        related="website_ribbon_id.disable_add_to_cart",
         string="Add to Cart Disabled",
-        store=False  # or True if you need search/filter
+        store=False,  # or True if you need search/filter
     )
 
     def _can_be_added_to_cart(self):

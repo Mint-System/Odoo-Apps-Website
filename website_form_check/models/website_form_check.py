@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -13,15 +13,9 @@ class WebsiteFormCheck(models.Model):
 
     name = fields.Char()
     patterns = fields.Char()
-    form_id = fields.Many2one(
-        comodel_name='ir.ui.view',
-        domain="[('key', 'like', 'website_sale%')]"
-    )
-    redirect_id = fields.Many2one(
-        comodel_name='website.rewrite'
-    )
+    redirect_id = fields.Many2one(comodel_name="website.rewrite")
     website_id = fields.Many2one(
-        comodel_name='website',
+        comodel_name="website",
         copy=False,
         readonly=True,
     )
