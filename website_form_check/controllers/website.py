@@ -1,5 +1,6 @@
 import json
 import logging
+import unicodedata
 
 from odoo.exceptions import ValidationError
 from odoo.http import request, route
@@ -10,6 +11,16 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSaleFormCheck(WebsiteSaleForm):
+
+    def _unicode_to_ascii(self, string):
+        # replace 'ß'
+        string = string.replace('ß', 'ss')
+        # Normalize to NFD (decomposes accented chars)
+        normalized = unicodedata.normalize('NFD', string)
+        # Keep only ASCII characters (i.e., discard combining diacritics)
+        ascii_only = normalized.encode('ascii', 'ignore').decode('ascii')
+        return ascii_only
+
     def _generate_string(self, data):
         data_string = ""
         for key, value in data.items():
@@ -43,8 +54,11 @@ class WebsiteSaleFormCheck(WebsiteSaleForm):
         email_string = partner.email or ""
 
         data_string = name_string + email_string + data_string
+        _logger.warning(f"#### data_string: {data_string}")
+        data_string_ascii = self._unicode_to_ascii(data_string)
+        _logger.warning(f"#### ascii data_string: {data_string_ascii}")
 
-        return data_string
+        return data_string_ascii
 
     def _check_data(self, data):
         data = self._generate_string(data)

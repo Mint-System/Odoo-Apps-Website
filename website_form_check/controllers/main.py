@@ -10,7 +10,6 @@ class WebsiteSaleFormCheck(WebsiteSale):
     @route('/shop/payment', type='http', auth='public', website=True, sitemap=False)
     def shop_payment(self, **post):
         redirect_url = request.session.pop('form_check_redirect', False)
-        _logger.warning(f"redirect_url: {redirect_url}")
 
         if redirect_url:
             return request.redirect(redirect_url)
