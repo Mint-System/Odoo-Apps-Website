@@ -7,7 +7,7 @@
             <list>
                 <field name="name" />
                 <field name="patterns" />
-                <field name="redirect_id" />
+                <field name="redirect_id" context="{'from_form_check': True}"/>
                 <field name="active" />
             </list>
         </field>
@@ -22,8 +22,8 @@
     <menuitem
         id="menu_website_form_check"
         name="Form Checks"
-        parent="contacts.res_partner_menu_config"
+        parent="website.menu_website_global_configuration"
         action="action_website_form_check"
-        sequence="50"
+        sequence="15"
     />
 </odoo>

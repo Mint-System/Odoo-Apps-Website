@@ -18,8 +18,9 @@ class Website(models.Model):
             for pattern in patterns:
                 try:
                     if re.search(pattern, data_string):
-                        if check.redirect_id:
-                            return check.redirect_id.url_to
+                        redirect = check.redirect_id
+                        if redirect:
+                            return redirect.sudo().url_to
                         # fallback
                         return "/shop"
                 except re.error:
