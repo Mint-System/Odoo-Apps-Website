@@ -11,8 +11,19 @@ class WebsiteFormCheck(models.Model):
     _name = "website.form.check"
     _description = "Website Form Check"
 
+    DEFAULT_PATTERN = r"max.*muster.*max\.muster@beispiel\.com.*20\.02\.1980"
+
     name = fields.Char()
-    patterns = fields.Char(default="max.*muster.*max\\.muster@beispiel\\.com.*20.02.1980", help="Gebe hier das Muster an, das kontrolliert werden soll. Trage 'Vorname', 'Nachname', 'E-Mailadresse' und 'Geburtsdatum' in genau dieser Reihenfolge ein, mit '.*' als Trennzeichen. NB Eine '.' im Muster muss als '\\.' geschrieben werden, z. B. in der E-Mailadresse ('kunde@beispiel\\.com'), aber nicht beim Trennzeichen ('Max.*Muster').")
+    patterns = fields.Char(
+        default=DEFAULT_PATTERN,
+        help=(
+            "Gib hier das Muster an, das kontrolliert werden soll.\n"
+            "Reihenfolge: Vorname → Nachname → E-Mail → Geburtsdatum.\n"
+            "Trennzeichen: '.*'.\n"
+            "Punkte in der E-Mail und im Datum müssen als '\\.' geschrieben werden (z.B. 'kunde@beispiel\\.com')."
+        ),
+    )
+
     redirect_id = fields.Many2one(comodel_name="website.rewrite")
     website_id = fields.Many2one(
         comodel_name="website",

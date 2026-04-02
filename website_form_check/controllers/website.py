@@ -32,7 +32,7 @@ class WebsiteSaleFormCheck(WebsiteSaleForm):
 
         name_parts = []
         if len(parts) == 2:
-            name_parts = [parts[0], parts[1], ['---'], parts[1], parts[0]]  # Build [first, last, last, first]
+            name_parts = [parts[0], parts[1], '---', parts[1], parts[0]]  # Build [first, last, last, first]
         elif len(parts) == 1:
             name_parts = [parts[0]]
         else:
@@ -47,9 +47,7 @@ class WebsiteSaleFormCheck(WebsiteSaleForm):
         email_string = partner.email or ""
 
         data_string = name_string + '---' + email_string + '---' + data_string
-        _logger.warning(f"#### data_string: {data_string}")
         data_string_ascii = _unicode_to_ascii(data_string)
-        _logger.warning(f"#### ascii data_string: {data_string_ascii}")
 
         return data_string_ascii
 
