@@ -3,6 +3,8 @@ import re
 
 from odoo import fields, models
 
+from ..helpers.utils import _unicode_to_ascii
+
 _logger = logging.getLogger(__name__)
 
 
@@ -17,6 +19,7 @@ class Website(models.Model):
 
             for pattern in patterns:
                 try:
+                    pattern = _unicode_to_ascii(pattern)
                     if re.search(pattern, data_string):
                         redirect = check.redirect_id
                         if redirect:
