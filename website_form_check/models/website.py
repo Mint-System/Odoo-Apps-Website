@@ -15,7 +15,6 @@ class Website(models.Model):
 
     def check_form_data(self, data_string):
         for check in self.check_ids.filtered(lambda ch: ch.is_active):
-            _logger.warning(f"check: {check}")
             patterns = [p.strip() for p in check.patterns.split("\n") if p.strip()]
 
             for pattern in patterns:
