@@ -32,5 +32,5 @@ class WebsiteFormCheck(models.Model):
         default=lambda self: self.env['website'].get_current_website()
     )
 
-    active = fields.Boolean(default=True)
+    is_active = fields.Boolean(default=True)
 

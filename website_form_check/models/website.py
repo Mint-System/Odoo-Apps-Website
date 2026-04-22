@@ -14,7 +14,8 @@ class Website(models.Model):
     check_ids = fields.One2many("website.form.check", inverse_name="website_id", string="Checks")
 
     def check_form_data(self, data_string):
-        for check in self.check_ids:
+        for check in self.check_ids.filtered(lambda ch: ch.is_active):
+            _logger.warning(f"check: {check}")
             patterns = [p.strip() for p in check.patterns.split("\n") if p.strip()]
 
             for pattern in patterns:
