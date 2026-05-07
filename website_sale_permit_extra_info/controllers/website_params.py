@@ -97,7 +97,7 @@ class WebsiteParamController(http.Controller):
             "min_age": min_age,
             "future_only": future_only,
             "patents_by_year": patents_by_year,
-            "max_day": 2,
+            "max_day": 5,
             "max_week": 1,
             "max_year": 1,
             "duration": product_duration,

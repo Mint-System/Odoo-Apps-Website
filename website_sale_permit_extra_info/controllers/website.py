@@ -38,6 +38,8 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
         data = prepared_data["data"]
         custom_result = prepared_data["custom_result"]
         birthdate_date = prepared_data["birthdate_date"]
+        _logger.warning(f"#### custom_result: {custom_result}")
+        region = custom_result.get("region", "none")
 
         order = request.website.sale_get_order()
         partner = order.partner_id
@@ -45,10 +47,11 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
         if not order:
             return json.dumps({"error": "No order found; please add a product to your cart."})
 
-        # only store date_from
+        # store date_from and region
         order.order_line.write(
             {
                 "date_from": custom_result["date_from"],
+                "region": region
             }
         )
 
