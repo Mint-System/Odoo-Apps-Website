@@ -38,7 +38,6 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
         data = prepared_data["data"]
         custom_result = prepared_data["custom_result"]
         birthdate_date = prepared_data["birthdate_date"]
-        _logger.warning(f"#### custom_result: {custom_result}")
         region = custom_result.get("region", "none")
 
         order = request.website.sale_get_order()
@@ -69,10 +68,8 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
             filename = upload.filename
             mimetype = upload.mimetype
 
-            # if not partner.image_1920:
             partner.sudo().write({"image_1920": b64})
 
-        # return json.dumps({"id": order.id})
         return super().website_form_saleorder(**kwargs)
 
     def parse_custom_field(self, text):

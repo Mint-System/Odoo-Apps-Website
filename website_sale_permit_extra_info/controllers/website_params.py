@@ -79,12 +79,9 @@ class WebsiteParamController(http.Controller):
 
             patent_lines_of_partner = request.env["sale.order.line"].sudo().search(domain)
 
-            _logger.warning(f"patent lines: {patent_lines_of_partner}")
-
             for line in patent_lines_of_partner:
                 year = line.date_from.year
                 duration = line.product_id.duration
-                _logger.warning(f"############ duration: {duration}")
 
                 if duration:
                     if year not in patents_by_year:
