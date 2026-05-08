@@ -13,6 +13,7 @@
             >
                 <t t-call="website_sale.checkout_layout">
                     <t t-set="order" t-value="website.sale_get_order()" />
+                    <t t-set="partner" t-value="order.partner_id if order else request.env.user.partner_id"/>
                     <t
                         t-set="has_year_duration"
                         t-value="any(
@@ -205,7 +206,7 @@
                                                         type="text"
                                                         class="form-control datetimepicker-input s_website_form_input"
                                                         name="birthdate_date"
-                                                        value=""
+                                                        t-att-value="partner.birthdate_date or ''"
                                                         placeholder=""
                                                         id="o5koaivn76tr"
                                                     />
@@ -249,7 +250,16 @@
                                                     id="o9yrctzinfhn"
                                                     data-max-files-number="1"
                                                 />
+
                                                 <img
+                                                    id="photo_preview"
+                                                    t-if="partner.image_1920"
+                                                    t-att-src="'/web/image/res.partner/%s/image_1920' % partner.id"
+                                                    style="margin-top:10px; max-height:200px;"
+                                                    class="img-fluid"
+                                                />
+                                                <img
+                                                    t-else=""
                                                     id="photo_preview"
                                                     style="display:none; margin-top:10px; max-height:200px;"
                                                     class="img-fluid"

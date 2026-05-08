@@ -41,11 +41,12 @@ class WebsiteParamController(http.Controller):
             return True
         return False
 
-    @http.route("/website/get_params", type="json", auth="public", csrf=False, website=True)
+    @http.route("/website/get_params", type="json", auth="user", csrf=False, website=True)
     def get_params(self, **kwargs):
         order_id = request.session.get("sale_order_id")
-        # order = request.website.sale_get_order()
-        # blacklisted_dates = request.env['blacklist.date'].sudo().search([]).mapped('date')
+        if not order_id and request.env.user._is_public():
+            return request.redirect('/web/login')
+        
         blacklisted_dates = self.get_blacklisted_dates()
         _logger.warning(f"blacklisted dates: {blacklisted_dates}")
         needs_photo = False
@@ -94,6 +95,7 @@ class WebsiteParamController(http.Controller):
         params = {
             "blacklisted_dates": blacklisted_dates,
             "needs_photo": needs_photo,
+            "has_existing_photo": bool(partner.image_1920),
             "min_age": min_age,
             "future_only": future_only,
             "patents_by_year": patents_by_year,

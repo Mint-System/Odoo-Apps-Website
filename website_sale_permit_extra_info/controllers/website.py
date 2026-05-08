@@ -26,7 +26,7 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
             "birthdate_date": birthdate_date,
         }
 
-    @route("/website/form/shop.sale.order", type="http", auth="public", methods=["POST"], website=True)
+    @route("/website/form/shop.sale.order", type="http", auth="user", methods=["POST"], website=True)
     def website_form_saleorder(self, **kwargs):
         model_record = request.env.ref("sale.model_sale_order")
         try:
@@ -69,8 +69,8 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
             filename = upload.filename
             mimetype = upload.mimetype
 
-            if not partner.image_1920:
-                partner.sudo().write({"image_1920": b64})
+            # if not partner.image_1920:
+            partner.sudo().write({"image_1920": b64})
 
         # return json.dumps({"id": order.id})
         return super().website_form_saleorder(**kwargs)
