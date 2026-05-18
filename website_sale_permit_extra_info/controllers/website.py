@@ -38,13 +38,18 @@ class WebsiteSalePermitExtraForm(WebsiteSaleForm):
         data = prepared_data["data"]
         custom_result = prepared_data["custom_result"]
         birthdate_date = prepared_data["birthdate_date"]
-        region = custom_result.get("region", "none")
+        region = custom_result.get("region")
 
         order = request.website.sale_get_order()
-        partner = order.partner_id
-
         if not order:
             return json.dumps({"error": "No order found; please add a product to your cart."})
+        
+        if not order and request.env.user._is_public():
+            # shouldn't happen if your routes are protected, but safe fallback
+            return request.redirect('/web/login')
+
+        partner = order.partner_id if order else request.env.user.partner_id
+
 
         # store date_from and region
         order.order_line.write(

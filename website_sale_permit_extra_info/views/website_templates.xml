@@ -14,6 +14,8 @@
                 <t t-call="website_sale.checkout_layout">
                     <t t-set="order" t-value="website.sale_get_order()" />
                     <t t-set="partner" t-value="order.partner_id if order else request.env.user.partner_id"/>
+                    <t t-set="birthdate_ts" t-value="int(partner.birthdate_date.strftime('%s')) if partner.birthdate_date else ''"/>
+                    <t t-set="region_selection" t-value="order.fields_get(['region'])['region']['selection']"/>
                     <t
                         t-set="has_year_duration"
                         t-value="any(
@@ -135,28 +137,12 @@
                                                     id="osx5r9oc5lar"
                                                     required="required"
                                                 >
-                                                    <option
-                                                        value=""
-                                                    >-- Bitte wählen --</option>
-                                                    <option
-                                                        id="osx5r9oc5lar0"
-                                                        value="galp"
-                                                    >1. Göscheneralp/Voralp</option>
-                                                    <option
-                                                        id="osx5r9oc5lar1"
-                                                        value="fell"
-                                                    >2.
-                                                        Fellital</option>
-                                                    <option
-                                                        id="osx5r9oc5lar2"
-                                                        value="made"
-                                                    >3.
-                                                        Maderanertal/Etzlital/Brunnital</option>
-                                                    <option
-                                                        id="osx5r9oc5lar3"
-                                                        value="rest"
-                                                    >4.
-                                                        Übriges Strahlnergebiet Korporation Uri</option>
+                                                    <option value="">-- Bitte wählen --</option>
+                                                    <t t-foreach="region_selection" t-as="region">
+                                                        <t t-if="region[0]">
+                                                            <option t-att-value="region[0]" t-esc="region[1]"/>
+                                                        </t>
+                                                    </t>
                                                 </select>
                                             </div>
                                         </div>
@@ -206,7 +192,7 @@
                                                         type="text"
                                                         class="form-control datetimepicker-input s_website_form_input"
                                                         name="birthdate_date"
-                                                        t-att-value="partner.birthdate_date or ''"
+                                                        t-att-value="birthdate_ts"
                                                         placeholder=""
                                                         id="o5koaivn76tr"
                                                     />
