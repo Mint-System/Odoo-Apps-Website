@@ -1,0 +1,1 @@
+Support the permalink structure month and name of Wordpress.

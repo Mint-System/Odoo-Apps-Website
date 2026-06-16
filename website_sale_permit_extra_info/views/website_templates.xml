@@ -13,9 +13,18 @@
             >
                 <t t-call="website_sale.checkout_layout">
                     <t t-set="order" t-value="website.sale_get_order()" />
-                    <t t-set="partner" t-value="order.partner_id if order else request.env.user.partner_id"/>
-                    <t t-set="birthdate_ts" t-value="int(partner.birthdate_date.strftime('%s')) if partner.birthdate_date else ''"/>
-                    <t t-set="region_selection" t-value="order.fields_get(['region'])['region']['selection']"/>
+                    <t
+                        t-set="partner"
+                        t-value="order.partner_id if order else request.env.user.partner_id"
+                    />
+                    <t
+                        t-set="birthdate_ts"
+                        t-value="int(partner.birthdate_date.strftime('%s')) if partner.birthdate_date else ''"
+                    />
+                    <t
+                        t-set="region_selection"
+                        t-value="order.fields_get(['region'])['region']['selection']"
+                    />
                     <t
                         t-set="has_year_duration"
                         t-value="any(
@@ -137,10 +146,18 @@
                                                     id="osx5r9oc5lar"
                                                     required="required"
                                                 >
-                                                    <option value="">-- Bitte wählen --</option>
-                                                    <t t-foreach="region_selection" t-as="region">
+                                                    <option
+                                                        value=""
+                                                    >-- Bitte wählen --</option>
+                                                    <t
+                                                        t-foreach="region_selection"
+                                                        t-as="region"
+                                                    >
                                                         <t t-if="region[0]">
-                                                            <option t-att-value="region[0]" t-esc="region[1]"/>
+                                                            <option
+                                                                t-att-value="region[0]"
+                                                                t-esc="region[1]"
+                                                            />
                                                         </t>
                                                     </t>
                                                 </select>

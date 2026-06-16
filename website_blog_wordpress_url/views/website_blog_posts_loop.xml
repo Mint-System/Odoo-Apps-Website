@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="posts_loop_read_more" inherit_id="website_blog.posts_loop">
+        <xpath expr="//a[contains(@class,'btn btn-primary')]" position="attributes">
+            <attribute name="t-attf-href">#{blog_post.website_url}</attribute>
+        </xpath>
+    </template>
+
+    <template id="post_heading_url" inherit_id="website_blog.post_heading">
+        <xpath expr="//a[@t-field='blog_post.name']" position="attributes">
+            <attribute name="t-att-href">blog_post.website_url</attribute>
+        </xpath>
+    </template>
+
+    <template id="post_cover_image_url" inherit_id="website_blog.post_cover_image">
+        <xpath expr="//a[@t-attf-class]" position="attributes">
+            <attribute name="t-att-href">blog_post.website_url</attribute>
+        </xpath>
+    </template>
+
+    <template id="post_teaser_url" inherit_id="website_blog.post_teaser">
+        <xpath expr="//a[@class='text-reset text-decoration-none']" position="attributes">
+            <attribute name="t-att-href">blog_post.website_url</attribute>
+        </xpath>
+    </template>
+
+</odoo>

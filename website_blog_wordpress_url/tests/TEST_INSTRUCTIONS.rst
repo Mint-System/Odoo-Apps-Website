@@ -1,0 +1,5 @@
+- Open "Website > Site > Blog Posts"
+- Open first blog post
+- Check if url matches the "/blog/YYYY/MM/slug/" format
+- Open blog post list
+- Check ir urls also match the format

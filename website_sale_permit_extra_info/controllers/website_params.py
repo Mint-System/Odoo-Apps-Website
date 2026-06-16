@@ -45,8 +45,8 @@ class WebsiteParamController(http.Controller):
     def get_params(self, **kwargs):
         order_id = request.session.get("sale_order_id")
         if not order_id and request.env.user._is_public():
-            return request.redirect('/web/login')
-        
+            return request.redirect("/web/login")
+
         blacklisted_dates = self.get_blacklisted_dates()
         _logger.warning(f"blacklisted dates: {blacklisted_dates}")
         needs_photo = False

@@ -1,7 +1,6 @@
 import json
 import logging
 
-
 from odoo.exceptions import ValidationError
 from odoo.http import request, route
 
@@ -13,7 +12,6 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSaleFormCheck(WebsiteSaleForm):
-
     def _generate_string(self, data):
         data_string = ""
         for key, value in data.items():
@@ -32,7 +30,7 @@ class WebsiteSaleFormCheck(WebsiteSaleForm):
 
         name_parts = []
         if len(parts) == 2:
-            name_parts = [parts[0], parts[1], '---', parts[1], parts[0]]  # Build [first, last, last, first]
+            name_parts = [parts[0], parts[1], "---", parts[1], parts[0]]  # Build [first, last, last, first]
         elif len(parts) == 1:
             name_parts = [parts[0]]
         else:
@@ -46,7 +44,7 @@ class WebsiteSaleFormCheck(WebsiteSaleForm):
         # Append email if exists
         email_string = partner.email or ""
 
-        data_string = name_string + '---' + email_string + '---' + data_string
+        data_string = name_string + "---" + email_string + "---" + data_string
         data_string_ascii = _unicode_to_ascii(data_string)
 
         return data_string_ascii

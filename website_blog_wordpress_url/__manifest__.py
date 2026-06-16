@@ -1,8 +1,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Website Form Check",
+    "name": "Website Blog Wordpress Url",
     "summary": """
-        Create form checks that redirect users on a match.
+        Support the permalink structure month and name of Wordpress.
     """,
     "author": "Mint System GmbH",
     "website": "https://www.mint-system.ch/",
@@ -10,12 +10,8 @@
     "development_status": "Production/Stable",
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["website_sale"],
-    "data": [
-        "security/ir.model.access.csv",
-        "views/website_views.xml",
-        "views/website_form_check_views.xml",
-    ],
+    "depends": ["website_blog"],
+    "data": ["views/website_blog_posts_loop.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

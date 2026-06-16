@@ -249,7 +249,12 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
         }
         console.log("needs_photo", this.params.needs_photo);
 
-        if (this.params.needs_photo && !this.params.has_existing_photo && fileInput && fileInput.files.length === 0) {
+        if (
+            this.params.needs_photo &&
+            !this.params.has_existing_photo &&
+            fileInput &&
+            fileInput.files.length === 0
+        ) {
             this._showError(fileInput, "Bitte eine Datei hochladen.");
             hasError = true;
         }

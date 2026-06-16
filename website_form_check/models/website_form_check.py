@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -29,8 +29,7 @@ class WebsiteFormCheck(models.Model):
         comodel_name="website",
         copy=False,
         readonly=True,
-        default=lambda self: self.env['website'].get_current_website()
+        default=lambda self: self.env["website"].get_current_website(),
     )
 
     is_active = fields.Boolean(default=True)
-

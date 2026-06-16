@@ -7,7 +7,7 @@
             <list>
                 <field name="name" />
                 <field name="patterns" />
-                <field name="redirect_id" context="{'from_form_check': True}"/>
+                <field name="redirect_id" context="{'from_form_check': True}" />
                 <field name="website_id" />
                 <field string="active" name="is_active" />
             </list>

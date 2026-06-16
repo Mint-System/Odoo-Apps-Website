@@ -2,7 +2,7 @@
 - Go to Website > Configuration > Websites.
 - Chose website you want to add check.
 - Open tab "Form Checks" and add a new form check.
-- Enter a pattern against which the form data is checked. 
+- Enter a pattern against which the form data is checked.
 - The pattern should consists of name, email and birthdate.
 - Birthdate pattern should have form "03\.07\.1982"
 - Replace 'ß' in your pattern by 'ss'.
