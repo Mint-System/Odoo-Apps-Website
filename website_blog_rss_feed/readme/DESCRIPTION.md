@@ -1,0 +1,1 @@
+Provide RSS feed for blogs.
