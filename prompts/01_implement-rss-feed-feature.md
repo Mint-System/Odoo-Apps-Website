@@ -164,7 +164,7 @@ I have created all the necessary files to implement the feature:
 - `website_blog_rss_feed/views/website_blog_templates.xml`: Setup the RSS feed templates
   in there.
 
-Odoo does support an atom feed. I want you to overwrite the functionality and routes.
+Odoo does support an atom feed (see `odoo/addons/website_blog/controllers/main.py:206`). I want you to overwrite the functionality and routes.
 
 When implementing not that:
 
