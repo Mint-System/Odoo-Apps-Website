@@ -20,8 +20,9 @@ Read the `AGENTS.md` and `README.md` to get an understanding of the project.
 ## Task
 
 I want you to implement the `website_blog_rss_feed` module. To goal is to recreate the
-Wordpress RSS feed feature for Odoo. Here is an example feed (the content has been
-striped) of <https://ocad.com/blog/feed/>:
+Wordpress RSS feed feature for Odoo.
+
+Here is an example feed (the content has been striped) of <https://ocad.com/blog/feed/>:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
@@ -151,10 +152,11 @@ striped) of <https://ocad.com/blog/feed/>:
 </rss>
 ```
 
-The `channel` relates to `blog.blog` and `item` to `blog.post`. I have created all the
-necessary files to implement the feature:
+The `channel` relates to `blog.blog` and `item` to `blog.post`.
 
-- `website_blog_rss_feed/controllers/main.py`: Create a route for `/blog/feed/` that
+I have created all the necessary files to implement the feature:
+
+- `website_blog_rss_feed/controllers/main.py`: Create a route for `/blog/feed` that
   returns the feed for the first blog and another route
   `/blog/<blog.slug>-<blog.id>/feed` that returns the feed of selected blog.
 - `website_blog_rss_feed/models/blog_post.py`: If you need some logic to prepare the RSS
@@ -162,7 +164,9 @@ necessary files to implement the feature:
 - `website_blog_rss_feed/views/website_blog_templates.xml`: Setup the RSS feed templates
   in there.
 
-Additional notes:
+Odoo does support an atom feed. I want you to overwrite the functionality and routes.
+
+When implementing not that:
 
 - Comments are not supported
 - Categories are `blog.tag`
@@ -171,7 +175,9 @@ Additional notes:
 - The RSS feed is always built dynamically
 - generator is `https://odoo.com`
 
-As if something is not clear.
+When adding helper function, add them to `blog.blog`.
+
+Ask if something is not unclear.
 
 ## Worklog
 
