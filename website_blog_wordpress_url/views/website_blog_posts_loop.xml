@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="posts_loop_read_more" inherit_id="website_blog.posts_loop">
         <xpath expr="//a[contains(@class,'btn btn-primary')]" position="attributes">
             <attribute name="t-attf-href">#{blog_post.website_url}</attribute>
@@ -20,9 +19,11 @@
     </template>
 
     <template id="post_teaser_url" inherit_id="website_blog.post_teaser">
-        <xpath expr="//a[@class='text-reset text-decoration-none']" position="attributes">
+        <xpath
+            expr="//a[@class='text-reset text-decoration-none']"
+            position="attributes"
+        >
             <attribute name="t-att-href">blog_post.website_url</attribute>
         </xpath>
     </template>
-
 </odoo>

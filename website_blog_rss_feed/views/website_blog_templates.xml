@@ -1,17 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="website_blog_rss_channel" model="ir.ui.view">
         <field name="name">website_blog_rss_feed.website_blog_rss_channel</field>
         <field name="model">blog.blog</field>
-        <field name="arch" type="xml">
-        </field>
+        <field name="arch" type="xml" />
     </record>
 
     <record id="website_blog_rss_item" model="ir.ui.view">
         <field name="name">website_blog_rss_feed.website_blog_rss_item</field>
         <field name="model">blog.post</field>
-        <field name="arch" type="xml">
-        </field>
+        <field name="arch" type="xml" />
     </record>
 </odoo>
