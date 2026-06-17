@@ -184,6 +184,12 @@ Focus on these folders:
 
 Do read other folders only if necessary.
 
+Install the module with `task init-module addons/website/website_blog_rss_feed`.
+
+Start the Odoo server with `task start source &`.
+
+Try to curl the feed with `curl http://localhost:8069/blog/feed`.
+
 ## Worklog
 
 @Clanker Add a summary here once the task has been completed.
