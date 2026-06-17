@@ -177,7 +177,12 @@ When implementing not that:
 
 When adding helper function, add them to `blog.blog`.
 
-Ask if something is not unclear.
+Focus on these folders:
+
+- `addons/website/website_blog_rss_feed`: Implement the module here
+- `odoo/addons/website_blog`: Use as reference
+
+Do read other folders only if necessary.
 
 ## Worklog
 
