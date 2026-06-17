@@ -201,12 +201,14 @@ Implemented the `website_blog_rss_feed` module with the following components:
 
 - `addons/website/website_blog_rss_feed/controllers/main.py` - Controller overriding
   `WebsiteBlog` class:
+
   - Combined route for `/blog/feed` and `/blog/<blog>/feed`
   - Filters for published posts only
   - Returns RSS XML with proper content-type header
 
 - `addons/website/website_blog_rss_feed/models/blog.py` - Added helper methods to
   `blog.blog`:
+
   - `_get_rss_xml()` - Generates complete RSS 2.0 feed XML using lxml
   - `_append_rss_item()` - Appends item elements with proper namespacing
   - Uses `lxml.etree` with CDATA support for HTML content
@@ -214,8 +216,8 @@ Implemented the `website_blog_rss_feed` module with the following components:
 
 - `addons/website/website_blog_rss_feed/models/blog_post.py` - Empty (not needed)
 
-- `addons/website/website_blog_rss_feed/views/website_blog_templates.xml` - Empty
-  (RSS generated dynamically, no templates needed)
+- `addons/website/website_blog_rss_feed/views/website_blog_templates.xml` - Empty (RSS
+  generated dynamically, no templates needed)
 
 **RSS Feed Features:**
 
@@ -224,8 +226,8 @@ Implemented the `website_blog_rss_feed` module with the following components:
 - Channel elements: title, atom:link (self), link, description, lastBuildDate, language,
   updatePeriod, updateFrequency, generator (base_url)
 - Item elements: title, link, dc:creator, pubDate, category (blog.tag), guid
-  (isPermaLink="true"), description (plaintext via html2plaintext), content:encoded (HTML
-  preserved in CDATA)
+  (isPermaLink="true"), description (plaintext via html2plaintext), content:encoded
+  (HTML preserved in CDATA)
 - No comments support (as requested)
 - Uses `website_url` for permalinks
 - Only shows published posts with post_date in the past

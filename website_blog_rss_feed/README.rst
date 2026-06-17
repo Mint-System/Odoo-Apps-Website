@@ -1,5 +1,5 @@
 =====================
-Website Blog Rss Feed
+Website Blog RSS Feed
 =====================
 
 .. 
