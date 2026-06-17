@@ -1,20 +1,29 @@
-from werkzeug.exceptions import NotFound
-
-from odoo import http
+from odoo import fields, http
 from odoo.http import request
 from odoo.tools import html2plaintext
 
-from odoo.addons.website_blog.controllers.main import WebsiteBlog
+from odoo.addons.website_blog.controllers.main import WebsiteBlog as WebsiteBlogOriginal
 
 
-class WebsiteBlog(http.Controller):
+class WebsiteBlog(WebsiteBlogOriginal):
+    @http.route(
+        ["/blog/feed", '/blog/<model("blog.blog"):blog>/feed'], type="http", auth="public", website=True, sitemap=True
+    )
+    def blog_feed(self, blog=None, limit="15", **kwargs):
+        if not blog:
+            blog = request.env["blog.blog"].sudo().search([], limit=1, order="id ASC")
+            if not blog:
+                return request.not_found()
+        return self._blog_feed_xml(blog, limit, **kwargs)
 
-    @http.route(['''/blog/<model("blog.blog"):blog>/feed'''], type='http', auth="public", website=True, sitemap=True)
-    def blog_feed(self, blog, limit='15', **kwargs):
-        v = {}
-        v['blog'] = blog
-        v['base_url'] = blog.get_base_url()
-        v['posts'] = request.env['blog.post'].search([('blog_id', '=', blog.id)], limit=min(int(limit), 50), order="post_date DESC")
-        v['html2plaintext'] = html2plaintext
-        r = request.render("website_blog.blog_feed", v, headers=[('Content-Type', 'application/atom+xml')])
-        return r
+    def _blog_feed_xml(self, blog, limit="15", **kwargs):
+        blog.ensure_one()
+        domain = [
+            ("blog_id", "=", blog.id),
+            ("website_published", "=", True),
+            ("post_date", "<=", fields.Datetime.now()),
+        ]
+        posts = request.env["blog.post"].search(domain, limit=min(int(limit), 50), order="post_date DESC")
+        base_url = blog.get_base_url()
+        xml = blog._get_rss_xml(posts, base_url, html2plaintext)
+        return request.make_response(xml, headers=[("Content-Type", "application/rss+xml")])
