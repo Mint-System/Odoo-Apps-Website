@@ -1,0 +1,5 @@
+- Enable module.
+- Start purchase in webshop.
+- Check that the "Date of Birth" input field is visible in the address form.
+- Check that the Name, Phone and Date of Birth fields are required fields.
+- Check that the birthday is saved on the buyer's contact.
