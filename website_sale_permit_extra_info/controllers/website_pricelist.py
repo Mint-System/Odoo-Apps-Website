@@ -13,7 +13,7 @@ class WebsiteSalePricelistPersist(WebsiteSale):
         sitemap=False,
     )
     def pricelist_change(self, pricelist, **post):
-        website = request.env['website'].get_current_website()
+        website = request.env["website"].get_current_website()
         previous_pl_id = website.pricelist_id.id if website.pricelist_id else None
         response = super().pricelist_change(pricelist, **post)
 
@@ -30,9 +30,7 @@ class WebsiteSalePricelistPersist(WebsiteSale):
             order_sudo = website.sale_get_order()
             if order_sudo and order_sudo.order_line:
                 order_sudo.order_line.unlink()
-                request.session['cart_cleared_notice'] = True
-                return request.redirect('/shop/cart')
+                request.session["cart_cleared_notice"] = True
+                return request.redirect("/shop/cart")
 
         return response
-
-

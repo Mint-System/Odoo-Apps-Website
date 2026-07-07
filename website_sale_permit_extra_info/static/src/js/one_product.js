@@ -18,10 +18,8 @@ publicWidget.registry.OneProductCart = publicWidget.Widget.extend({
             ev.preventDefault();
             ev.stopPropagation();
 
-
             // 1. Clear cart
             await rpc("/shop/cart/clear", {});
-
 
             // 2. Re-trigger click so Odoo performs its normal flow
             const reClick = new MouseEvent("click", {bubbles: true, cancelable: true});

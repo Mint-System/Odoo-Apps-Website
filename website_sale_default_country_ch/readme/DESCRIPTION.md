@@ -1,0 +1,1 @@
+Set switzerland as the default country in the website sale address from.

@@ -1,0 +1,2 @@
+- Enable module.
+- Check if Switzerland is selected on address form if default country.

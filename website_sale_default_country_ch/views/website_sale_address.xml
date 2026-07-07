@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="address_form"
+        inherit_id="website_sale.address"
+        name="Set default country"
+        priority="20"
+    >
+        <xpath expr="//div[@id='div_country']" position="replace">
+            <!-- Hide country selection -->
+            <div id="div_country" class="col-lg-6 mb-2 d-none">
+                <label class="col-form-label" for="o_country_id">Country</label>
+                <select
+                    id="o_country_id"
+                    name="country_id"
+                    class="form-select"
+                >
+                    <option value="">Country...</option>
+                    <t t-foreach="countries" t-as="c">
+                        <!-- Set selected if country is switerland -->
+                        <t t-if="c.id == 43">
+                            <option t-att-value="c.id" t-att-selected="True" t-att-code="c.code">
+                                <t t-esc="c.name" />
+                            </option>
+                        </t>
+                        <t t-else="">
+                            <option t-att-value="c.id" t-att-selected="c.id == country.id" t-att-code="c.code">
+                                <t t-esc="c.name"/>
+                            </option>
+                        </t>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template>
+</odoo>
