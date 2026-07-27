@@ -175,13 +175,13 @@ publicWidget.registry.ExtraInfosForm = publicWidget.Widget.extend({
             }
 
             // check if for year duration date is after March 31 of current year
-            if (duration === "year" && this._isAfterDeadlineOfCurrentYear(dateFrom)) {
-                hasError = true;
-                this._showError(
-                    dateInput,
-                    "Nach dem 31. März können Sie kein Jahrespatent mehr für das laufende Jahr bestellen."
-                );
-            }
+            //if (duration === "year" && this._isAfterDeadlineOfCurrentYear(dateFrom)) {
+            //    hasError = true;
+            //    this._showError(
+            //        dateInput,
+            //        "Nach dem 31. März können Sie kein Jahrespatent mehr für das laufende Jahr bestellen."
+            //    );
+            //}
 
             // limit checks
 
