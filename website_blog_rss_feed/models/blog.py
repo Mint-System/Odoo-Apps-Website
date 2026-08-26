@@ -1,5 +1,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import re
+
 from lxml import etree
 
 from odoo import models
@@ -46,8 +48,20 @@ class Blog(models.Model):
         for post in posts:
             self._append_rss_item(channel, post, base_url, html2plaintext_func)
 
-        xml_str = etree.tostring(rss, encoding="UTF-8", xml_declaration=True, pretty_print=True)
-        return xml_str.decode("utf-8")
+        xml_bytes = etree.tostring(rss, encoding="UTF-8", xml_declaration=False, pretty_print=True)
+        xml_str = '<?xml version="1.0" encoding="UTF-8"?>\n' + xml_bytes.decode("utf-8")
+        return xml_str
+
+    def _make_absolute_urls(self, html, base_url):
+        self.ensure_one()
+        if not html:
+            return html
+        pattern = re.compile(r'\b(src|href|data-original-src)\s*=\s*(["\'])(/[^"\']*?)\2', re.IGNORECASE)
+
+        def _replace(match):
+            return f"{match.group(1)}={match.group(2)}{base_url}{match.group(3)}{match.group(2)}"
+
+        return pattern.sub(_replace, html)
 
     def _append_rss_item(self, parent, post, base_url, html2plaintext_func):
         self.ensure_one()
@@ -79,4 +93,4 @@ class Blog(models.Model):
         desc_elem.text = html2plaintext_func(post.teaser) or ""
 
         content_elem = etree.SubElement(item, "{%s}encoded" % NSMAP["content"])
-        content_elem.text = etree.CDATA(post.content or "")
+        content_elem.text = etree.CDATA(self._make_absolute_urls(post.content or "", base_url))

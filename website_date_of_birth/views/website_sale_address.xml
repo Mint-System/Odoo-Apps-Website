@@ -8,10 +8,13 @@
     >
         <xpath expr="//form/div[1]/div[2]" position="after">
             <div id="div_date_of_birth" class="col-lg-12 mb-2">
-                <label class="col-form-label" for="o_date_of_birth">Date of birth</label>
-                <input 
-                    id="o_date_of_birth" 
-                    type="date" 
+                <label
+                    class="col-form-label"
+                    for="o_date_of_birth"
+                >Date of birth</label>
+                <input
+                    id="o_date_of_birth"
+                    type="date"
                     name="date_of_birth"
                     t-att-value="partner_sudo.date_of_birth"
                     class="form-control"
@@ -20,7 +23,7 @@
         </xpath>
 
         <xpath expr="//input[@name='required_fields']" position="replace">
-            <input 
+            <input
                 type="hidden"
                 name="required_fields"
                 t-att-value="'phone,name,date_of_birth'"
