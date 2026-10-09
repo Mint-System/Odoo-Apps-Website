@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="address_form_fields" inherit_id="portal.address_form_fields" name="website_sale_address_optional_fields.address_form_fields">
+        <!-- The form sends its own required fields, which are validated on top of the mandatory ones -->
+        <xpath expr="//input[@name='required_fields']" position="attributes">
+            <attribute name="t-att-value">','.join(sorted({'name', 'country_id'} - website._get_address_optional_field_names()))</attribute>
+        </xpath>
+    </template>
+</odoo>

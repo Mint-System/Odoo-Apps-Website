@@ -1,0 +1,5 @@
+- Go to Website > Configuration > Settings.
+- Under E-Commerce > Optional Address Fields, select the fields that you want to be optional.
+- Create new private browser window and start website sale workflow.
+- Leave the optional fields open in the address form during checkout.
+- Check if checkout pass.

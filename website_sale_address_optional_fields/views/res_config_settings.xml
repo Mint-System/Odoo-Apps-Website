@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">website_sale_address_optional_fields.res_config_settings_view_form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='website_payment_block']" position="inside">
+                <setting id="address_optional_fields_setting" string="Optional Address Fields" help="Fields that are not required in the shop address form.">
+                    <field name="address_optional_field_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+
