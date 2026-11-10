@@ -65,7 +65,7 @@ class Blog(models.Model):
 
         return pattern.sub(_replace, html)
 
-    def _get_rss_cover_html(self, post, base_url):
+    def _get_rss_cover_html(self, post):
         """Return an <img> tag for the post cover image or an empty string."""
         self.ensure_one()
         properties = json.loads(post.cover_properties or "{}")
@@ -74,8 +74,6 @@ class Blog(models.Model):
         if not match:
             return ""
         src = match.group(1)
-        if src.startswith("/"):
-            src = f"{base_url}{src}"
         return f'<p><img src="{escape(src)}" alt="{escape(post.name or "")}"/></p>'
 
     def _append_rss_item(self, parent, post, base_url, html2plaintext_func):
@@ -108,5 +106,5 @@ class Blog(models.Model):
         desc_elem.text = html2plaintext_func(post.teaser) or ""
 
         content_elem = etree.SubElement(item, "{%s}encoded" % NSMAP["content"])
-        content = self._get_rss_cover_html(post, base_url) + self._make_absolute_urls(post.content or "", base_url)
+        content = self._make_absolute_urls(self._get_rss_cover_html(post) + (post.content or ""), base_url)
         content_elem.text = etree.CDATA(content)
