@@ -106,5 +106,6 @@ class Blog(models.Model):
         desc_elem.text = html2plaintext_func(post.teaser) or ""
 
         content_elem = etree.SubElement(item, "{%s}encoded" % NSMAP["content"])
-        content = self._make_absolute_urls(self._get_rss_cover_html(post) + (post.content or ""), base_url)
+        # post.content is Markup; concatenating a str to it would escape the str
+        content = self._make_absolute_urls(self._get_rss_cover_html(post) + str(post.content or ""), base_url)
         content_elem.text = etree.CDATA(content)
