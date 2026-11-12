@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template
+        id="address_form_fields"
+        inherit_id="portal.address_form_fields"
+        name="website_sale_select_address_type.address_form_fields"
+    >
+        <div id="div_name" position="before">
+            <t t-set="address_is_company" t-value="partner_sudo.is_company if partner_sudo else False"/>
+        </div>
+        <div id="div_name" position="before">
+            <t name="b2b_fields" position="move"/>
+        </div>
+        <label for="o_name" position="replace">
+            <label class="col-form-label" for="o_name">
+                <span class="o_address_type_person">Your name</span>
+                <span class="o_address_type_company">Company name</span>
+            </label>
+        </label>
+        <t name="b2b_fields" position="before">
+            <!-- Empty value for "Person": the boolean field converts "" to False.
+                 Disabled b2b inputs are not submitted for companies. -->
+            <div
+                id="div_is_company"
+                class="col-lg-12 mb-2"
+                onchange="event.target.form.querySelectorAll('.o_address_type_b2b :is(input, select)').forEach((el) => { el.disabled = !!event.target.value; })"
+            >
+                <div class="form-check form-check-inline">
+                    <input
+                        id="o_is_company_person"
+                        type="radio"
+                        name="is_company"
+                        value=""
+                        class="form-check-input"
+                        t-att-checked="not address_is_company"
+                    />
+                    <label class="form-check-label" for="o_is_company_person">Person</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input
+                        id="o_is_company_company"
+                        type="radio"
+                        name="is_company"
+                        value="1"
+                        class="form-check-input"
+                        t-att-checked="address_is_company"
+                    />
+                    <label class="form-check-label" for="o_is_company_company">Company</label>
+                </div>
+            </div>
+        </t>
+        <input id="o_company_name" position="attributes">
+            <attribute name="t-att-disabled">'1' if address_is_company else None</attribute>
+        </input>
+        <input id="o_vat" position="attributes">
+            <attribute name="t-att-disabled">'1' if address_is_company else None</attribute>
+        </input>
+        <!-- Mark the b2b fields, visibility is handled in address_type.scss. -->
+        <div id="company_name_div" position="attributes">
+            <attribute name="class" add="o_address_type_b2b" separator=" "/>
+        </div>
+        <div id="div_vat" position="attributes">
+            <attribute name="class" add="o_address_type_b2b" separator=" "/>
+        </div>
+        <xpath
+            expr="//t[@name='b2b_fields']//div[@t-if='not (is_commercial_address or is_main_address)']"
+            position="attributes"
+        >
+            <attribute name="class" add="o_address_type_b2b" separator=" "/>
+        </xpath>
+    </template>
+</odoo>

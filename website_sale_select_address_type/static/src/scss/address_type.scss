@@ -1,0 +1,10 @@
+form:has(#o_is_company_person:checked) .o_address_type_company {
+    display: none !important;
+}
+
+form:has(#o_is_company_company:checked) {
+    .o_address_type_person,
+    .o_address_type_b2b {
+        display: none !important;
+    }
+}
