@@ -19,11 +19,11 @@
         </label>
         <t name="b2b_fields" position="before">
             <!-- Empty value for "Person": the boolean field converts "" to False.
-                 Disabled b2b inputs are not submitted for companies. -->
+                 Disabled b2b inputs are not submitted for companies, persons get them read-only. -->
             <div
                 id="div_is_company"
                 class="col-lg-12 mb-2"
-                onchange="event.target.form.querySelectorAll('.o_address_type_b2b :is(input, select)').forEach((el) => { el.disabled = !!event.target.value; })"
+                onchange="event.target.form.querySelectorAll('.o_address_type_b2b :is(input, select)').forEach((el) => { el.disabled = !!event.target.value; el.readOnly ||= !event.target.value; })"
             >
                 <div class="form-check form-check-inline">
                     <input
@@ -49,11 +49,14 @@
                 </div>
             </div>
         </t>
+        <!-- Original readonly conditions, extended by: read-only for persons. -->
         <input id="o_company_name" position="attributes">
             <attribute name="t-att-disabled">'1' if address_is_company else None</attribute>
+            <attribute name="t-att-readonly">'1' if (not is_main_address or not address_is_company) else None</attribute>
         </input>
         <input id="o_vat" position="attributes">
             <attribute name="t-att-disabled">'1' if address_is_company else None</attribute>
+            <attribute name="t-att-readonly">'1' if (not is_commercial_address or vat_warning or not address_is_company) else None</attribute>
         </input>
         <!-- Mark the b2b fields, visibility is handled in address_type.scss. -->
         <div id="company_name_div" position="attributes">
