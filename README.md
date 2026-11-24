@@ -1,19 +1,17 @@
 # Odoo Apps: Website
 
-Collection of website model related modules.
+Odoo modules extending the `website` module.
 
 ## Usage
 
-Clone module into Odoo addon directory.
+Clone this repo into the Odoo addons directory.
 
 ```bash
-git clone git@github.com:mint-system/odoo-apps-website.git ./addons/website
+git clone git@github.com:Mint-System/Odoo-Apps-Website.git ./addons/website
 ```
 
 ## Available modules
 
-| Module                                                              | Summary                                                                  |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [website_date_of_birth](website_date_of_birth/)                     | Adds date of birth field to partner and website checkout form.           |
-| [website_product_description](website_product_description/)         | Add separate description field to website product view.                  |
-| [website_sale_default_country_ch](website_sale_default_country_ch/) | Set switzerland as the default country in the website sale address from. |
+| Module | Summary |
+| ------ | ------- |
+|        |         |
