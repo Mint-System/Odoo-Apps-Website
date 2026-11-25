@@ -1,18 +1,17 @@
 # Odoo Apps: Website
 
-Collection of website model related modules.
+Odoo modules extending the `website` module.
 
 ## Usage
 
-Clone module into Odoo addon directory.
+Clone this repo into the Odoo addons directory.
 
 ```bash
-git clone git@github.com:mint-system/odoo-apps-website.git ./addons/website
+git clone git@github.com:Mint-System/Odoo-Apps-Website.git ./addons/website
 ```
 
 ## Available modules
 
 | Module | Summary |
-| --- | --- |
-| [website_sale_minimum_order_quantity](website_sale_minimum_order_quantity) |         Set minimum order quantity for product variants. |
-| [website_sale_pricelist_fixed_discount](website_sale_pricelist_fixed_discount) |         Add discount from pricelist with fixed price. |
+| ------ | ------- |
+|        |         |
